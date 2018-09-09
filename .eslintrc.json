@@ -1,0 +1,85 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jquery": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/recommended"
+  ],
+  "globals": {
+    "WB": true,
+    "L": true,
+    "yaCounter50190469": true,
+    "Pikaday": true,
+    "math": true,
+    "Mustache": true,
+    "Spinner": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "indent": [
+      "error",
+      2
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "prefer-const": "error",
+    "prefer-destructuring": [
+      "error",
+      {
+        "array": false,
+        "object": true
+      }
+    ],
+    "no-console": "off",
+    "no-with": "error",
+    "no-void": "error",
+    "radix": "error",
+    "yoda": "error",
+    "no-duplicate-imports": "error",
+    "no-var": "error",
+    "semi-spacing": "error",
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
+    "array-bracket-spacing": [
+      "error",
+      "always",
+      {
+        "singleValue": false,
+        "objectsInArrays": false,
+        "arraysInArrays": false
+      }
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "spaced-comment": [
+      "error",
+      "always"
+    ],
+    "eol-last": "error"
+  }
+}
