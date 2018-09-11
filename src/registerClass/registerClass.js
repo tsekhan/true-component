@@ -1,21 +1,6 @@
-import getAllPropertyNames from './registerClass/getAllPropertyNames';
-
-customElements.define('web-component-root', class extends HTMLElement {
-});
-
-const WebComponent = class {
-  constructor() {
-    const element = document.createElement('web-component-root');
-
-    Object.defineProperty(element, 'template', {
-      set: function (template) {
-        this.innerHTML = template;
-      }
-    });
-
-    return element;
-  }
-};
+import getAllPropertyNames from './getAllPropertyNames';
+import { ROOT_TAG_NAME } from '../component/RootNodeClass';
+import dataStore from '../dataStore/dataStore';
 
 function registerClass(tag, Class) {
   const WebComponentClass = class extends HTMLElement {
@@ -24,8 +9,23 @@ function registerClass(tag, Class) {
 
       const shadowRoot = this.attachShadow({ mode: 'closed' });
 
-      const classInstance = new Class();
-      if (classInstance.tagName.toLowerCase() === 'web-component-root') {
+      const props = {};
+
+      for (let i = 0; i < this.attributes.length; i++) {
+        const attribute = this.attributes[i];
+
+        let propValue = attribute.value;
+
+        if (dataStore.has(propValue)) {
+          propValue = dataStore.get(propValue);
+        }
+        props[attribute.name] = propValue;
+      }
+
+      const classInstance = new Class({
+        props,
+      });
+      if (classInstance.tagName.toLowerCase() === ROOT_TAG_NAME) {
         Array.from(classInstance.childNodes).forEach(node => {
           shadowRoot.appendChild(node);
         });
@@ -36,7 +36,6 @@ function registerClass(tag, Class) {
   };
 
   const classPropertyNames = getAllPropertyNames(Class.prototype);
-  console.log(classPropertyNames);
   classPropertyNames.forEach(propertyName => {
     WebComponentClass.prototype[propertyName] = Class.prototype[propertyName];
   });
@@ -50,4 +49,4 @@ function registerClass(tag, Class) {
   };
 }
 
-export { WebComponent, registerClass };
+export default registerClass;

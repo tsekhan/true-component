@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -6,5 +5,8 @@ module.exports = {
   output: {
     filename: 'wc.js',
     path: path.resolve(__dirname, 'dist')
+  },
+  optimization: {
+    minimize: false
   },
 };
