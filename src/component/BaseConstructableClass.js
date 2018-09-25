@@ -1,22 +1,20 @@
-import { ROOT_TAG_NAME } from './RootNodeClass';
 import dataStore from '../dataStore/dataStore';
 
 class BaseConstructableClass {
   constructor(config) {
-    const element = document.createElement(ROOT_TAG_NAME);
+    const rootElement = document.createElement('div');
 
-    Object.assign(element, config);
+    Object.assign(rootElement, config);
 
-    Object.defineProperty(element, 'template', {
+    Object.defineProperty(rootElement, 'template', {
       set: function (template) {
-
         template.satelliteData.forEach((value, key) => dataStore.set(key, value));
         this.innerHTML = template.templateString;
         template.satelliteData.forEach((value, key) => dataStore.delete(key));
       }
     });
 
-    return element;
+    return rootElement;
   }
 }
 
