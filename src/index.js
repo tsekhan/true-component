@@ -1,9 +1,9 @@
+import Component from './component/Component';
 import registerClass from './registerClass/registerClass';
-import BaseConstructableClass from './component/BaseConstructableClass';
 import html from './html/tag';
 
 window.WC = {
-  WebComponent: BaseConstructableClass,
+  Component,
   registerClass,
   html,
 };

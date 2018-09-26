@@ -1,78 +1,28 @@
-const { WebComponent, registerClass, html } = window.WC;
+const { Component, registerClass, html } = window.WC;
 
-class A1 extends WebComponent {
-  constructor(config) {
-    super(config);
-
-    const param = {
-      a: 'One',
-      b: 'Two',
-    };
-    this.template = html`
-      <div>
-        <b-b a="${'text'}" b="${param}" c="${{ a: 1 }}">
-          Ololosh
-        </b-b>
-      </div>
-      Tse${123}
-`;
-    this.sing = () => {
-      console.log('Song!');
-    };
+class Test extends Component {
+  static get tag() {
+    return 'span-olo';
   }
-
-  set xxx(value) {
-    // console.log('XXX', value);
-  }
-
-  mikola() {
-    // console.log('First');
-  }
-}
-
-class A2 extends A1 {
-  mikola() {
-    console.log('du');
-  }
-}
-
-class B1 extends WebComponent {
 
   constructor(config) {
     super(config);
 
-    this.template = html`<slot></slot><span>${this.props.a}</span><span>${this.props.b.a}</span><span>${this.props.c.a}</span>`;
+    if (this.a) {
+      this.appendChild(html`
+        <div>
+          ${this.a.a}
+          ${this.a.b}
+        </div>
+      `);
+    }
+  }
+
+  sing() {
+    console.log('Song!');
   }
 }
 
-registerClass('b-b', B1);
-const ExampleElement = registerClass('a-a', A2);
+registerClass(Test);
 
-const body = document.body;
-
-const a = new ExampleElement();
-a.sing();
-body.appendChild(a);
-// a.mikola();
-// a.template = html`text`;
-Object.defineProperty(a, 'mi', {
-  set: function (value) {
-    // console.log(this.sing());
-    // console.log('value', value);
-  }
-});
-a.mi = 'OOO';
-a.xxx = '123';
-
-const b = document.createElement('a-a');
-
-body.appendChild(b);
-b.sing();
-b.mikola();
-// b.template = html`text`;
-Object.defineProperty(b, 'mi', {
-  set: function (value) {
-    // console.log('value', value);
-  }
-});
-b.mi = 'OOO';
+document.body.appendChild(html`<div><p><span-olo a="${{ a: 'Mikola', b: 'Tsekhan' }}"></span-olo></p></div>`);

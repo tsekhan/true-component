@@ -1,4 +1,5 @@
 import getDataAttributeSet from './getDataAttributeSet';
+import instantiateNodes from './instantiateNodes';
 
 const FAKE_INDEX_PREFIX = 'mikola';
 
@@ -31,13 +32,10 @@ const html = function (strings, ...data) {
     }
   });
 
-  const parser = new DOMParser();
-  const fakeHtml = parser.parseFromString(fakeMarkup, 'text/html').body;
-
-  const dataAttributesSet = getDataAttributeSet(fakeHtml, dataMap);
-
   let resultingMarkup = '';
   const satelliteData = new Map();
+  const fakeHtml = new DOMParser().parseFromString(fakeMarkup, 'text/html').body;
+  const dataAttributesSet = getDataAttributeSet(fakeHtml, dataMap);
 
   strings.forEach((string, index) => {
     resultingMarkup += string;
@@ -53,11 +51,13 @@ const html = function (strings, ...data) {
     }
   });
 
-  return {
-    templateString: resultingMarkup,
-    satelliteData,
-  };
+  const container = document.createElement('div');
+  container.innerHTML = resultingMarkup;
+
+  instantiateNodes(container, satelliteData, dataAttributesSet);
+
+  // TODO Return evertything except container
+  return container;
 };
 
-export { html, FAKE_INDEX_PREFIX };
 export default html;
