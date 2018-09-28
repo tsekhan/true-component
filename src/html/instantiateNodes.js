@@ -1,30 +1,47 @@
 import nodeStore from '../nodeStore/nodeStore';
+import getFakeDataKey from './getFakeDataKey';
 
-const instantiateNodes = function (root, dataMap, dataAttributesSet) {
+// FIXME Won't work if root node is data node
+const instantiateNodes = function (root, dataMap, dataPlaceholders) {
   root.childNodes.forEach(child => {
-    let resultingChild = child;
-    if (nodeStore.has(child)) {
-      const Class = nodeStore.get(child);
-      const params = {};
+    let currentChild = child;
 
-      for (let i = 0; i < child.attributes.length; i++) {
-        const attribute = child.attributes[i];
+    const childNodeName = currentChild.nodeName.toLowerCase();
+    const potentialId = getFakeDataKey(childNodeName);
+    console.log(potentialId);
+    if (dataPlaceholders.has(potentialId)) {
+      const paramToInsert = dataMap.get(potentialId);
+      if (paramToInsert instanceof NodeList) {
+        Array.from(paramToInsert).forEach(node => {
+          root.insertBefore(node, currentChild);
+        });
+        root.removeChild(currentChild);
+      } else {
+        root.replaceChild(paramToInsert, currentChild);
+      }
+    } else {
+      if (nodeStore.has(child)) {
+        const Class = nodeStore.get(child);
+        const params = {};
 
-        let attributeValue = attribute.value;
+        for (let i = 0; i < child.attributes.length; i++) {
+          const attribute = child.attributes[i];
 
-        if (dataAttributesSet.has(attributeValue)) {
-          attributeValue = dataMap.get(attributeValue);
+          let attributeValue = attribute.value;
+
+          if (dataPlaceholders.has(attributeValue)) {
+            attributeValue = dataMap.get(attributeValue);
+          }
+
+          params[attribute.name] = attributeValue;
         }
 
-        params[attribute.name] = attributeValue;
+        currentChild = new Class(params, child.childNodes);
+
+        root.replaceChild(currentChild, child);
       }
-
-      resultingChild = new Class(params);
-
-      // TODO Copy children
-      root.replaceChild(resultingChild, child);
+      instantiateNodes(currentChild, dataMap, dataPlaceholders);
     }
-    instantiateNodes(resultingChild, dataMap, dataAttributesSet);
   });
 
   return root.childNodes;

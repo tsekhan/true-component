@@ -5,16 +5,18 @@ class Test extends Component {
     return 'span-olo';
   }
 
-  constructor(config) {
-    super(config);
+  constructor(config, children) {
+    super(config, children);
 
     if (this.a) {
-      this.appendChild(html`
+      this.template = html`
         <div>
           ${this.a.a}
           ${this.a.b}
+          ${this.a.c}
         </div>
-      `);
+        <slot></slot>
+      `;
     }
   }
 
@@ -25,4 +27,17 @@ class Test extends Component {
 
 registerClass(Test);
 
-document.body.appendChild(html`<div><p><span-olo a="${{ a: 'Mikola', b: 'Tsekhan' }}"></span-olo></p></div>`);
+console.time('component');
+for (let i = 0; i < 1; i++) {
+  const node = html`<span>Node1</span> <span>Node2</span>`;
+  document.body.appendChild(html`
+  <div>
+    <span>
+      <span-olo a="${{ a: 'Mikola', b: 'Tsekhan', c: node }}">
+        Just text<div>Tag</div>
+      </span-olo>
+    </span>
+  </div>
+`);
+}
+console.timeEnd('component');

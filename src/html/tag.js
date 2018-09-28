@@ -1,17 +1,24 @@
-import getDataAttributeSet from './getDataAttributeSet';
+import getDataPlaceholders from './getDataPlaceholders';
 import instantiateNodes from './instantiateNodes';
+import getFakeDataKey from './getFakeDataKey';
 
-const FAKE_INDEX_PREFIX = 'mikola';
+const getRandomizedToken = () => Math.random().toString(36).substr(2);
 
-const html = function (strings, ...data) {
+const html = function (strings, ...params) {
   const dataMap = new Map();
 
-  const fakeDataKeys = data.map((dataItem) => {
+  const fakeDataKeys = params.map((dataItem) => {
     let fakeDataKey;
 
+    const joinedStrings = strings.join();
+
     do {
-      fakeDataKey = `${FAKE_INDEX_PREFIX}-${Math.random().toString()}`;
-    } while (dataMap.has(fakeDataKey));
+      const randomizedToken = getRandomizedToken();
+      fakeDataKey = getFakeDataKey(`token-${randomizedToken}`);
+    } while (
+      dataMap.has(fakeDataKey) &&
+      joinedStrings.indexOf(fakeDataKey) === '-1'
+    );
 
     if (
       !(dataItem instanceof String)
@@ -33,31 +40,32 @@ const html = function (strings, ...data) {
   });
 
   let resultingMarkup = '';
-  const satelliteData = new Map();
   const fakeHtml = new DOMParser().parseFromString(fakeMarkup, 'text/html').body;
-  const dataAttributesSet = getDataAttributeSet(fakeHtml, dataMap);
+  const dataPlaceholders = getDataPlaceholders(fakeHtml, dataMap);
+  console.log(fakeHtml);
+  console.log(fakeMarkup);
 
   strings.forEach((string, index) => {
     resultingMarkup += string;
 
-    if (dataAttributesSet.has(fakeDataKeys[index])) {
-      const fakeKey = fakeDataKeys[index];
-      resultingMarkup += fakeKey;
-
-      const data = dataMap.get(fakeKey);
-      satelliteData.set(fakeKey, data);
+    // TODO Implement adding of nodes
+    if (dataPlaceholders.has(fakeDataKeys[index])) {
+      resultingMarkup += fakeDataKeys[index];
     } else if (fakeDataKeys[index]) {
-      resultingMarkup += data[index];
+      resultingMarkup += params[index];
     }
   });
 
   const container = document.createElement('div');
-  container.innerHTML = resultingMarkup;
+  container.innerHTML = resultingMarkup.trim();
 
-  instantiateNodes(container, satelliteData, dataAttributesSet);
+  instantiateNodes(container, dataMap, dataPlaceholders);
 
-  // TODO Return evertything except container
-  return container;
+  if (container.childNodes.length === 1) {
+    return container.childNodes[0];
+  } else {
+    return container.childNodes;
+  }
 };
 
 export default html;

@@ -5,7 +5,7 @@ import registerClass from '../registerClass/registerClass';
 const DEFAULT_TAG = 'component-wc';
 
 class Component {
-  constructor(config) {
+  constructor(config, children) {
     const Class = Object.getPrototypeOf(this).constructor;
     const tag = Class.tag || DEFAULT_TAG;
 
@@ -23,7 +23,7 @@ class Component {
     Object.setPrototypeOf(fakePrototype, Object.getPrototypeOf(this));
 
     getAllPropertyNames(rootElement).forEach(propertyName => {
-      if (!getPropertyDescriptor(this, propertyName)) {
+      if (!(propertyName in this)) {
         const propertyDescriptor = getPropertyDescriptor(rootElement, propertyName);
         Object.defineProperty(fakePrototype, propertyName, propertyDescriptor);
       }
@@ -32,6 +32,12 @@ class Component {
     Object.setPrototypeOf(rootElement, fakePrototype);
 
     Object.assign(rootElement, config);
+
+    if (children) {
+      Array.from(children).forEach(child => {
+        rootElement.appendChild(child);
+      });
+    }
 
     return rootElement;
   }
