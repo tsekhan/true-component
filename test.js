@@ -25,19 +25,33 @@ class Test extends Component {
   }
 }
 
+class Test2 extends Test {}
+
+document.Test = Test;
+
 registerClass(Test);
 
-console.time('component');
-for (let i = 0; i < 1; i++) {
-  const node = html`<span>Node1</span> <span>Node2</span>`;
-  document.body.appendChild(html`
+const test = new Test2();
+test.sing();
+async function render() {
+  console.time('component');
+  for (let i = 0; i < 100; i++) {
+    const node = html`<span>Node1</span> <span>Node2</span>`;
+    const node2 = html`<span>Node1</span> <span>Node2</span>`;
+
+    const instance = new Test({ a: { a: 'Mikola', b: 'Tsekhan', c: node2 } });
+    document.body.appendChild(html`
   <div>
     <span>
       <span-olo a="${{ a: 'Mikola', b: 'Tsekhan', c: node }}">
         Just text<div>Tag</div>
       </span-olo>
+      ${instance}
     </span>
   </div>
 `);
+  }
+  console.timeEnd('component');
 }
-console.timeEnd('component');
+
+render();

@@ -42,13 +42,10 @@ const html = function (strings, ...params) {
   let resultingMarkup = '';
   const fakeHtml = new DOMParser().parseFromString(fakeMarkup, 'text/html').body;
   const dataPlaceholders = getDataPlaceholders(fakeHtml, dataMap);
-  console.log(fakeHtml);
-  console.log(fakeMarkup);
 
   strings.forEach((string, index) => {
     resultingMarkup += string;
 
-    // TODO Implement adding of nodes
     if (dataPlaceholders.has(fakeDataKeys[index])) {
       resultingMarkup += fakeDataKeys[index];
     } else if (fakeDataKeys[index]) {

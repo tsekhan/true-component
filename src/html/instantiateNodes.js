@@ -1,5 +1,6 @@
 import nodeStore from '../nodeStore/nodeStore';
 import getFakeDataKey from './getFakeDataKey';
+import Component from '../component/Component';
 
 // FIXME Won't work if root node is data node
 const instantiateNodes = function (root, dataMap, dataPlaceholders) {
@@ -8,7 +9,6 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
 
     const childNodeName = currentChild.nodeName.toLowerCase();
     const potentialId = getFakeDataKey(childNodeName);
-    console.log(potentialId);
     if (dataPlaceholders.has(potentialId)) {
       const paramToInsert = dataMap.get(potentialId);
       if (paramToInsert instanceof NodeList) {
@@ -16,8 +16,15 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
           root.insertBefore(node, currentChild);
         });
         root.removeChild(currentChild);
-      } else {
+      } else if (
+        paramToInsert instanceof Component ||
+        paramToInsert instanceof HTMLElement ||
+        paramToInsert instanceof Text
+      ) {
         root.replaceChild(paramToInsert, currentChild);
+      } else {
+        const textNode = document.createTextNode(paramToInsert);
+        root.replaceChild(textNode, currentChild);
       }
     } else {
       if (nodeStore.has(child)) {

@@ -19,8 +19,84 @@ class Component {
 
     const rootElement = document.createElement(tag);
 
-    const fakePrototype = {};
-    Object.setPrototypeOf(fakePrototype, Object.getPrototypeOf(this));
+    const shadowRoot = rootElement.attachShadow({ mode: 'open' });
+
+    Object.defineProperty(rootElement, 'template', {
+      set: template => {
+        if (typeof template === 'string' || template instanceof String) {
+
+          // XXX Non-standard property
+          shadowRoot.innerHTML = template;
+        } else if(template instanceof NodeList) {
+          Array.from(template).forEach(templateItem => {
+            shadowRoot.appendChild(templateItem);
+          });
+        } else {
+          shadowRoot.appendChild(template);
+        }
+      }
+    });
+
+    const rootElementMixin = {};
+
+    const fakePrototype = new Proxy({}, {
+      getPrototypeOf: () => {
+        return rootElementMixin;
+      },
+
+      setPrototypeOf: (target, prototype) => {
+        Object.setPrototypeOf(rootElementMixin, prototype);
+        return true;
+      },
+
+      isExtensible: () => {
+        return Object.isExtensible(rootElementMixin);
+      },
+
+      preventExtensions: (oTarget) => {
+        Object.preventExtensions(oTarget);
+        Object.preventExtensions(rootElementMixin);
+        return !Object.isExtensible(rootElementMixin);
+      },
+
+      getOwnPropertyDescriptor: function (oTarget, sKey) {
+        return Object.getOwnPropertyDescriptor(rootElementMixin, sKey);
+      },
+
+      defineProperty: function (oTarget, sKey, oDesc) {
+        Object.defineProperty(oTarget, sKey, oDesc);
+        const newDesc = Object.assign({}, oDesc);
+
+        if (oDesc.get) {
+          newDesc.get = oDesc.get.bind(rootElement);
+        }
+
+        return Object.defineProperty(rootElementMixin, sKey, newDesc);
+      },
+
+      has: function (oTarget, sKey) {
+        return sKey in rootElementMixin;
+      },
+
+      get: function (oTarget, sKey) {
+        return rootElementMixin[sKey];
+      },
+
+      set: function (oTarget, sKey, vValue) {
+        rootElementMixin[sKey] = vValue;
+        return true;
+      },
+
+      deleteProperty: function (oTarget, sKey) {
+        return delete rootElementMixin[sKey];
+      },
+
+      ownKeys: function (oTarget, sKey) {
+        console.log(rootElementMixin, sKey);
+        return Object.getOwnPropertyNames(rootElementMixin);
+      },
+    });
+    Object.setPrototypeOf(rootElementMixin, Object.getPrototypeOf(this));
 
     getAllPropertyNames(rootElement).forEach(propertyName => {
       if (!(propertyName in this)) {
