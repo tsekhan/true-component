@@ -1,6 +1,7 @@
 import getAllPropertyNames from './getAllPropertyNames';
 import getPropertyDescriptor from './getPropertyDescriptor';
 import registerClass from '../registerClass/registerClass';
+import Ref from '../Ref/Ref';
 
 const DEFAULT_TAG = 'component-wc';
 
@@ -106,12 +107,18 @@ class Component {
 
     Object.setPrototypeOf(rootElement, fakePrototype);
 
-    Object.assign(rootElement, config);
-
     if (children) {
       Array.from(children).forEach(child => {
         rootElement.appendChild(child);
       });
+    }
+
+    if (config) {
+      Object.assign(rootElement, config);
+
+      if (config.ref && config.ref instanceof Ref) {
+        config.ref.node = rootElement;
+      }
     }
 
     return rootElement;

@@ -6,7 +6,7 @@ const getDataPlaceholders = function (node, dataMap) {
   const currentNodeName = node.nodeName.toLowerCase();
   const potentialId = getFakeDataKey(currentNodeName);
 
-  if (dataMap.has(potentialId)) {
+  if (dataMap.has(potentialId)) { // if node name in dataMap
     dataPlaceholders.add(potentialId);
   } else {
     node.childNodes.forEach(child => {

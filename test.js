@@ -1,4 +1,4 @@
-const { Component, registerClass, html } = window.WC;
+const { Component, registerClass, html, Ref } = window.WC;
 
 class CustomComponent extends Component {
   static get tag() {
@@ -10,9 +10,13 @@ class CustomComponent extends Component {
 
     const span = [];
 
+    const ref = new Ref();
+
     for (let i = 0; i < 10; i++) {
-      span.push(html`X:<span>Mikola${i}</span>`);
+      span.push(html`X:<span ref="${ref}" d>Mikola${i}</span>`);
     }
+
+    console.log(ref);
 
     this.template = html`
     <div>Div</div>

@@ -1,16 +1,18 @@
 import nodeStore from '../nodeStore/nodeStore';
 import getFakeDataKey from './getFakeDataKey';
 import Component from '../Component/Component';
-import { isIterable, flattenArray } from '../utils/utils.js';
+import { isIterable, flattenArray } from '../utils/utils';
+import Ref from '../Ref/Ref';
+import getRealAttributes from './getRealAttributes';
 
 const instantiateNodes = function (root, dataMap, dataPlaceholders) {
   root.childNodes.forEach(child => {
     let currentChild = child;
 
     const childNodeName = currentChild.nodeName.toLowerCase();
-    const fakeDataKey = getFakeDataKey(childNodeName);
-    if (dataPlaceholders.has(fakeDataKey)) {
-      const dataToInsert = dataMap.get(fakeDataKey);
+    const fakeNodeName = getFakeDataKey(childNodeName);
+    if (dataPlaceholders.has(fakeNodeName)) { // if element has been inserted in markup as an object
+      let dataToInsert = dataMap.get(fakeNodeName);
 
       const insertBefore = (node, placeholder) => root.insertBefore(node, placeholder);
 
@@ -19,21 +21,26 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
         flatArray.forEach(item => insertBefore(item, currentChild));
       } else {
         if (
-          dataToInsert instanceof Component ||
-          dataToInsert instanceof Node
+          !(dataToInsert instanceof Component) &&
+          !(dataToInsert instanceof Node)
         ) {
-          insertBefore(dataToInsert, currentChild);
-        } else {
-          const textNode = document.createTextNode(dataToInsert);
-          insertBefore(textNode, currentChild);
+          dataToInsert = document.createTextNode(dataToInsert);
         }
+        insertBefore(dataToInsert, currentChild);
       }
 
       root.removeChild(currentChild);
     } else {
-      if (nodeStore.has(child)) {
+      if (nodeStore.has(child)) { // if Component's descendant has been inserted in markup as a tag
         const Class = nodeStore.get(child);
         const params = {};
+
+        getRealAttributes(
+          child,
+          dataMap,
+          dataPlaceholders,
+          (attributeName, attributeValue) => params[attributeName] = attributeValue
+        );
 
         for (let i = 0; i < child.attributes.length; i++) {
           const attribute = child.attributes[i];
@@ -50,7 +57,23 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
         currentChild = new Class(params, child.childNodes);
 
         root.replaceChild(currentChild, child);
+      } else { // if it's a plain Node descendant
+        getRealAttributes(
+          child,
+          dataMap,
+          dataPlaceholders,
+          (attributeName, attributeValue) => {
+            if (attributeName === 'ref' && attributeValue instanceof Ref) {
+              attributeValue.node = child;
+
+              // FIXME Check why it not works
+              child.removeAttribute('ref');
+            }
+            child.setAttribute(attributeName, String(attributeValue));
+          }
+        );
       }
+
       instantiateNodes(currentChild, dataMap, dataPlaceholders);
     }
   });
