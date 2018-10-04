@@ -1,6 +1,6 @@
 import nodeStore from '../nodeStore/nodeStore';
 import getFakeDataKey from './getFakeDataKey';
-import Component from '../Component_/Component';
+import Component from '../Component/Component';
 import { isIterable, flattenArray } from '../utils/utils.js';
 
 const instantiateNodes = function (root, dataMap, dataPlaceholders) {

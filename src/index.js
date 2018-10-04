@@ -1,4 +1,4 @@
-import Component from './Component_/Component';
+import Component from './Component/Component';
 import registerClass from './registerClass/registerClass';
 import html from './html/html';
 
