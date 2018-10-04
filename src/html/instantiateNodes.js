@@ -20,7 +20,7 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
       } else {
         if (
           dataToInsert instanceof Component ||
-          dataToInsert instanceof Element
+          dataToInsert instanceof Node
         ) {
           insertBefore(dataToInsert, currentChild);
         } else {
