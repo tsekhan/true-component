@@ -91,8 +91,7 @@ class Component {
         return delete rootElementMixin[sKey];
       },
 
-      ownKeys: function (oTarget, sKey) {
-        console.log(rootElementMixin, sKey);
+      ownKeys: function () {
         return Object.getOwnPropertyNames(rootElementMixin);
       },
     });

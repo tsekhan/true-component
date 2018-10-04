@@ -1,31 +1,35 @@
 import nodeStore from '../nodeStore/nodeStore';
 import getFakeDataKey from './getFakeDataKey';
 import Component from '../component/Component';
+import { isIterable, flattenArray } from '../utils/utils.js';
 
-// FIXME Won't work if root node is data node
 const instantiateNodes = function (root, dataMap, dataPlaceholders) {
   root.childNodes.forEach(child => {
     let currentChild = child;
 
     const childNodeName = currentChild.nodeName.toLowerCase();
-    const potentialId = getFakeDataKey(childNodeName);
-    if (dataPlaceholders.has(potentialId)) {
-      const paramToInsert = dataMap.get(potentialId);
-      if (paramToInsert instanceof NodeList) {
-        Array.from(paramToInsert).forEach(node => {
-          root.insertBefore(node, currentChild);
-        });
-        root.removeChild(currentChild);
-      } else if (
-        paramToInsert instanceof Component ||
-        paramToInsert instanceof HTMLElement ||
-        paramToInsert instanceof Text
-      ) {
-        root.replaceChild(paramToInsert, currentChild);
+    const fakeDataKey = getFakeDataKey(childNodeName);
+    if (dataPlaceholders.has(fakeDataKey)) {
+      const dataToInsert = dataMap.get(fakeDataKey);
+
+      const insertBefore = (node, placeholder) => root.insertBefore(node, placeholder);
+
+      if (isIterable(dataToInsert)) {
+        const flatArray = flattenArray(Array.from(dataToInsert));
+        flatArray.forEach(item => insertBefore(item, currentChild));
       } else {
-        const textNode = document.createTextNode(paramToInsert);
-        root.replaceChild(textNode, currentChild);
+        if (
+          dataToInsert instanceof Component ||
+          dataToInsert instanceof Node
+        ) {
+          insertBefore(dataToInsert, currentChild);
+        } else {
+          const textNode = document.createTextNode(dataToInsert);
+          insertBefore(textNode, currentChild);
+        }
       }
+
+      root.removeChild(currentChild);
     } else {
       if (nodeStore.has(child)) {
         const Class = nodeStore.get(child);
