@@ -20,4 +20,4 @@ export default {
   isIterable,
   flattenArray,
 };
-export { isIterable, flattenArray }
+export { isIterable, flattenArray };

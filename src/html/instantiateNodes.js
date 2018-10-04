@@ -1,6 +1,6 @@
 import nodeStore from '../nodeStore/nodeStore';
 import getFakeDataKey from './getFakeDataKey';
-import Component from '../component/Component';
+import Component from '../Component_/Component';
 import { isIterable, flattenArray } from '../utils/utils.js';
 
 const instantiateNodes = function (root, dataMap, dataPlaceholders) {
@@ -20,7 +20,7 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
       } else {
         if (
           dataToInsert instanceof Component ||
-          dataToInsert instanceof Node
+          dataToInsert instanceof Element
         ) {
           insertBefore(dataToInsert, currentChild);
         } else {
