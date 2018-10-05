@@ -59,7 +59,7 @@ const html = function (strings, ...params) {
   instantiateNodes(container, dataMap, dataPlaceholders);
 
   if (container.childNodes.length === 1) {
-    return container.childNodes[0];
+    return container.firstChild;
   } else {
     return container.childNodes;
   }

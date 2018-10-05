@@ -1,6 +1,7 @@
 import getAllPropertyNames from './getAllPropertyNames';
 import getPropertyDescriptor from './getPropertyDescriptor';
 import registerClass from '../registerClass/registerClass';
+import { isIterable } from '../utils/utils';
 import Ref from '../Ref/Ref';
 
 const DEFAULT_TAG = 'component-wc';
@@ -24,17 +25,30 @@ class Component {
 
     Object.defineProperty(rootElement, 'template', {
       set: template => {
+        while (shadowRoot.firstChild) {
+          shadowRoot.removeChild(shadowRoot.firstChild);
+        }
+
         if (typeof template === 'string' || template instanceof String) {
 
           // XXX Non-standard property
           shadowRoot.innerHTML = template;
-        } else if(template instanceof NodeList) {
+        } else if (isIterable(template)) {
           Array.from(template).forEach(templateItem => {
             shadowRoot.appendChild(templateItem);
           });
         } else {
           shadowRoot.appendChild(template);
         }
+      },
+
+      get: () => {
+        if (shadowRoot.childNodes.length === 0) {
+          return undefined;
+        } else if (shadowRoot.childNodes.length === 1) {
+          return shadowRoot.firstChild;
+        }
+        return shadowRoot.childNodes;
       }
     });
 
