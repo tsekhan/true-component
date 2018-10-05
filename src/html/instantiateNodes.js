@@ -35,12 +35,12 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
         const Class = nodeStore.get(child);
         const params = {};
 
-        getRealAttributes(
+        getRealAttributes({
           child,
           dataMap,
           dataPlaceholders,
-          (attributeName, attributeValue) => params[attributeName] = attributeValue
-        );
+          callback: (attributeName, attributeValue) => params[attributeName] = attributeValue,
+        });
 
         for (let i = 0; i < child.attributes.length; i++) {
           const attribute = child.attributes[i];
@@ -58,11 +58,11 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
 
         root.replaceChild(currentChild, child);
       } else { // if it's a plain Node descendant
-        getRealAttributes(
+        getRealAttributes({
           child,
           dataMap,
           dataPlaceholders,
-          (attributeName, attributeValue) => {
+          callback: (attributeName, attributeValue) => {
             if (attributeName === 'ref' && attributeValue instanceof Ref) {
               attributeValue.node = child;
 
@@ -70,8 +70,8 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
               child.removeAttribute('ref');
             }
             child.setAttribute(attributeName, String(attributeValue));
-          }
-        );
+          },
+        });
       }
 
       instantiateNodes(currentChild, dataMap, dataPlaceholders);

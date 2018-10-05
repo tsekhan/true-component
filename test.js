@@ -13,7 +13,7 @@ class CustomComponent extends Component {
     const ref = new Ref();
 
     for (let i = 0; i < 10; i++) {
-      span.push(html`X:<span ref="${ref}" d>Mikola${i}</span>`);
+      span.push(html`X:<span ref="${ref}">Mikola${i}</span>`);
     }
 
     console.log(ref);
