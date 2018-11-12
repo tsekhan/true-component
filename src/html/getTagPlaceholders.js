@@ -1,19 +1,26 @@
 import getFakeDataKey from './getFakeDataKey';
 
-const getDataPlaceholders = function (node, dataMap) {
+const getTagPlaceholders = function (node, dataMap) {
   const dataPlaceholders = new Set();
 
-  const currentNodeName = node.nodeName.toLowerCase();
-  const potentialId = getFakeDataKey(currentNodeName);
+  let potentialId;
 
-  if (dataMap.has(potentialId)) { // if node name in dataMap
+  if (node.nodeName.toLowerCase() === 'template') {
+    const placeholderId = node.attributes[0].name;
+    potentialId = getFakeDataKey(placeholderId);
+  }
+
+  if (
+    potentialId !== undefined
+    && dataMap.has(potentialId)
+  ) { // if node name in dataMap
     dataPlaceholders.add(potentialId);
   } else {
     node.childNodes.forEach(child => {
-      const childDataPlaceholders = getDataPlaceholders(child, dataMap);
+      const childDataPlaceholders = getTagPlaceholders(child, dataMap);
 
-      childDataPlaceholders.forEach(attr => {
-        dataPlaceholders.add(attr);
+      childDataPlaceholders.forEach(placeholder => {
+        dataPlaceholders.add(placeholder);
       });
     });
 
@@ -33,4 +40,4 @@ const getDataPlaceholders = function (node, dataMap) {
   return dataPlaceholders;
 };
 
-export default getDataPlaceholders;
+export default getTagPlaceholders;

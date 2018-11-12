@@ -48,8 +48,9 @@ class Component {
         } else if (shadowRoot.childNodes.length === 1) {
           return shadowRoot.firstChild;
         }
+
         return shadowRoot.childNodes;
-      }
+      },
     });
 
     const rootElementMixin = {};
@@ -61,6 +62,7 @@ class Component {
 
       setPrototypeOf: (target, prototype) => {
         Object.setPrototypeOf(rootElementMixin, prototype);
+
         return true;
       },
 
@@ -71,6 +73,7 @@ class Component {
       preventExtensions: (oTarget) => {
         Object.preventExtensions(oTarget);
         Object.preventExtensions(rootElementMixin);
+
         return !Object.isExtensible(rootElementMixin);
       },
 
@@ -99,6 +102,7 @@ class Component {
 
       set: function (oTarget, sKey, vValue) {
         rootElementMixin[sKey] = vValue;
+
         return true;
       },
 

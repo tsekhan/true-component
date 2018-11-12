@@ -10,10 +10,8 @@ function registerClass(Class, tag) {
     }
   };
 
-  customElements.define(
-    tag || Class.tag,
-    AssociatedClass,
-  );
+  customElements.define(tag || Class.tag,
+    AssociatedClass);
 }
 
 export default registerClass;

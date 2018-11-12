@@ -1,4 +1,6 @@
-const { Component, registerClass, Ref, html } = window.WC;
+const {
+  Component, registerClass, Ref, html,
+} = window.WC;
 
 class Test extends Component {
   static get tag() {
@@ -41,11 +43,21 @@ for (let i = 0; i < 100; i++) {
   const node = html`<span>Node1</span> <span>Node2</span>`;
   const node2 = html`<span>Node1</span> <span>Node2</span>`;
 
-  const instance = new Test({ a: { a: 'Mikola', b: 'Tsekhan', c: node2 } });
+  const instance = new Test({
+    a: {
+      a: 'Mikola',
+      b: 'Tsekhan',
+      c: node2,
+    },
+  });
   document.body.appendChild(html`
       <div>
         <span>
-          <span-olo ref="${ref}" a="${{ a: 'Mikola', b: 'Tsekhan', c: node }}">
+          <span-olo ref="${ref}" a="${{
+  a: 'Mikola',
+  b: 'Tsekhan',
+  c: node,
+}}">
             Just text<div>Tag</div>
           </span-olo>
           ${instance}

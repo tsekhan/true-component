@@ -1,4 +1,4 @@
-import getDataPlaceholders from './getDataPlaceholders';
+import getTagPlaceholders from './getTagPlaceholders';
 import instantiateNodes from './instantiateNodes';
 import getFakeDataKey from './getFakeDataKey';
 
@@ -40,8 +40,14 @@ const html = function (strings, ...params) {
   });
 
   let resultingMarkup = '';
-  const fakeHtml = new DOMParser().parseFromString(fakeMarkup, 'text/html').body;
-  const dataPlaceholders = getDataPlaceholders(fakeHtml, dataMap);
+
+  fakeMarkup = `<body><template>${fakeMarkup}</template></body>`;
+
+  const fakeHtml = new DOMParser().parseFromString(fakeMarkup, 'text/html').body.firstChild.content;
+  const dataPlaceholders = getTagPlaceholders(fakeHtml, dataMap);
+
+  console.log(fakeMarkup);
+  console.log(fakeHtml);
 
   strings.forEach((string, index) => {
     resultingMarkup += string;
@@ -53,8 +59,14 @@ const html = function (strings, ...params) {
     }
   });
 
+  const templateContainer = document.createElement('template');
+  templateContainer.innerHTML = resultingMarkup.trim();
+
   const container = document.createElement('div');
-  container.innerHTML = resultingMarkup.trim();
+  const templateContainerChildren = Array.from(templateContainer.content.childNodes);
+  templateContainerChildren.forEach(child => {
+    container.appendChild(child);
+  });
 
   instantiateNodes(container, dataMap, dataPlaceholders);
 

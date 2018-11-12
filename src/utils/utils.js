@@ -1,5 +1,7 @@
 const isIterable = obj => {
-  return typeof obj[Symbol.iterator] === 'function';
+  return typeof obj !== 'string'
+    && !(obj instanceof String)
+    && typeof obj[Symbol.iterator] === 'function';
 };
 
 const flattenArray = array => {
@@ -16,8 +18,4 @@ const flattenArray = array => {
   return result;
 };
 
-export default {
-  isIterable,
-  flattenArray,
-};
 export { isIterable, flattenArray };

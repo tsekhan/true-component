@@ -8,17 +8,27 @@ import getRealAttributes from './getRealAttributes';
 const instantiateNodes = function (root, dataMap, dataPlaceholders) {
   root.childNodes.forEach(child => {
     let currentChild = child;
+    let potentialId;
 
-    const childNodeName = currentChild.nodeName.toLowerCase();
-    const fakeNodeName = getFakeDataKey(childNodeName);
-    if (dataPlaceholders.has(fakeNodeName)) { // if element has been inserted in markup as an object
-      let dataToInsert = dataMap.get(fakeNodeName);
+    if (currentChild.nodeName.toLowerCase() === 'template') {
+      const placeholderId = currentChild.attributes[0].name;
+      potentialId = getFakeDataKey(placeholderId);
+    }
+
+    if (dataPlaceholders.has(potentialId)) { // if element has been inserted in markup as an object
+      let dataToInsert = dataMap.get(potentialId);
 
       const insertBefore = (node, placeholder) => root.insertBefore(node, placeholder);
 
       if (isIterable(dataToInsert)) {
         const flatArray = flattenArray(Array.from(dataToInsert));
-        flatArray.forEach(item => insertBefore(item, currentChild));
+        flatArray.forEach(item => {
+          if (typeof item === 'string' || item instanceof String) {
+            insertBefore(new Text(item), currentChild);
+          } else {
+            insertBefore(item, currentChild);
+          }
+        });
       } else {
         if (
           !(dataToInsert instanceof Component) &&

@@ -1,12 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    'wc': './src/index.js',
+    'test': './tests/test.js',
+  },
   output: {
-    filename: 'wc.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist'),
   },
-  optimization: {
-    minimize: false
-  },
+  optimization: { minimize: false },
 };

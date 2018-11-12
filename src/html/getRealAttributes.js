@@ -1,5 +1,7 @@
 export default function getRealAttributes(params) {
-  const { child, dataMap, dataPlaceholders, callback } = params;
+  const {
+    child, dataMap, dataPlaceholders, callback,
+  } = params;
 
   if (child.attributes) {
     for (let i = 0; i < child.attributes.length; i++) {

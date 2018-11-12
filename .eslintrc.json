@@ -1,23 +1,12 @@
 {
   "env": {
     "browser": true,
-    "es6": true,
-    "node": true,
-    "jquery": true
+    "es6": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:import/recommended"
   ],
-  "globals": {
-    "WB": true,
-    "L": true,
-    "yaCounter50190469": true,
-    "Pikaday": true,
-    "math": true,
-    "Mustache": true,
-    "Spinner": true
-  },
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
@@ -83,6 +72,88 @@
       "error",
       "always"
     ],
-    "eol-last": "error"
+    "eol-last": "error",
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "always-multiline"
+      }
+    ],
+    "no-trailing-spaces": "error",
+    "no-useless-concat": "error",
+    "prefer-template": "error",
+    "prefer-spread": "error",
+    "prefer-rest-params": "error",
+    "array-bracket-newline": [
+      "error",
+      {
+        "minItems": 4,
+        "multiline": true
+      }
+    ],
+    "array-element-newline": [
+      "error",
+      {
+        "minItems": 4
+      }
+    ],
+    "object-curly-newline": [
+      "error",
+      {
+        "minProperties": 4,
+        "multiline": true
+      }
+    ],
+    "newline-per-chained-call": [
+      "error",
+      {
+        "ignoreChainWithDepth": 3
+      }
+    ],
+    "object-property-newline": "error",
+    "function-paren-newline": [
+      "error",
+      {
+        "minItems": 4
+      }
+    ],
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "return"
+      }
+    ],
+    "key-spacing": [
+      "error",
+      {
+        "beforeColon": false,
+        "afterColon": true
+      }
+    ],
+    "no-useless-return": "error",
+    "no-lonely-if": "error",
+    "func-call-spacing": "error",
+    "no-unneeded-ternary": "error",
+    "template-curly-spacing": "error",
+    "no-multi-spaces": "error",
+    "no-magic-numbers": [
+      "warn",
+      {
+        "ignore": [
+          -1,
+          0,
+          1
+        ],
+        "detectObjects": true,
+        "enforceConst": true
+      }
+    ],
+    "brace-style": "error"
   }
 }
