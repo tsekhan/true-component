@@ -34,8 +34,9 @@ const html = function (strings, ...params) {
   strings.forEach((string, index) => {
     fakeMarkup += string;
 
-    if (fakeDataKeys[index]) {
-      fakeMarkup += fakeDataKeys[index];
+    const fakeDataKey = fakeDataKeys[index];
+    if (fakeDataKey && dataMap.has(fakeDataKey)) {
+      fakeMarkup += fakeDataKey;
     }
   });
 
@@ -45,9 +46,6 @@ const html = function (strings, ...params) {
 
   const fakeHtml = new DOMParser().parseFromString(fakeMarkup, 'text/html').body.firstChild.content;
   const dataPlaceholders = getTagPlaceholders(fakeHtml, dataMap);
-
-  console.log(fakeMarkup);
-  console.log(fakeHtml);
 
   strings.forEach((string, index) => {
     resultingMarkup += string;
