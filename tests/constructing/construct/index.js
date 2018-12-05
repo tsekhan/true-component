@@ -3,7 +3,10 @@ const name = 'Construction';
 const description = 'Tests if object creates successfully';
 
 const run = async () => {
-  return 'Success';
+  return {
+    status: 'success',
+    message: 'Success run',
+  };
 };
 
 export default {

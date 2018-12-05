@@ -1,16 +1,19 @@
-export default function getRealAttributes(params) {
-  const {
-    child, dataMap, dataPlaceholders, callback,
-  } = params;
-
+export default function getRealAttributes(
+  {
+    child,
+    keyToData,
+    placeholders,
+    callback,
+  }
+) {
   if (child.attributes) {
     for (let i = 0; i < child.attributes.length; i++) {
       const attribute = child.attributes[i];
 
       let attributeValue = attribute.value;
 
-      if (dataPlaceholders.has(attributeValue)) {
-        attributeValue = dataMap.get(attributeValue);
+      if (placeholders.has(attributeValue)) {
+        attributeValue = keyToData.get(attributeValue);
       }
 
       callback(attribute.name, attributeValue);

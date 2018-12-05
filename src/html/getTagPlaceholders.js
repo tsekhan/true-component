@@ -1,43 +1,29 @@
-import getFakeDataKey from './getFakeDataKey';
+import PlaceholderRoles from './PlaceholderRoles';
+import buildFakeHtml from "./buildFakeHtml";
 
-const getTagPlaceholders = function (node, dataMap) {
-  const dataPlaceholders = new Set();
-
-  let potentialId;
+const scanForTags = (node, tokenToParam) => {
+  const placeholders = new Map();
 
   if (node.nodeName.toLowerCase() === 'template') {
-    const placeholderId = node.attributes[0].name;
-    potentialId = getFakeDataKey(placeholderId);
-  }
+    const potentialId = node.attributes[0].name;
 
-  if (
-    potentialId !== undefined
-    && dataMap.has(potentialId)
-  ) { // if node name in dataMap
-    dataPlaceholders.add(potentialId);
-  } else {
-    node.childNodes.forEach(child => {
-      const childDataPlaceholders = getTagPlaceholders(child, dataMap);
-
-      childDataPlaceholders.forEach(placeholder => {
-        dataPlaceholders.add(placeholder);
-      });
-    });
-
-    const { attributes: nodeAttributes } = node;
-
-    if (nodeAttributes !== undefined) {
-      for (let i = 0; i < nodeAttributes.length; i++) {
-        const attributeValue = nodeAttributes[i].value;
-
-        if (dataMap.has(attributeValue)) {
-          dataPlaceholders.add(attributeValue);
-        }
-      }
+    if (tokenToParam.has(potentialId)) { // if node name in dataMap
+      placeholders.set(potentialId, PlaceholderRoles.TAG);
     }
   }
 
-  return dataPlaceholders;
+  node.childNodes.forEach(child => {
+    scanForTags(child, tokenToParam)
+      .forEach((value, key) => placeholders.set(key, value));
+  });
+
+  return placeholders;
+};
+
+const getTagPlaceholders = (fakeMarkup, tokenToParam) => {
+  const node = buildFakeHtml(fakeMarkup);
+
+  return scanForTags(node, tokenToParam);
 };
 
 export default getTagPlaceholders;

@@ -1,64 +1,65 @@
+import buildFakeAttributeMarkup from './buildFakeAttributeMarkup';
+import buildFakeTagMarkup from './buildFakeTagMarkup';
+import generateTemplateParams from './generateTemplateParams';
+import getAttributePlaceholders from './getAttributePlaceholders';
 import getTagPlaceholders from './getTagPlaceholders';
-import instantiateNodes from './instantiateNodes';
-import getFakeDataKey from './getFakeDataKey';
+import generateTagByKey from './generateTagByKey';
+import instantiateNodes from '../html/instantiateNodes';
+import PlaceholderRoles from './PlaceholderRoles';
 
-const getRandomizedToken = () => Math.random().toString(36).substr(2);
+const html = (strings, ...params) => {
+  const {
+    tokenToParam: plainKeyToParam,
+    indexToToken: indexToPlainKey,
+  } = generateTemplateParams(strings, params);
 
-const html = function (strings, ...params) {
-  const dataMap = new Map();
+  const fakeMarkup = buildFakeAttributeMarkup(
+    plainKeyToParam,
+    indexToPlainKey,
+    strings,
+  );
 
-  const fakeDataKeys = params.map((dataItem) => {
-    let fakeDataKey;
+  const placeholders = getAttributePlaceholders(fakeMarkup, plainKeyToParam);
 
-    const joinedStrings = strings.join();
+  const {
+    tokenToParam: tagNameToParam,
+    indexToToken: indexToTagName,
+  } = generateTemplateParams(strings, params);
 
-    do {
-      const randomizedToken = getRandomizedToken();
-      fakeDataKey = getFakeDataKey(`token-${randomizedToken}`);
-    } while (
-      dataMap.has(fakeDataKey) &&
-      joinedStrings.indexOf(fakeDataKey) === '-1'
-    );
+  // Don't substitute params already detected as attribute placeholders.
+  indexToTagName.forEach((tag, index) => {
+    const matchingKey = indexToPlainKey[index];
 
-    if (
-      !(dataItem instanceof String)
-      && typeof dataItem !== 'string'
-    ) {
-      dataMap.set(fakeDataKey, dataItem);
-    }
-
-    return fakeDataKey;
-  });
-
-  let fakeMarkup = '';
-  strings.forEach((string, index) => {
-    fakeMarkup += string;
-
-    const fakeDataKey = fakeDataKeys[index];
-    if (fakeDataKey && dataMap.has(fakeDataKey)) {
-      fakeMarkup += fakeDataKey;
+    if (placeholders.has(matchingKey)) {
+      tagNameToParam.delete(tag);
     }
   });
 
-  let resultingMarkup = '';
+  const tagFakeMarkup = buildFakeTagMarkup(
+    tagNameToParam,
+    indexToTagName,
+    strings,
+  );
 
-  fakeMarkup = `<body><template>${fakeMarkup}</template></body>`;
+  getTagPlaceholders(tagFakeMarkup, tagNameToParam)
+    .forEach((value, key) => placeholders.set(key, value));
 
-  const fakeHtml = new DOMParser().parseFromString(fakeMarkup, 'text/html').body.firstChild.content;
-  const dataPlaceholders = getTagPlaceholders(fakeHtml, dataMap);
+  let markup = '';
 
   strings.forEach((string, index) => {
-    resultingMarkup += string;
+    markup += string;
 
-    if (dataPlaceholders.has(fakeDataKeys[index])) {
-      resultingMarkup += fakeDataKeys[index];
-    } else if (fakeDataKeys[index]) {
-      resultingMarkup += params[index];
+    if (placeholders.has(indexToPlainKey[index])) {
+      markup += indexToPlainKey[index];
+    } else if (placeholders.has(indexToTagName[index])) {
+      markup += generateTagByKey(indexToTagName[index]);
+    } else if (index < params.length) {
+      markup += params[index];
     }
   });
 
   const templateContainer = document.createElement('template');
-  templateContainer.innerHTML = resultingMarkup.trim();
+  templateContainer.innerHTML = markup.trim();
 
   const container = document.createElement('div');
   const templateContainerChildren = Array.from(templateContainer.content.childNodes);
@@ -66,7 +67,17 @@ const html = function (strings, ...params) {
     container.appendChild(child);
   });
 
-  instantiateNodes(container, dataMap, dataPlaceholders);
+  const keyToData = new Map();
+
+  placeholders.forEach((role, key) => {
+    if (role === PlaceholderRoles.TAG) {
+      keyToData.set(key, tagNameToParam.get(key));
+    } else {
+      keyToData.set(key, plainKeyToParam.get(key));
+    }
+  });
+
+  instantiateNodes(container, placeholders, keyToData);
 
   if (container.childNodes.length === 1) {
     return container.firstChild;

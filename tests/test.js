@@ -1,7 +1,7 @@
-import testCases from './index';
+import tests from './index';
 
 const {
-  Component, registerClass, html, Ref,
+  Component, html, Ref,
 } = window.WC;
 
 class TestResults extends Component {
@@ -9,13 +9,32 @@ class TestResults extends Component {
     return 'test-results';
   }
 
-  constructor(config, children) {
-    super(config, children);
+  static _processTestCase(testCase, index) {
+    let tests = [];
+    let runners = [];
 
-    const runPromises = [];
-    const tests = [];
+    if (testCase.tests) {
+      tests.push(html`
+          <tr>
+            <td>${index}</td>
+            <td>${testCase.name}</td>
+            <td>${testCase.description}</td>
+            <td></td>
+          </tr>
+        `);
 
-    Object.values(testCases).forEach((testCase, index) => {
+      testCase.tests.forEach((childTestCase, childIndex) => {
+        let composedIndex = `${index ? `${index}.` : ''}${childIndex + 1}`;
+
+        const {
+          tests: newTests,
+          runners: newRunners,
+        } = TestResults._processTestCase(childTestCase, composedIndex);
+
+        tests = [...tests, ...newTests];
+        runners = [...runners, ...newRunners];
+      });
+    } else {
       const trRef = new Ref();
       const messageRef = new Ref();
 
@@ -28,28 +47,47 @@ class TestResults extends Component {
         </tr>
       `);
 
-      console.log(trRef);
+      const runner = async () => {
+        let status, message;
 
-      const runPromise = new Promise(async resolve => {
-        let success, message;
+        try {
+          const result = await testCase.run();
 
-        testCase.run().then(result => {
-          success = result;
-          message = result;
-        }).catch(reason => {
-          success = false;
-          message = reason.message;
-        }).finally(() => {
-          trRef.node.classList.add(success ? 'test-correct' : 'test-incorrect');
-          messageRef.node.innerHTML = message;
-          resolve();
-        });
-      });
+          status = result.status;
+          message = result.message;
+        } catch(error) {
+          status = 'failure';
+          message = error.message;
+        }
 
-      runPromises.push(runPromise);
+        trRef.node.classList.add(`test-${status}`);
+        messageRef.node.innerHTML = message;
+      };
+
+      runners.push(runner);
+    }
+
+    return {
+      tests,
+      runners,
+    }
+  }
+
+  constructor(testCases, children) {
+    super(testCases, children);
+
+    let tests = [];
+    let runners = [];
+
+    testCases.tests.forEach((testCase, index) => {
+      const {
+        tests: childTests,
+        runners: childRunners,
+      } = TestResults._processTestCase(testCase, index + 1);
+
+      tests = [...tests, ...childTests];
+      runners = [...runners, ...childRunners];
     });
-
-    Promise.all(runPromises);
 
     this.template = html`
       <style>
@@ -57,11 +95,11 @@ class TestResults extends Component {
           border: 0;
         }
 
-        .test-correct {
+        .test-success {
             background: lightgreen;
         }
 
-        .test-incorrect {
+        .test-failure {
             background: lightcoral;
         }
       </style>
@@ -77,9 +115,15 @@ class TestResults extends Component {
         </tbody>
       </table>
     `;
+
+    Promise.all(runners).then(() => {
+      // TODO Measure timings
+    });
+
+    runners.forEach(runner => runner());
   }
 }
 
 window.onload = () => {
-  document.body.appendChild(new TestResults());
+  document.body.appendChild(new TestResults(tests));
 };

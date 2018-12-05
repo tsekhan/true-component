@@ -1,3 +1,7 @@
-import construct from './construct';
+import constructing from './constructing';
 
-export default { construct };
+export default {
+  name: 'Tests',
+  description: 'Bunch of tests',
+  tests: [constructing],
+};

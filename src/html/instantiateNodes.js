@@ -1,22 +1,23 @@
 import nodeStore from '../nodeStore/nodeStore';
-import getFakeDataKey from './getFakeDataKey';
 import Component from '../Component/Component';
 import { isIterable, flattenArray } from '../utils/utils';
 import Ref from '../Ref/Ref';
 import getRealAttributes from './getRealAttributes';
 
-const instantiateNodes = function (root, dataMap, dataPlaceholders) {
+const instantiateNodes = function (root, placeholders, keyToData) {
   root.childNodes.forEach(child => {
     let currentChild = child;
     let potentialId;
 
     if (currentChild.nodeName.toLowerCase() === 'template') {
-      const placeholderId = currentChild.attributes[0].name;
-      potentialId = getFakeDataKey(placeholderId);
+      potentialId = currentChild.attributes[0].name;
     }
 
-    if (dataPlaceholders.has(potentialId)) { // if element has been inserted in markup as an object
-      let dataToInsert = dataMap.get(potentialId);
+    if (
+      potentialId &&
+      placeholders.has(potentialId)
+    ) { // if element has been inserted in markup as an object
+      let dataToInsert = keyToData.get(potentialId);
 
       const insertBefore = (node, placeholder) => root.insertBefore(node, placeholder);
 
@@ -47,8 +48,8 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
 
         getRealAttributes({
           child,
-          dataMap,
-          dataPlaceholders,
+          keyToData,
+          placeholders,
           callback: (attributeName, attributeValue) => params[attributeName] = attributeValue,
         });
 
@@ -57,8 +58,8 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
 
           let attributeValue = attribute.value;
 
-          if (dataPlaceholders.has(attributeValue)) {
-            attributeValue = dataMap.get(attributeValue);
+          if (placeholders.has(attributeValue)) {
+            attributeValue = keyToData.get(attributeValue);
           }
 
           params[attribute.name] = attributeValue;
@@ -70,8 +71,8 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
       } else { // if it's a plain Node descendant
         getRealAttributes({
           child,
-          dataMap,
-          dataPlaceholders,
+          keyToData,
+          placeholders,
           callback: (attributeName, attributeValue) => {
             if (attributeName === 'ref' && attributeValue instanceof Ref) {
               attributeValue.node = child;
@@ -84,7 +85,7 @@ const instantiateNodes = function (root, dataMap, dataPlaceholders) {
         });
       }
 
-      instantiateNodes(currentChild, dataMap, dataPlaceholders);
+      instantiateNodes(currentChild, placeholders, keyToData);
     }
   });
 
