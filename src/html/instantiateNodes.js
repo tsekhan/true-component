@@ -74,11 +74,11 @@ const instantiateNodes = function (root, placeholders, keyToData) {
           keyToData,
           placeholders,
           callback: (attributeName, attributeValue) => {
-            if (attributeName === 'ref' && attributeValue instanceof Ref) {
+            if (attributeName.toLowerCase() === 'ref' && attributeValue instanceof Ref) {
               attributeValue.node = child;
 
               // FIXME Check why it not works
-              child.removeAttribute('ref');
+              child.removeAttribute(attributeName);
             }
             child.setAttribute(attributeName, String(attributeValue));
           },
