@@ -1,8 +1,8 @@
 import getAllPropertyNames from './getAllPropertyNames';
 import getPropertyDescriptor from './getPropertyDescriptor';
-import registerClass from '../registerClass/registerClass';
-import { isIterable } from '../utils/utils';
-import Ref from '../Ref/Ref';
+import registerClass from '../registerClass';
+import { isIterable } from '../utils';
+import Ref from '../Ref';
 
 const DEFAULT_TAG = 'component-wc';
 
@@ -44,7 +44,7 @@ class Component {
 
       get: () => {
         if (shadowRoot.childNodes.length === 0) {
-          return undefined;
+          return;
         } else if (shadowRoot.childNodes.length === 1) {
           return shadowRoot.firstChild;
         }

@@ -1,7 +1,7 @@
-import nodeStore from '../nodeStore/nodeStore';
-import Component from '../Component/Component';
-import { isIterable, flattenArray } from '../utils/utils';
-import Ref from '../Ref/Ref';
+import nodeRegistry from '../nodeRegistry';
+import Component from '../Component';
+import { isIterable, flattenArray } from '../utils';
+import Ref from '../Ref';
 import getRealAttributes from './getRealAttributes';
 
 const instantiateNodes = function (root, placeholders, keyToData) {
@@ -42,8 +42,10 @@ const instantiateNodes = function (root, placeholders, keyToData) {
 
       root.removeChild(currentChild);
     } else {
-      if (nodeStore.has(child)) { // if Component's descendant has been inserted in markup as a tag
-        const Class = nodeStore.get(child);
+      const childNodeName = child.nodeName.toLowerCase();
+
+      if (nodeRegistry.has(childNodeName)) { // if Component's descendant has been inserted in markup as a tag
+        const Class = nodeRegistry.get(childNodeName);
         const params = {};
 
         getRealAttributes({
@@ -52,18 +54,6 @@ const instantiateNodes = function (root, placeholders, keyToData) {
           placeholders,
           callback: (attributeName, attributeValue) => params[attributeName] = attributeValue,
         });
-
-        for (let i = 0; i < child.attributes.length; i++) {
-          const attribute = child.attributes[i];
-
-          let attributeValue = attribute.value;
-
-          if (placeholders.has(attributeValue)) {
-            attributeValue = keyToData.get(attributeValue);
-          }
-
-          params[attribute.name] = attributeValue;
-        }
 
         currentChild = new Class(params, child.childNodes);
 

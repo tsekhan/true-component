@@ -1,8 +1,6 @@
-import tests from './index';
+import { Component, html, Ref } from '../src';
 
-const {
-  Component, html, Ref,
-} = window.WC;
+import tests from '../tests';
 
 class TestResults extends Component {
   static get tag() {
@@ -17,7 +15,6 @@ class TestResults extends Component {
       tests.push(html`
           <tr>
             <td>${index}</td>
-            <td>${testCase.name}</td>
             <td>${testCase.description}</td>
             <td></td>
           </tr>
@@ -41,21 +38,29 @@ class TestResults extends Component {
       tests.push(html`
         <tr ref="${trRef}">
           <td>${index}</td>
-          <td>${testCase.name}</td>
           <td>${testCase.description}</td>
           <td ref="${messageRef}"></td>
         </tr>
       `);
 
       const runner = async () => {
-        let status, message;
+        let status;
+        let message = '';
 
         try {
           const result = await testCase.run();
 
-          status = result.status;
-          message = result.message;
+          if (result === undefined) {
+            status = 'success';
+          } else if (typeof result === 'boolean' || result instanceof Boolean) {
+            status = result ? 'success' : 'failure';
+          } else {
+            status = result.status;
+            message = result.message;
+          }
         } catch(error) {
+          console.error(error.stack);
+
           status = 'failure';
           message = error.message;
         }
@@ -79,7 +84,7 @@ class TestResults extends Component {
     let tests = [];
     let runners = [];
 
-    testCases.tests.forEach((testCase, index) => {
+    testCases.forEach((testCase, index) => {
       const {
         tests: childTests,
         runners: childRunners,
@@ -107,8 +112,7 @@ class TestResults extends Component {
         <tbody>
           <tr>
             <td>#</td>
-            <td>Name</td>
-            <td>Description</td>
+            <td>Test</td>
             <td>Result</td>
           </tr>
           ${tests}
