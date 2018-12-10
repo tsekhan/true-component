@@ -105,7 +105,7 @@ class TestResults extends Component {
         }
 
         .test-failure {
-            background: lightcoral;
+            background: lightpink;
         }
       </style>
       <table>
