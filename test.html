@@ -5,8 +5,36 @@
     <meta charset="UTF-8">
 
     <script src="dist/wc.js"></script>
-    <script src="dist/test.js"></script>
+
+    <script src="node_modules/mocha/mocha.js"></script>
+    <script src="node_modules/chai/chai.js"></script>
+
+    <script>
+      mocha.setup({
+        ui: 'bdd',
+        ignoreLeaks: false,
+        reporter: 'html'
+      });
+
+      assert = chai.assert;
+
+      Component = WC.Component;
+      html = WC.html;
+      Ref = WC.Ref;
+      registerClass = WC.registerClass;
+    </script>
+
+    <script src="./dist/tests.js"></script>
+
+    <script>
+      window.onload = () => {
+        mocha.run();
+      };
+    </script>
+
+    <link rel="stylesheet" href="node_modules/mocha/mocha.css">
 </head>
 <body>
+<div id="mocha"></div>
 </body>
 </html>

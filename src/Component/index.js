@@ -3,6 +3,7 @@ import getPropertyDescriptor from './getPropertyDescriptor';
 import registerClass from '../registerClass';
 import { isIterable } from '../utils';
 import Ref from '../Ref';
+import nodeRegistry from '../nodeRegistry';
 
 const DEFAULT_TAG = 'component-wc';
 
@@ -14,7 +15,7 @@ class Component {
     if (
       tag &&
       tag.indexOf('-') !== -1
-      && customElements.get(tag) === undefined
+      && !nodeRegistry.has(tag)
     ) {
       registerClass(Class, tag);
     }

@@ -1,3 +1,3 @@
-import constructing from './constructing';
+import 'source-map-support/register';
 
-export default [ constructing ];
+import './constructing';

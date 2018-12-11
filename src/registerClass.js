@@ -3,7 +3,10 @@ import nodeRegistry from './nodeRegistry';
 function registerClass(Class, tag = Class.tag) {
   const AssociatedClass = class extends HTMLElement {};
 
-  customElements.define(tag, AssociatedClass);
+  if (nodeRegistry.has(tag)) {
+    console.warn(`Re-registrering of <${tag} /> may cause usage of invalid component.`);
+  }
+
   nodeRegistry.set(
     tag.toLowerCase(),
     Class.tag ? Class : (class extends Class {
