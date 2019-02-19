@@ -1,5 +1,5 @@
 import nodeRegistry from '../nodeRegistry';
-import Component from '../Component';
+import HtmlComponent from '../components/HtmlComponent';
 import { isIterable, flattenArray } from '../utils';
 import Ref from '../Ref';
 import getRealAttributes from './getRealAttributes';
@@ -16,12 +16,17 @@ const instantiateNodes = function (root, placeholders, keyToData) {
     if (
       potentialId &&
       placeholders.has(potentialId)
-    ) { // if element has been inserted in markup as an object
+    ) {
+      // If current child node is a <template> and first attribute name matches with name of placeholder,
+      // then element has been inserted in markup as an object
+
       let dataToInsert = keyToData.get(potentialId);
 
       const insertBefore = (node, placeholder) => root.insertBefore(node, placeholder);
 
       if (isIterable(dataToInsert)) {
+        // If it's array or something iterable...
+
         const flatArray = flattenArray(Array.from(dataToInsert));
         flatArray.forEach(item => {
           if (typeof item === 'string' || item instanceof String) {
@@ -32,11 +37,13 @@ const instantiateNodes = function (root, placeholders, keyToData) {
         });
       } else {
         if (
-          !(dataToInsert instanceof Component) &&
+          !(dataToInsert instanceof HtmlComponent) &&
           !(dataToInsert instanceof Node)
         ) {
+          // If it's something unknown - cast it to string
           dataToInsert = document.createTextNode(dataToInsert);
         }
+
         insertBefore(dataToInsert, currentChild);
       }
 
@@ -44,7 +51,9 @@ const instantiateNodes = function (root, placeholders, keyToData) {
     } else {
       const childNodeName = child.nodeName.toLowerCase();
 
-      if (nodeRegistry.has(childNodeName)) { // if Component's descendant has been inserted in markup as a tag
+      if (nodeRegistry.has(childNodeName)) {
+        // if HtmlComponent's descendant has been inserted in markup as a tag
+
         const Class = nodeRegistry.get(childNodeName);
         const params = {};
 
@@ -52,13 +61,16 @@ const instantiateNodes = function (root, placeholders, keyToData) {
           child,
           keyToData,
           placeholders,
+
           callback: (attributeName, attributeValue) => params[attributeName] = attributeValue,
         });
 
         currentChild = new Class(params, child.childNodes);
 
         root.replaceChild(currentChild, child);
-      } else { // if it's a plain Node descendant
+      } else {
+        // if it's a plain Node descendant
+
         getRealAttributes({
           child,
           keyToData,
@@ -70,6 +82,7 @@ const instantiateNodes = function (root, placeholders, keyToData) {
               // FIXME Check why it not works
               child.removeAttribute(attributeName);
             }
+
             child.setAttribute(attributeName, String(attributeValue));
           },
         });

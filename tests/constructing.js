@@ -4,7 +4,7 @@ describe('Construction tests', () => {
   let CustomComponent;
 
   beforeEach(() => {
-    CustomComponent = class extends Component {
+    CustomComponent = class extends HtmlComponent {
       static get tag() {
         return 'component-example';
       }
@@ -19,10 +19,10 @@ describe('Construction tests', () => {
     registerClass(CustomComponent);
   });
 
-  it('Instantiate component by calling of new Component()', () => {
+  it('Instantiate component by calling of new HtmlComponent()', () => {
     const instance = new CustomComponent();
 
-    assert.isTrue(instance instanceof Component);
+    assert.isTrue(instance instanceof HtmlComponent);
     assert.isTrue(instance instanceof CustomComponent);
 
     assert.equal(instance.exampleField, 42);
@@ -31,7 +31,7 @@ describe('Construction tests', () => {
   it('Instantiate component as a tag in html``', () => {
     const instance = html`<component-example></component-example>`;
 
-    assert.isTrue(instance instanceof Component, 'Not instance of Component');
+    assert.isTrue(instance instanceof HtmlComponent, 'Not instance of HtmlComponent');
     assert.isTrue(instance instanceof CustomComponent, 'Not instance of CustomComponent');
 
     assert.isTrue(instance.exampleField === 42);
@@ -46,7 +46,7 @@ describe('Construction tests', () => {
       </component-example>
     `;
 
-    assert.isTrue(instance.children[0] instanceof Component, 'Not instance of Component');
+    assert.isTrue(instance.children[0] instanceof HtmlComponent, 'Not instance of HtmlComponent');
     assert.isTrue(instance.children[0] instanceof CustomComponent, 'Not instance of CustomComponent');
 
     assert.equal(instance.children[0].children[0].className, 'test');

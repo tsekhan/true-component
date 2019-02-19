@@ -1,13 +1,14 @@
 import getAllPropertyNames from './getAllPropertyNames';
 import getPropertyDescriptor from './getPropertyDescriptor';
-import registerClass from '../registerClass';
-import { isIterable } from '../utils';
-import Ref from '../Ref';
-import nodeRegistry from '../nodeRegistry';
+import registerClass from '../../registerClass';
+import { isIterable } from '../../utils';
+import Ref from '../../Ref';
+import nodeRegistry from '../../nodeRegistry';
+import $ from '../$';
 
 const DEFAULT_TAG = 'component-wc';
 
-class Component {
+class HtmlComponent {
   constructor(config, children) {
     const Class = Object.getPrototypeOf(this).constructor;
     const tag = Class.tag || DEFAULT_TAG;
@@ -23,6 +24,8 @@ class Component {
     const rootElement = document.createElement(tag);
 
     const shadowRoot = rootElement.attachShadow({ mode: 'open' });
+
+    const binders = new Map();
 
     Object.defineProperty(rootElement, 'template', {
       set: template => {
@@ -54,7 +57,19 @@ class Component {
       },
     });
 
+    rootElement.$ = new Proxy({}, {
+      get: function (oTarget, sKey) {
+        if (!binders.has(sKey)) {
+          binders.set(sKey, new $(rootElement[sKey]));
+        }
+
+        return binders.get(sKey);
+      },
+    });
+
     const rootElementMixin = {};
+
+    const bindedValues = new Map();
 
     const fakePrototype = new Proxy({}, {
       getPrototypeOf: () => {
@@ -102,7 +117,30 @@ class Component {
       },
 
       set: function (oTarget, sKey, vValue) {
-        rootElementMixin[sKey] = vValue;
+        let newValue = vValue;
+
+        if (vValue instanceof $) {
+          bindedValues.set(sKey, vValue);
+          newValue = vValue.value;
+
+          vValue.registerCallback(() => {
+            rootElementMixin[sKey] = vValue.value;
+
+            if (binders.has(sKey)) {
+              binders.get(sKey).value = vValue.value;
+            }
+          }, false);
+        } else {
+          if (bindedValues.has(sKey)) {
+            bindedValues.delete(sKey);
+          }
+        }
+
+        rootElementMixin[sKey] = newValue;
+
+        if (binders.has(sKey)) {
+          binders.get(sKey).value = newValue;
+        }
 
         return true;
       },
@@ -115,6 +153,7 @@ class Component {
         return Object.getOwnPropertyNames(rootElementMixin);
       },
     });
+
     Object.setPrototypeOf(rootElementMixin, Object.getPrototypeOf(this));
 
     getAllPropertyNames(rootElement).forEach(propertyName => {
@@ -144,4 +183,4 @@ class Component {
   }
 }
 
-export default Component;
+export default HtmlComponent;

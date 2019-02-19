@@ -1,24 +1,28 @@
-import Component from './Component';
+import HtmlComponent from './components/HtmlComponent';
+import $ from './components/$';
 import registerClass from './registerClass';
 import html from './html';
 import Ref from './Ref';
 
 window.WC = {
-  Component: Component,
+  HtmlComponent,
+  $,
   registerClass,
   html,
   Ref,
 };
 
 export {
-  Component,
+  HtmlComponent,
+  $,
   registerClass,
   html,
   Ref,
 }
 
 export default {
-  Component: Component,
+  HtmlComponent,
+  $,
   registerClass,
   html,
   Ref,

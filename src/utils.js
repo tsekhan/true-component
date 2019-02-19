@@ -1,7 +1,8 @@
 const isIterable = obj => {
-  return typeof obj !== 'string'
-    && !(obj instanceof String)
-    && typeof obj[Symbol.iterator] === 'function';
+  return obj &&
+    typeof obj !== 'string' &&
+    !(obj instanceof String) &&
+    typeof obj[Symbol.iterator] === 'function';
 };
 
 const flattenArray = array => {
