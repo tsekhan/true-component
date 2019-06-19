@@ -1,4 +1,6 @@
 import 'source-map-support/register';
 
-import './constructing';
-import './binding';
+import '../dist/wc';
+
+import './constructing.spec';
+import './binding.spec';

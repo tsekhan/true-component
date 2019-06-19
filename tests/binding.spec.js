@@ -1,4 +1,8 @@
-import 'chai';
+import chai from 'chai';
+
+const { assert } = chai;
+
+import { HtmlComponent } from '../src';
 
 describe('Binders', () => {
   let CustomComponent;

@@ -1,4 +1,8 @@
-import 'chai';
+import chai from 'chai';
+
+const { assert } = chai;
+
+import { HtmlComponent, html, registerClass } from '../src';
 
 describe('Construction tests', () => {
   let CustomComponent;
