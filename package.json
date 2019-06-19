@@ -4,6 +4,7 @@
   "main": "src/index.js",
   "license": "MIT",
   "devDependencies": {
+    "babel-plugin-istanbul": "^5.1.4",
     "babel-preset-latest": "^7.0.0-alpha.7",
     "chai": "^4.2.0",
     "eslint": "^6.0.0-rc.0",
@@ -15,8 +16,12 @@
     "webpack": "^4.34.0",
     "webpack-cli": "^3.3.4"
   },
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false
+  },
   "scripts": {
     "lint": "eslint --fix --ignore-path .eslintignore .",
-    "coverage": "NODE_ENV=test NODE_OPTIONS='--experimental-modules' nyc --reporter=html mocha-puppeteer ./**/*.spec.js"
+    "coverage": "nyc --reporter=html mocha-puppeteer ./**/*.spec.js"
   }
 }
