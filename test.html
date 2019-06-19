@@ -22,6 +22,38 @@
     <script>
       window.onload = () => {
         mocha.run();
+
+        const myConst = 123;
+
+        class MyClass extends WC.HtmlComponent {
+          static get tag() {
+            return 'my-class';
+          }
+
+          constructor(config) {
+            super(config);
+
+            this.template = `
+              Test${myConst}
+            `;
+          }
+        }
+
+        class MyClass2 extends WC.HtmlComponent {
+          static get tag() {
+            return 'my-class2';
+          }
+
+          constructor(config) {
+            super(config);
+
+            this.template = `
+              AB${new MyClass()}CD
+            `;
+          }
+        }
+
+        document.body.appendChild(new MyClass2());
       };
     </script>
 
