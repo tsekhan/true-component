@@ -18,7 +18,7 @@ export {
   registerClass,
   html,
   Ref,
-}
+};
 
 export default {
   HtmlComponent,
@@ -26,4 +26,4 @@ export default {
   registerClass,
   html,
   Ref,
-}
+};

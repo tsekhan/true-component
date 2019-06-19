@@ -1,5 +1,5 @@
 import PlaceholderRoles from './PlaceholderRoles';
-import buildFakeHtml from "./buildFakeHtml";
+import buildFakeHtml from './buildFakeHtml';
 
 const scanForTags = (node, tokenToParam) => {
   const placeholders = new Map();

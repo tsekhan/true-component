@@ -13,11 +13,9 @@ const html = (strings, ...params) => {
     indexToToken: indexToPlainKey,
   } = generateTemplateParams(strings, params);
 
-  const fakeMarkup = buildFakeAttributeMarkup(
-    plainKeyToParam,
+  const fakeMarkup = buildFakeAttributeMarkup(plainKeyToParam,
     indexToPlainKey,
-    strings,
-  );
+    strings);
 
   const placeholders = getAttributePlaceholders(fakeMarkup, plainKeyToParam);
 
@@ -35,11 +33,9 @@ const html = (strings, ...params) => {
     }
   });
 
-  const tagFakeMarkup = buildFakeTagMarkup(
-    tagNameToParam,
+  const tagFakeMarkup = buildFakeTagMarkup(tagNameToParam,
     indexToTagName,
-    strings,
-  );
+    strings);
 
   getTagPlaceholders(tagFakeMarkup, tagNameToParam)
     .forEach((value, key) => placeholders.set(key, value));

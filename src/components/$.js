@@ -4,7 +4,7 @@ class $ extends Text{
     super();
 
     let _value;
-    let callbacks = [];
+    const callbacks = [];
 
     Object.defineProperties(this, {
       value: {
@@ -19,14 +19,14 @@ class $ extends Text{
 
         get: () => {
           return _value;
-        }
+        },
       },
 
       registerCallback: {
         value: (callback) => {
           callbacks.push(callback);
-        }
-      }
+        },
+      },
     });
 
     this.value = value;

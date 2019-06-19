@@ -16,7 +16,7 @@ const generateTemplateParams = (strings, params) => {
     } while (
       tokenToParam.has(key) &&
       templateWithoutParams.indexOf(key) === '-1'
-      );
+    );
 
     if (isString(param)) {
       tokenToParam.set(key, param);
@@ -28,7 +28,7 @@ const generateTemplateParams = (strings, params) => {
   return {
     tokenToParam,
     indexToToken,
-  }
+  };
 };
 
 export default generateTemplateParams;

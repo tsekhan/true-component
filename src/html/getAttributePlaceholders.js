@@ -37,6 +37,7 @@ const scanForAttributes = function (node, tokenToParam) {
               attributeValue.indexOf(token)
             ) {
               placeholders.set(token, PlaceholderRoles.PART_OF_ATTRIBUTE_OR_VALUE);
+
               return true;
             }
 

@@ -9,14 +9,8 @@ module.exports = {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
-  optimization: {minimize: false},
+  optimization: { minimize: false },
   context: path.resolve(__dirname),
-  resolve: {
-    modules: [
-      __dirname,
-      'node_modules',
-      'tester'
-    ],
-  },
+  resolve: { modules: [ __dirname, 'node_modules', 'tester' ] },
   devtool: 'source-map',
 };

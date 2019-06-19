@@ -48,7 +48,7 @@ class HtmlComponent {
 
       get: () => {
         if (shadowRoot.childNodes.length === 0) {
-          return;
+          return undefined;
         } else if (shadowRoot.childNodes.length === 1) {
           return shadowRoot.firstChild;
         }
@@ -69,7 +69,7 @@ class HtmlComponent {
 
     const rootElementMixin = {};
 
-    const bindedValues = new Map();
+    const boundValues = new Map();
 
     const fakePrototype = new Proxy({}, {
       getPrototypeOf: () => {
@@ -120,7 +120,7 @@ class HtmlComponent {
         let newValue = vValue;
 
         if (vValue instanceof $) {
-          bindedValues.set(sKey, vValue);
+          boundValues.set(sKey, vValue);
           newValue = vValue.value;
 
           vValue.registerCallback(() => {
@@ -130,10 +130,8 @@ class HtmlComponent {
               binders.get(sKey).value = vValue.value;
             }
           }, false);
-        } else {
-          if (bindedValues.has(sKey)) {
-            bindedValues.delete(sKey);
-          }
+        } else if (boundValues.has(sKey)) {
+          boundValues.delete(sKey);
         }
 
         rootElementMixin[sKey] = newValue;
