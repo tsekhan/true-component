@@ -12,9 +12,15 @@
     "mocha": "^6.1.4",
     "mocha-puppeteer": "^0.14.0",
     "nyc": "^14.1.1",
+    "rimraf": "^2.6.3",
     "source-map-support": "^0.5.12",
     "webpack": "^4.34.0",
     "webpack-cli": "^3.3.4"
+  },
+  "engines": {
+    "node": ">=12.4.0",
+    "npm": ">=6.9.0",
+    "yarn": ">=1.16.0"
   },
   "nyc": {
     "sourceMap": false,
@@ -22,6 +28,7 @@
   },
   "scripts": {
     "lint": "eslint --fix --ignore-path .eslintignore .",
-    "coverage": "nyc --reporter=html mocha-puppeteer ./**/*.spec.js"
+    "cleanup": "rimraf .cache .nyc_output .mocha-puppeteer coverage",
+    "coverage": "npm run cleanup && nyc --reporter=html mocha-puppeteer ./**/*.spec.js"
   }
 }
