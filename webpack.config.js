@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -11,6 +12,6 @@ module.exports = {
   },
   optimization: { minimize: false },
   context: path.resolve(__dirname),
-  resolve: { modules: [ __dirname, 'node_modules', 'tester' ] },
-  devtool: 'source-map',
+  resolve: { modules: [ __dirname, 'node_modules' ] },
+  devtool: 'inline-source-map',
 };
