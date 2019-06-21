@@ -1,0 +1,13 @@
+diff --git a/node_modules/lasso-babel-transform/src/index.js b/node_modules/lasso-babel-transform/src/index.js
+index abb6d81..4274e96 100644
+--- a/node_modules/lasso-babel-transform/src/index.js
++++ b/node_modules/lasso-babel-transform/src/index.js
+@@ -100,7 +100,7 @@ module.exports = {
+                 }
+             }
+ 
+-            babelOptions.filename = path.relative(curDir, filename);
++            babelOptions.filename = filename;
+             babelOptions.babelrc = false;
+             let babel = getBabel();
+ 
