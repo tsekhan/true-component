@@ -11,6 +11,8 @@
 ## About this project
 
 ## Usage
+* Check out [quick start guide](docs/QUICK_START.md).
+* See the [API docs](docs/API.md).
 
 ## Assembling
 To build WC framework run `webpack`. As a result you'll have `dist` directory in
