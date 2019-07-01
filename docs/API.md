@@ -17,7 +17,7 @@ as a result of parsing.
 There are several scenarios how data passed as an expression would be
 processed.
 
-#### Data passed as a child
+### Data passed as a child
 * If [`HtmlComponent`](#htmlcomponent) or
 [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node) passed as
 nested object in an expression then they'll be inserted as nested objects.
@@ -36,7 +36,7 @@ html`<div>${myComponent}</div>`;
 collection would be treated as siblings and would be processed one by one
 according to rules applicable to every particular object.
 
-#### Data passed inside of tag description
+### Data passed inside of tag description
 * Expression can define tag name.
 ```javascript
 const tag = 'div';
