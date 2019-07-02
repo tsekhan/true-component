@@ -1,7 +1,7 @@
-import nodeRegistry from '../nodeRegistry';
-import HtmlComponent from '../components/HtmlComponent';
-import { isIterable, flattenArray } from '../utils';
-import Ref from '../Ref';
+import nodeRegistry from '../../nodeRegistry';
+import HtmlComponent from '../../components/HtmlComponent';
+import { isIterable, flattenArray } from '../../utils';
+import Ref from '../../Ref';
 import getRealAttributes from './getRealAttributes';
 
 const instantiateNodes = function (root, placeholders, keyToData) {
