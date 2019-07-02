@@ -59,13 +59,13 @@ const html = (strings, ...params) => {
     }
   });
 
-  const keyToData = new Map();
+  const tokenToData = new Map();
 
-  placeholders.forEach((role, key) => {
+  placeholders.forEach((role, token) => {
     if (role === PLACEHOLDER_ROLES.TAG) {
-      keyToData.set(key, tagNameToParam.get(key));
+      tokenToData.set(token, tagNameToParam.get(token));
     } else {
-      keyToData.set(key, plainKeyToParam.get(key));
+      tokenToData.set(token, plainKeyToParam.get(token));
     }
   });
 
@@ -78,7 +78,7 @@ const html = (strings, ...params) => {
     container.appendChild(child);
   });
 
-  instantiateNodes(container, placeholders, keyToData);
+  instantiateNodes(container, placeholders, tokenToData);
 
   if (container.childNodes.length === 1) {
     return container.firstChild;

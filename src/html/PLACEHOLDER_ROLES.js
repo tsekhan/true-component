@@ -1,14 +1,7 @@
 /**
- * Variants of usage for placeholders used instead of template literal parameters (expressions).
- * @type {{
- *   ATTRIBUTE_NAME: symbol,
- *   ATTRIBUTE: symbol,
- *   ATTRIBUTE_VALUE: symbol,
- *   ATTRIBUTE_OR_ATTRIBUTE_NAME: symbol,
- *   PART_OF_ATTRIBUTE_OR_VALUE: symbol,
- *   TAG: symbol,
- *   TAG_NAME: symbol
- * }}
+ * Enum for variants of usage for placeholders used instead of template literal parameters (expressions).
+ * @readonly
+ * @enum {Symbol}
  */
 const PLACEHOLDER_ROLES = {
   TAG_NAME: Symbol('TAG_NAME'),

@@ -4,7 +4,7 @@ import { isIterable, flattenArray } from '../../utils';
 import Ref from '../../Ref';
 import getRealAttributes from './getRealAttributes';
 
-const instantiateNodes = function (root, placeholders, keyToData) {
+const instantiateNodes = function (root, placeholders, tokenToData) {
   root.childNodes.forEach(child => {
     let currentChild = child;
     let potentialId;
@@ -20,7 +20,7 @@ const instantiateNodes = function (root, placeholders, keyToData) {
       // If current child node is a <template> and first attribute name matches with name of placeholder,
       // then element has been inserted in markup as an object
 
-      let dataToInsert = keyToData.get(potentialId);
+      let dataToInsert = tokenToData.get(potentialId);
 
       const insertBefore = (node, placeholder) => root.insertBefore(node, placeholder);
 
@@ -57,13 +57,8 @@ const instantiateNodes = function (root, placeholders, keyToData) {
         const Class = nodeRegistry.get(childNodeName);
         const params = {};
 
-        getRealAttributes({
-          child,
-          keyToData,
-          placeholders,
-
-          callback: (attributeName, attributeValue) => params[attributeName] = attributeValue,
-        });
+        getRealAttributes(child, tokenToData, placeholders)
+          .forEach((attributeValue, attributeName) => params[attributeName] = attributeValue);
 
         currentChild = new Class(params, child.childNodes);
 
@@ -71,24 +66,19 @@ const instantiateNodes = function (root, placeholders, keyToData) {
       } else {
         // if it's a plain Node descendant
 
-        getRealAttributes({
-          child,
-          keyToData,
-          placeholders,
-          callback: (attributeName, attributeValue) => {
-            if (attributeName.toLowerCase() === 'ref' && attributeValue instanceof Ref) {
-              attributeValue.node = child;
+        getRealAttributes(child, tokenToData, placeholders).forEach((attributeName, attributeValue) => {
+          if (attributeName.toLowerCase() === 'ref' && attributeValue instanceof Ref) {
+            attributeValue.node = child;
 
-              // FIXME Check why it not works
-              child.removeAttribute(attributeName);
-            }
+            // FIXME Check why it not works
+            child.removeAttribute(attributeName);
+          }
 
-            child.setAttribute(attributeName, String(attributeValue));
-          },
+          child.setAttribute(attributeName, String(attributeValue));
         });
       }
 
-      instantiateNodes(currentChild, placeholders, keyToData);
+      instantiateNodes(currentChild, placeholders, tokenToData);
     }
   });
 
