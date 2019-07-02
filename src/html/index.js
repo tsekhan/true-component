@@ -5,6 +5,7 @@ import getTagPlaceholders from './getTagPlaceholders';
 import generateTagByKey from './generateTagByKey';
 import instantiateNodes from '../html/instantiateNodes';
 import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
+import buildFakeHtml from './buildFakeHtml';
 
 /**
  * Template literal tag function, which converts template literal to DOM.
@@ -42,7 +43,9 @@ const html = (strings, ...params) => {
     tagNameToParam, indexToTagName, strings, true,
   );
 
-  getTagPlaceholders(fakeTagMarkup, tagNameToParam)
+  const fakeDom = buildFakeHtml(fakeTagMarkup);
+
+  getTagPlaceholders(fakeDom, tagNameToParam)
     .forEach((value, key) => placeholders.set(key, value));
 
   let markup = '';

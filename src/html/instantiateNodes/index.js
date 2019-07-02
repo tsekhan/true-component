@@ -4,6 +4,14 @@ import { isIterable, flattenArray } from '../../utils';
 import Ref from '../../Ref';
 import getRealAttributes from './getRealAttributes';
 
+/**
+ * Instantiate components recursively, pass parameters to them and replace other placeholders by data.
+ *
+ * @param {Node} root - node to start from.
+ * @param {Map<string, PLACEHOLDER_ROLES>} placeholders - kinds of places, where data passed, mapped to tokens.
+ * @param {Map<string, any>} tokenToData - tokens mapped to data substituted by them.
+ * @returns {NodeListOf<ChildNode>} Returns DOM node with instantiated custom components.
+ */
 const instantiateNodes = function (root, placeholders, tokenToData) {
   root.childNodes.forEach(child => {
     let currentChild = child;
