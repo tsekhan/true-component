@@ -1,5 +1,4 @@
-import buildFakeAttributeMarkup from './buildFakeAttributeMarkup';
-import buildFakeTagMarkup from './buildFakeTagMarkup';
+import buildFakeMarkup from './buildFakeMarkup';
 import generateTemplateParams from './generateTemplateParams';
 import getAttributePlaceholders from './getAttributePlaceholders';
 import getTagPlaceholders from './getTagPlaceholders';
@@ -7,17 +6,23 @@ import generateTagByKey from './generateTagByKey';
 import instantiateNodes from '../html/instantiateNodes';
 import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
 
+/**
+ * Template literal tag function, which converts template literal to DOM.
+ *
+ * @param {string[]} strings - plain strings.
+ * @param {Array} params - data to be inserted into markup.
+ * @returns {ChildNode|NodeListOf<ChildNode>} Returns root element of parsed markup or list of elements if there are
+ * more than one.
+ */
 const html = (strings, ...params) => {
   const {
     tokenToParam: plainKeyToParam,
     indexToToken: indexToPlainKey,
   } = generateTemplateParams(strings, params);
 
-  const fakeMarkup = buildFakeAttributeMarkup(plainKeyToParam,
-    indexToPlainKey,
-    strings);
+  const fakeAttributeMarkup = buildFakeMarkup(plainKeyToParam, indexToPlainKey, strings);
 
-  const placeholders = getAttributePlaceholders(fakeMarkup, plainKeyToParam);
+  const placeholders = getAttributePlaceholders(fakeAttributeMarkup, plainKeyToParam);
 
   const {
     tokenToParam: tagNameToParam,
@@ -33,11 +38,11 @@ const html = (strings, ...params) => {
     }
   });
 
-  const tagFakeMarkup = buildFakeTagMarkup(tagNameToParam,
-    indexToTagName,
-    strings);
+  const fakeTagMarkup = buildFakeMarkup(
+    tagNameToParam, indexToTagName, strings, true,
+  );
 
-  getTagPlaceholders(tagFakeMarkup, tagNameToParam)
+  getTagPlaceholders(fakeTagMarkup, tagNameToParam)
     .forEach((value, key) => placeholders.set(key, value));
 
   let markup = '';
