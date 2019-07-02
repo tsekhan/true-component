@@ -1,9 +1,9 @@
-export default function getRealAttributes({
+const getRealAttributes = ({
   child,
   keyToData,
   placeholders,
   callback,
-}) {
+}) => {
   if (child.attributes) {
     for (let i = 0; i < child.attributes.length; i++) {
       const attribute = child.attributes[i];
@@ -17,4 +17,6 @@ export default function getRealAttributes({
       callback(attribute.name, attributeValue);
     }
   }
-}
+};
+
+export default getRealAttributes;

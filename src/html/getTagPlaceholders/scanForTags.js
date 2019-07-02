@@ -1,5 +1,4 @@
-import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
-import buildFakeHtml from './buildFakeHtml';
+import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
 
 const scanForTags = (node, tokenToParam) => {
   const placeholders = new Map();
@@ -20,10 +19,4 @@ const scanForTags = (node, tokenToParam) => {
   return placeholders;
 };
 
-const getTagPlaceholders = (fakeMarkup, tokenToParam) => {
-  const node = buildFakeHtml(fakeMarkup);
-
-  return scanForTags(node, tokenToParam);
-};
-
-export default getTagPlaceholders;
+export default scanForTags;
