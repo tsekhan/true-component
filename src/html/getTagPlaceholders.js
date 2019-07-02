@@ -1,4 +1,4 @@
-import PlaceholderRoles from './PlaceholderRoles';
+import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
 import buildFakeHtml from './buildFakeHtml';
 
 const scanForTags = (node, tokenToParam) => {
@@ -8,7 +8,7 @@ const scanForTags = (node, tokenToParam) => {
     const potentialId = node.attributes[0].name;
 
     if (tokenToParam.has(potentialId)) { // if node name in dataMap
-      placeholders.set(potentialId, PlaceholderRoles.TAG);
+      placeholders.set(potentialId, PLACEHOLDER_ROLES.TAG);
     }
   }
 

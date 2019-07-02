@@ -5,7 +5,7 @@ import getAttributePlaceholders from './getAttributePlaceholders';
 import getTagPlaceholders from './getTagPlaceholders';
 import generateTagByKey from './generateTagByKey';
 import instantiateNodes from '../html/instantiateNodes';
-import PlaceholderRoles from './PlaceholderRoles';
+import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
 
 const html = (strings, ...params) => {
   const {
@@ -57,7 +57,7 @@ const html = (strings, ...params) => {
   const keyToData = new Map();
 
   placeholders.forEach((role, key) => {
-    if (role === PlaceholderRoles.TAG) {
+    if (role === PLACEHOLDER_ROLES.TAG) {
       keyToData.set(key, tagNameToParam.get(key));
     } else {
       keyToData.set(key, plainKeyToParam.get(key));

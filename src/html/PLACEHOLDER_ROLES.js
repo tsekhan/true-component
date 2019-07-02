@@ -1,4 +1,4 @@
-const PlaceholderRoles = {
+const PLACEHOLDER_ROLES = {
   TAG_NAME: Symbol('TAG_NAME'),
   ATTRIBUTE_OR_ATTRIBUTE_NAME: Symbol('ATTRIBUTE_OR_ATTRIBUTE_NAME'),
   ATTRIBUTE_VALUE: Symbol('ATTRIBUTE_VALUE'),
@@ -10,4 +10,4 @@ const PlaceholderRoles = {
   TAG: Symbol('TAG'),
 };
 
-export default PlaceholderRoles;
+export default PLACEHOLDER_ROLES;
