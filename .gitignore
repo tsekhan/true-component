@@ -1,9 +1,9 @@
 .cache
 .idea/
-.jsdoc-out/
 .mocha-puppeteer/
 .nyc_output
 coverage/
 dist/
+jsdoc-out/
 node_modules/
 WebComponent.iml
