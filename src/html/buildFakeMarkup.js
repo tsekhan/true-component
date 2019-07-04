@@ -10,7 +10,7 @@ import generateTagByKey from './generateTagByKey';
  * delimited by expressions.
  * @param {boolean} wrapInTag - if set to true, tokens would be wrapped in tag to be easily found when traversing DOM.
  * @returns {string} Returns markup for HTML document where data placeholders are tokens. Resulting markup is wrapped in
- * <template> and <body> tags.
+ * &lt;template&gt; and &lt;body&gt; tags.
  */
 const buildFakeMarkup = (
   tokenToParam,
