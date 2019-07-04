@@ -9,6 +9,7 @@
     "chai": "^4.2.0",
     "eslint": "^6.0.1",
     "eslint-plugin-import": "^2.18.0",
+    "jsdoc": "~3.6.2",
     "mocha-puppeteer": "^0.14.0",
     "nyc": "^14.1.1",
     "patch-package": "^6.1.2",
@@ -24,9 +25,11 @@
     "yarn": ">=1.16.0"
   },
   "scripts": {
-    "lint": "eslint --fix --ignore-path .eslintignore .",
+    "build": "webpack && npm run docs && npm run coverage",
     "cleanup": "rimraf .cache .nyc_output .mocha-puppeteer coverage",
     "coverage": "npm run cleanup && nyc mocha-puppeteer ./**/*.spec.js",
+    "docs": "jsdoc ./src/**/*.js --destination ./.jsdoc-out",
+    "lint": "eslint --fix --ignore-path .eslintignore .",
     "postinstall": "patch-package"
   }
 }

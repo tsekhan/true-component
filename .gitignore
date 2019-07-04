@@ -1,5 +1,6 @@
 .cache
 .idea/
+.jsdoc-out/
 .mocha-puppeteer/
 .nyc_output
 coverage/
