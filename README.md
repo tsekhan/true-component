@@ -42,7 +42,7 @@ _Istanbul_ as a coverage meter.
 
 ### Running tests in-browser
 You can test WC framework in any browser you want. You just need to
-[build](#assembling) framework and then open `/test.html` in browser.
+[build](#assembling) framework and then open `/dist/test.html` in browser.
 
 It supports code maps for stack traces but it's known limitation - correct line
 numbers would be shown only if you accessing `/test.html` from HTTP server but
