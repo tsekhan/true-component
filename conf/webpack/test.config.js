@@ -11,5 +11,4 @@ module.exports = merge(baseConfig, {
     'wc': 'src/index.js',
     'tests': 'tests/index.js',
   },
-  devtool: 'inline-source-map',
 });

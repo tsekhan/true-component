@@ -10,5 +10,4 @@ module.exports = merge(baseConfig, {
   entry: {
     'wc': 'src/index.js',
   },
-  devtool: 'source-map',
 });
