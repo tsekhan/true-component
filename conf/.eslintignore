@@ -1,4 +1,5 @@
 conf/
+jsdoc-template/
 dist/
 node_modules/
 webcomponents-sd-ce-pf.js
