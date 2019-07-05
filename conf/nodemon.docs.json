@@ -1,0 +1,7 @@
+{
+  "watch": [
+    "docs/",
+    "src/"
+  ],
+  "ext": "js,json,md,jsdoc"
+}

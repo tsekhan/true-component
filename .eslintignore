@@ -1,5 +1,5 @@
+conf/
 dist/
 node_modules/
 webcomponents-sd-ce-pf.js
-webpack.config.js
 webpack-karma.config.js

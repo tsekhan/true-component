@@ -10,14 +10,18 @@
     "eslint": "^6.0.1",
     "eslint-plugin-import": "^2.18.0",
     "jsdoc": "~3.6.2",
+    "livereload": "^0.8.0",
+    "mocha": "^6.1.4",
     "mocha-puppeteer": "^0.14.0",
+    "nodemon": "^1.19.1",
     "nyc": "^14.1.1",
     "patch-package": "^6.1.2",
     "postinstall-postinstall": "^2.0.0",
     "rimraf": "^2.6.3",
     "source-map-support": "^0.5.12",
     "webpack": "^4.35.2",
-    "webpack-cli": "^3.3.5"
+    "webpack-cli": "^3.3.5",
+    "webpack-merge": "^4.2.1"
   },
   "engines": {
     "node": ">=12.4.0",
@@ -25,11 +29,16 @@
     "yarn": ">=1.16.0"
   },
   "scripts": {
-    "build": "webpack && npm run docs && npm run coverage",
-    "cleanup": "rimraf .cache .nyc_output .mocha-puppeteer coverage",
+    "build": "npm run build:prod && npm run build:tests && npm run build:docs && npm run coverage",
+    "build:docs": "npx jsdoc -c ./conf/jsdoc.conf.json ./src/**/*.js",
+    "build:prod": "webpack --mode=production --config ./conf/webpack/prod.config.js",
+    "build:tests": "webpack --mode=development --config ./conf/webpack/test.config.js",
+    "clean": "rimraf .cache .mocha-puppeteer .nyc_output coverage dist jsdoc-out",
     "coverage": "npm run cleanup && nyc mocha-puppeteer ./**/*.spec.js",
-    "docs": "jsdoc ./src/**/*.js -c ./.jsdoc.conf.json --destination ./jsdoc-out --readme ./docs/API.md" ,
     "lint": "eslint --fix --ignore-path .eslintignore .",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "watch:doc-src": "npx nodemon --config ./conf/nodemon.docs.json --exec 'npm run build:docs'",
+    "watch:doc-output": "npx livereload jsdoc-out",
+    "watch:docs": "npm run watch:doc-output & npm run watch:doc-src"
   }
 }

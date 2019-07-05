@@ -6,7 +6,12 @@
     "includePattern": ".+\\.js(doc|x)?$",
     "excludePattern": "(^|\\/|\\\\)_"
   },
-  "plugins": [],
+  "opts": {
+    "template": "./jsdoc-template",
+    "destination": "./jsdoc-out",
+    "readme": "./docs/API.md"
+  },
+  "plugins": ["plugins/markdown"],
   "templates": {
     "cleverLinks": false,
     "monospaceLinks": false,
