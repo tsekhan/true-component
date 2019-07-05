@@ -37,8 +37,9 @@ auto-updated after source code changed (just make sure you refreshed page
 in browser after you started this command).
 
 ## Testing
-WC uses _Mocha_ as a testing framework, _Chai_ as an assertion library,
-_Istanbul_ as a coverage meter.
+WC uses [Mocha](https://mochajs.org/) as a testing framework,
+[Chai](https://www.chaijs.com/) as an assertion library and
+[Istanbul](https://istanbul.js.org/) as a coverage meter.
 
 ### Running tests in-browser
 You can test WC framework in any browser you want. You just need to
