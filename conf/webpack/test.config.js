@@ -18,6 +18,6 @@ module.exports = merge(baseConfig, {
   ],
   entry: {
     'wc': 'src/index.js',
-    'tests': 'tests/index.js',
+    'tests': 'tests/source-map-wrapped.js',
   },
 });
