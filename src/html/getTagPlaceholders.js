@@ -1,3 +1,5 @@
+/** @module html */
+
 import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
 
 /**

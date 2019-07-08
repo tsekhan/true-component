@@ -1,3 +1,5 @@
+/** @module html */
+
 import generateTagByKey from '../generateTagByKey';
 import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
 

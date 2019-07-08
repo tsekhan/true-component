@@ -9,11 +9,12 @@
   "opts": {
     "template": "./jsdoc-template",
     "destination": "./jsdoc-out",
-    "readme": "./docs/API.md"
+    "readme": "./docs/API.md",
+    "recurse": true
   },
   "plugins": ["plugins/markdown"],
   "templates": {
-    "cleverLinks": false,
+    "cleverLinks": true,
     "monospaceLinks": false,
     "default": {
       "outputSourceFiles": true

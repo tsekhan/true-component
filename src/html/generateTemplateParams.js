@@ -1,3 +1,5 @@
+/** @module html */
+
 /**
  * Generate random token.
  *

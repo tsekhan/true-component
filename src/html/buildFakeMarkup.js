@@ -1,3 +1,5 @@
+/** @module html */
+
 import generateTagByKey from './generateTagByKey';
 
 /**

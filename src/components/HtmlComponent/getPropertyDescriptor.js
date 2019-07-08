@@ -1,3 +1,5 @@
+/** @module HtmlComponent */
+
 /**
  * Get property descriptor despite of own property or not.
  *
@@ -7,7 +9,7 @@
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor for
  * property descriptor documentations).
  */
-export default function getPropertyDescriptor(obj, property) {
+const getPropertyDescriptor = (obj, property) => {
   if (obj === null) {
     return undefined;
   }
@@ -16,4 +18,6 @@ export default function getPropertyDescriptor(obj, property) {
   } else {
     return getPropertyDescriptor(Object.getPrototypeOf(obj), property);
   }
-}
+};
+
+export default getPropertyDescriptor;

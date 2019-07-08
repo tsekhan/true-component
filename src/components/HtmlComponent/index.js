@@ -1,3 +1,5 @@
+/** @module HtmlComponent */
+
 import getAllPropertyNames from './getAllPropertyNames';
 import getPropertyDescriptor from './getPropertyDescriptor';
 import registerClass from '../../registerClass';
@@ -9,6 +11,13 @@ import $ from '../$';
 const DEFAULT_TAG = 'component-wc';
 
 class HtmlComponent {
+
+  /**
+   * @class
+   * @param config
+   * @param children
+   * @returns {HTMLElement}
+   */
   constructor(config, children) {
     const Class = Object.getPrototypeOf(this).constructor;
     const tag = Class.tag || DEFAULT_TAG;

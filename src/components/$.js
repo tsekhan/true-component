@@ -1,5 +1,11 @@
-// XXX Extendable Text is an experimental technology (https://developer.mozilla.org/en-US/docs/Web/API/Text/Text)
 class $ extends Text{
+  // XXX Extendable Text is an experimental technology (https://developer.mozilla.org/en-US/docs/Web/API/Text/Text)
+
+  /**
+   * @class
+   * @extends Text
+   * @param value
+   */
   constructor(value) {
     super();
 

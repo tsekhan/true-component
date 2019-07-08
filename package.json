@@ -31,7 +31,7 @@
   },
   "scripts": {
     "build": "yarn clean && yarn build:prod && yarn build:tests && yarn build:docs && yarn coverage",
-    "build:docs": "npx jsdoc -c ./conf/jsdoc.conf.json ./src/**/*.js",
+    "build:docs": "npx jsdoc -c ./conf/jsdoc.conf.json ./src/*",
     "build:prod": "webpack --mode=production --config ./conf/webpack/prod.config.js",
     "build:tests": "webpack --mode=development --config ./conf/webpack/test.config.js",
     "clean": "rimraf .cache .mocha-puppeteer .nyc_output coverage dist jsdoc-out",

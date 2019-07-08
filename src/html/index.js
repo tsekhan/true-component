@@ -1,3 +1,5 @@
+/** @module html */
+
 import buildFakeMarkup from './buildFakeMarkup';
 import generateTemplateParams from './generateTemplateParams';
 import getAttributePlaceholders from './getAttributePlaceholders';
@@ -10,6 +12,7 @@ import buildFakeHtml from './buildFakeHtml';
 /**
  * Template literal tag function, which converts template literal to DOM.
  *
+ * @global
  * @param {string[]} strings - Plain strings.
  * @param {Array} params - Data to be inserted into markup.
  * @returns {ChildNode|NodeListOf<ChildNode>} Returns root element of parsed markup or list of elements if there are

@@ -1,3 +1,5 @@
+/** @module html */
+
 /**
  * Generate HTML tag to use as placeholder instead of real data passed to `html` template literal tag.
  *

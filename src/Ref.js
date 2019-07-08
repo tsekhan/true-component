@@ -3,5 +3,8 @@
  *
  * To make it work pass `Ref` instance to the `ref` attribute of your custom tag. After template tag was instantiated,
  * attribute `node` of the `Ref` instance will point to the HTML element created by your custom tag.
+ * @class
  */
-export default class Ref {}
+const Ref = class {};
+
+export default Ref;

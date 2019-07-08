@@ -1,3 +1,5 @@
+/** @module nodeRegistry */
+
 /**
  * Map tag name to class describing it.
  *

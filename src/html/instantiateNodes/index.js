@@ -1,3 +1,5 @@
+/** @module html */
+
 import nodeRegistry from '../../nodeRegistry';
 import HtmlComponent from '../../components/HtmlComponent';
 import { isIterable, flattenArray } from '../../utils';

@@ -1,3 +1,5 @@
+/** @module html */
+
 /**
  * Parse markup with data replaced by placeholders and build HTML document based on it.
  *

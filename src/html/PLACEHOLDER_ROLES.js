@@ -1,3 +1,5 @@
+/** @module html */
+
 /**
  * Enum for variants of usage for placeholders used instead of template literal parameters (expressions).
  * @readonly
