@@ -6,8 +6,8 @@ import scanForAttributes from './scanForAttributes';
  * Parse markup and get all placeholders which acts as tag name, attribute value, part of attribute or value and
  * attribute or attribute name.
  *
- * @param {string} fakeMarkup - markup where variables are replaced by generated placeholders.
- * @param {Map<string, any>} tokenToParam - map where key is a generated unique token and value is a matching parameter.
+ * @param {string} fakeMarkup - Markup where variables are replaced by generated placeholders.
+ * @param {Map<string, any>} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
  * @returns {Map<string, PLACEHOLDER_ROLES>} Returns map where listed attributes, attribute names or values placeholders
  * mapped to their roles.
  */

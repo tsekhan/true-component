@@ -5,8 +5,8 @@ import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
  * Get all placeholders which acts as tag name, attribute value, part of attribute or value and attribute or attribute
  * name. Attribute or attribute name not differentiated one from another.
  *
- * @param {Node} node - node to start from.
- * @param {Map<string, any>} tokenToParam - map where key is a generated unique token and value is a matching parameter.
+ * @param {Node} node - Node to start from.
+ * @param {Map<string, any>} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
  * @returns {Map<string, PLACEHOLDER_ROLES>} Returns map where listed attribute and attribute name placeholders mapped
  * to their roles.
  */

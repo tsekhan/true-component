@@ -2,8 +2,8 @@
  * Get real data passed into HTML markup as attributes of tags by placeholders.
  *
  * @param {Node} child - DOM node to analyze
- * @param {Map<string, any>} tokenToData - tokens mapped to data substituted by them.
- * @param {Map<string, PLACEHOLDER_ROLES>} placeholders - kinds of places, where data passed, mapped to tokens.
+ * @param {Map<string, any>} tokenToData - Tokens mapped to data substituted by them.
+ * @param {Map<string, PLACEHOLDER_ROLES>} placeholders - Kinds of places, where data passed, mapped to tokens.
  * @returns {Map<string, any>} Returns real data passed into HTML markup as attributes of tags mapped to attribute
  * names.
  */
