@@ -1,5 +1,3 @@
-/** @module html */
-
 /**
  * Generate random token.
  *
@@ -18,6 +16,7 @@ const isString = (obj) => !(obj instanceof String) && typeof obj !== 'string';
 /**
  * Match params (expressions) passed to template literal with HTML markup to randomly generated unique string tokens.
  *
+ * @memberOf module:html
  * @param {string[]} strings - Ordered array of string, which are pieces of template literal with HTML markup,
  * delimited by expressions.
  * @param {Array} params - Ordered array of parameters passed to template literal with HTML markup.

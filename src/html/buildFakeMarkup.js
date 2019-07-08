@@ -1,10 +1,9 @@
-/** @module html */
-
 import generateTagByKey from './generateTagByKey';
 
 /**
  * Build markup from template and replace data with placeholders (tokens).
  *
+ * @memberOf module:html
  * @param {Map<string, any>} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
  * @param {string[]} indexToToken - Array where index matches index of element from `params` array, and associated
  * string is a unique string token.

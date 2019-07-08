@@ -1,5 +1,3 @@
-/** @module html */
-
 import nodeRegistry from '../../nodeRegistry';
 import HtmlComponent from '../../components/HtmlComponent';
 import { isIterable, flattenArray } from '../../utils';
@@ -9,6 +7,7 @@ import getRealAttributes from './getRealAttributes';
 /**
  * Instantiate components recursively, pass parameters to them and replace other placeholders by data.
  *
+ * @memberOf module:html
  * @param {Node} root - Node to start from.
  * @param {Map<string, PLACEHOLDER_ROLES>} placeholders - Kinds of places, where data passed, mapped to tokens.
  * @param {Map<string, any>} tokenToData - Tokens mapped to data substituted by them.

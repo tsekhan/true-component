@@ -1,10 +1,9 @@
-/** @module html */
-
 import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
 
 /**
  * Find tags which has name mentioned in provided token map.
  *
+ * @memberOf module:html
  * @param {Node} node - Node to start from.
  * @param {Map<string, any>} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
  * @returns {Map<string, PLACEHOLDER_ROLES.TAG>} Returns map of placeholders which contains only `PLACEHOLDER_ROLES.TAG`

@@ -1,8 +1,7 @@
-/** @module html */
-
 /**
  * Generate HTML tag to use as placeholder instead of real data passed to `html` template literal tag.
  *
+ * @memberOf module:html
  * @param {string} key - Key used for identifying of tag.
  * @returns {string} Returns HTML markup with generated tag.
  */

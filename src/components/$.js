@@ -4,7 +4,7 @@ class $ extends Text{
   /**
    * @class
    * @extends Text
-   * @param value
+   * @param {any} value - Value to be stored.
    */
   constructor(value) {
     super();

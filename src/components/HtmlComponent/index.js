@@ -14,8 +14,8 @@ class HtmlComponent {
 
   /**
    * @class
-   * @param config
-   * @param children
+   * @param {object} config - Associative array (Object) with objects to be assigned as instance properties.
+   * @param {Iterable} children - Child nodes for current node.
    * @returns {HTMLElement}
    */
   constructor(config, children) {

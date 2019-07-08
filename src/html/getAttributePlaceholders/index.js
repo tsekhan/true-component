@@ -1,5 +1,3 @@
-/** @module html */
-
 import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
 import buildFakeHtml from '../buildFakeHtml';
 import scanForAttributes from './scanForAttributes';
@@ -8,6 +6,7 @@ import scanForAttributes from './scanForAttributes';
  * Parse markup and get all placeholders which acts as tag name, attribute value, part of attribute or value and
  * attribute or attribute name.
  *
+ * @memberOf module:html
  * @param {string} fakeMarkup - Markup where variables are replaced by generated placeholders.
  * @param {Map<string, any>} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
  * @returns {Map<string, PLACEHOLDER_ROLES>} Returns map where listed attributes, attribute names or values placeholders

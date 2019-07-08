@@ -1,7 +1,7 @@
-/** @module html */
-
 /**
  * Enum for variants of usage for placeholders used instead of template literal parameters (expressions).
+ *
+ * @memberOf module:html
  * @readonly
  * @enum {Symbol}
  */
@@ -13,7 +13,7 @@ const PLACEHOLDER_ROLES = {
   TAG_NAME: Symbol('TAG_NAME'),
 
   /**
-   * Disambiguation (role not detected yet): expression placed instead of tag attribute (like
+   * Disambiguation (role not detected precisely yet): expression placed instead of tag attribute (like
    * `<my-component ${expr}>...`) or tag attribute name (like `<my-component ${expr}="123">`).
    */
   ATTRIBUTE_OR_ATTRIBUTE_NAME: Symbol('ATTRIBUTE_OR_ATTRIBUTE_NAME'),

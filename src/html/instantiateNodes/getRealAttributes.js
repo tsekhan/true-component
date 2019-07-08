@@ -1,5 +1,3 @@
-/** @module html */
-
 /**
  * Get real data passed into HTML markup as attributes of tags by placeholders.
  *
