@@ -108,7 +108,7 @@ class HtmlComponent {
 
       defineProperty: function (oTarget, sKey, oDesc) {
         Object.defineProperty(oTarget, sKey, oDesc);
-        const newDesc = Object.assign({}, oDesc);
+        const newDesc = { ...oDesc };
 
         if (oDesc.get) {
           newDesc.get = oDesc.get.bind(rootElement);
