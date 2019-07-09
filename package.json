@@ -3,10 +3,30 @@
   "version": "0.0.0",
   "main": "src/index.js",
   "license": "MIT",
+
+  "author": {
+    "name": "Mikola Tsekhan",
+    "email": "tsekhan@gmail.com"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tsekhan/wc.git"
+  },
+
+  "bugs": {
+    "url": "https://github.com/tsekhan/wc/issues"
+  },
+
+  "directories": {
+    "test": "./tests",
+    "doc": "./docs"
+  },
+
   "devDependencies": {
     "chai": "^4.2.0",
     "copy-webpack-plugin": "^5.0.3",
-    "copyfiles": "^2.1.0",
+    "copyfiles": "^2.1.1",
     "eslint": "^6.0.1",
     "eslint-plugin-import": "^2.18.0",
     "jsdoc": "~3.6.2",
