@@ -44,7 +44,6 @@ class HtmlComponent {
 
         if (typeof template === 'string' || template instanceof String) {
 
-          // XXX Non-standard property
           shadowRoot.innerHTML = template;
         } else if (isIterable(template)) {
           Array.from(template).forEach(templateItem => {
