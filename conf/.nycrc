@@ -1,6 +1,0 @@
- {
-   "exclude": ["tests/*"],
-   "reporter": "html",
-   "sourceMap": false,
-   "instrument": false
- }

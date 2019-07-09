@@ -1,9 +1,8 @@
-.cache
+.dist_tmp/
 .idea/
-.mocha-puppeteer/
-.nyc_output
+.nyc_output/
+.tmp/
 coverage/
 dist/
 jsdoc-out/
 node_modules/
-WebComponent.iml
