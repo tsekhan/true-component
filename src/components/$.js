@@ -2,6 +2,9 @@ class $ extends Text{
   // XXX Extendable Text is an experimental technology (https://developer.mozilla.org/en-US/docs/Web/API/Text/Text)
 
   /**
+   * {@link https://developer.mozilla.org/en-US/docs/Web/API/Text|`Text`} node descendant which provides data binding.
+   *
+   * Displayed value would be updated as soon as {@link $#value|value} param was updated.
    * @class
    * @extends Text
    * @param {any} value - Value to be stored.
@@ -13,6 +16,14 @@ class $ extends Text{
     const callbacks = [];
 
     Object.defineProperties(this, {
+
+      /**
+       * Bound data object.
+       *
+       * @memberOf $
+       * @instance
+       * @type {any}
+       */
       value: {
         set: newValue => {
           _value = newValue;
@@ -28,6 +39,14 @@ class $ extends Text{
         },
       },
 
+      /**
+       * Register new callback to be called on {@link $#value|value} change
+       *
+       * @memberOf $
+       * @instance
+       * @function
+       * @param {function} callback - Callback function to be called on {@link $#value|value} change.
+       */
       registerCallback: {
         value: (callback) => {
           callbacks.push(callback);

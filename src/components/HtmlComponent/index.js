@@ -14,12 +14,22 @@ class HtmlComponent {
 
   /**
    * @class
+   * @memberOf module:HtmlComponent
    * @param {object} config - Associative array (Object) with objects to be assigned as instance properties.
    * @param {Iterable} children - Child nodes for current node.
    * @returns {HTMLElement}
    */
   constructor(config, children) {
     const Class = Object.getPrototypeOf(this).constructor;
+
+    /**
+     * Tag name of HTML element created after instantiation.
+     *
+     * @memberOf module:HtmlComponent.HtmlComponent
+     * @name tag
+     * @type {string}
+     * @default component-wc
+     */
     const tag = Class.tag || DEFAULT_TAG;
 
     if (
@@ -36,34 +46,43 @@ class HtmlComponent {
 
     const binders = new Map();
 
-    Object.defineProperty(rootElement, 'template', {
-      set: template => {
-        while (shadowRoot.firstChild) {
-          shadowRoot.removeChild(shadowRoot.firstChild);
-        }
+    Object.defineProperty(rootElement, 'template',
 
-        if (typeof template === 'string' || template instanceof String) {
+      /**
+       * Shadow root template for instantiated component.
+       *
+       * @memberOf module:HtmlComponent.HtmlComponent
+       * @name template
+       * @type {string}
+       */
+      {
+        set: template => {
+          while (shadowRoot.firstChild) {
+            shadowRoot.removeChild(shadowRoot.firstChild);
+          }
 
-          shadowRoot.innerHTML = template;
-        } else if (isIterable(template)) {
-          Array.from(template).forEach(templateItem => {
-            shadowRoot.appendChild(templateItem);
-          });
-        } else {
-          shadowRoot.appendChild(template);
-        }
-      },
+          if (typeof template === 'string' || template instanceof String) {
 
-      get: () => {
-        if (shadowRoot.childNodes.length === 0) {
-          return undefined;
-        } else if (shadowRoot.childNodes.length === 1) {
-          return shadowRoot.firstChild;
-        }
+            shadowRoot.innerHTML = template;
+          } else if (isIterable(template)) {
+            Array.from(template).forEach(templateItem => {
+              shadowRoot.appendChild(templateItem);
+            });
+          } else {
+            shadowRoot.appendChild(template);
+          }
+        },
 
-        return shadowRoot.childNodes;
-      },
-    });
+        get: () => {
+          if (shadowRoot.childNodes.length === 0) {
+            return undefined;
+          } else if (shadowRoot.childNodes.length === 1) {
+            return shadowRoot.firstChild;
+          }
+
+          return shadowRoot.childNodes;
+        },
+      });
 
     rootElement.$ = new Proxy({}, {
       get: function (oTarget, sKey) {

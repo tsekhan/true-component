@@ -86,7 +86,7 @@ processed.
 Base class.
 
 ## `$` object
-`$` class is a `Text` node descendant which supports data binding.
+`$` class is a `Text` node descendant which provides data binding.
 
 Instance of `$` class has `value` field. Displayed text would be updated
 as soon as `value` was updated.
