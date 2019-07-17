@@ -32,7 +32,7 @@
     "nyc": "^14.1.1",
     "rimraf": "^2.6.3",
     "source-map-support": "^0.5.12",
-    "webpack": "^4.35.3",
+    "webpack": "^4.36.1",
     "webpack-cli": "^3.3.6",
     "webpack-merge": "^4.2.1"
   },
