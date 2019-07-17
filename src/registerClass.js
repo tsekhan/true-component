@@ -5,7 +5,7 @@ import nodeRegistry from './nodeRegistry';
  *
  * @global
  * @param Class - Class to be associated with tag.
- * @param tag - Tag name. Should meet custom element name specification.
+ * @param [tag] - Tag name. Should meet custom element name specification.
  * @see {@link https://stackoverflow.com/questions/22545621/do-custom-elements-require-a-dash-in-their-name}.
  */
 const registerClass = (Class, tag = Class.tag) => {

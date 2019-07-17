@@ -2,7 +2,7 @@
  * Enum for variants of usage for placeholders used instead of template literal parameters (expressions).
  *
  * @memberOf module:html
- * @readonly
+ * @alias PLACEHOLDER_ROLES
  * @enum {Symbol}
  */
 const PLACEHOLDER_ROLES = {

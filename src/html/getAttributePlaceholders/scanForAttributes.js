@@ -2,12 +2,20 @@ import generateTagByKey from '../generateTagByKey';
 import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
 
 /**
+ * Map of tokens to roles.
+ *
+ * @typedef {Map<string, PLACEHOLDER_ROLES>} PlaceholderMap
+ *
+ */
+
+/**
  * Get all placeholders which acts as tag name, attribute value, part of attribute or value and attribute or attribute
  * name. Attribute or attribute name not differentiated one from another.
  *
+ * @memberOf module:html
  * @param {Node} node - Node to start from.
- * @param {Map<string, any>} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
- * @returns {Map<string, PLACEHOLDER_ROLES>} Returns map where listed attribute and attribute name placeholders mapped
+ * @param {TokenToParamMap} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
+ * @returns {PlaceholderMap} Placeholders to try to find.
  * to their roles.
  */
 const scanForAttributes = (node, tokenToParam) => {

@@ -5,7 +5,7 @@ import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
  *
  * @memberOf module:html
  * @param {Node} node - Node to start from.
- * @param {Map<string, any>} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
+ * @param {TokenToParamMap} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
  * @returns {Map<string, PLACEHOLDER_ROLES.TAG>} Returns map of placeholders which contains only `PLACEHOLDER_ROLES.TAG`
  * roles mapped to tokens.
  */

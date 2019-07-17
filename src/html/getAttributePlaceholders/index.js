@@ -8,9 +8,8 @@ import scanForAttributes from './scanForAttributes';
  *
  * @memberOf module:html
  * @param {string} fakeMarkup - Markup where variables are replaced by generated placeholders.
- * @param {Map<string, any>} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
- * @returns {Map<string, PLACEHOLDER_ROLES>} Returns map where listed attributes, attribute names or values placeholders
- * mapped to their roles.
+ * @param {TokenToParamMap} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
+ * @returns {PlaceholderMap} Placeholders among which to search.
  */
 const getAttributePlaceholders = (fakeMarkup, tokenToParam) => {
   const fakeHtml = buildFakeHtml(fakeMarkup);

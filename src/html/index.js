@@ -14,7 +14,7 @@ import buildFakeHtml from './buildFakeHtml';
  *
  * @global
  * @param {string[]} strings - Plain strings.
- * @param {Array} params - Data to be inserted into markup.
+ * @param {any[]} params - Data to be inserted into markup.
  * @returns {ChildNode|NodeListOf<ChildNode>} Returns root element of parsed markup or list of elements if there are
  * more than one.
  */
@@ -84,7 +84,7 @@ const html = (strings, ...params) => {
     container.appendChild(child);
   });
 
-  instantiateNodes(container, placeholders, tokenToData);
+  instantiateNodes(container, tokenToData);
 
   if (container.childNodes.length === 1) {
     return container.firstChild;

@@ -4,12 +4,12 @@ import generateTagByKey from './generateTagByKey';
  * Build markup from template and replace data with placeholders (tokens).
  *
  * @memberOf module:html
- * @param {Map<string, any>} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
+ * @param {TokenToParamMap} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
  * @param {string[]} indexToToken - Array where index matches index of element from `params` array, and associated
  * string is a unique string token.
  * @param {string[]} strings - Ordered array of string, which are pieces of template literal with HTML markup,
  * delimited by expressions.
- * @param {boolean} wrapInTag - If set to true, tokens would be wrapped in tag to be easily found when traversing DOM.
+ * @param {boolean} [wrapInTag] - If set to true, tokens would be wrapped in tag to be easily found when traversing DOM.
  * @returns {string} Returns markup for HTML document where data placeholders are tokens. Resulting markup is wrapped in
  * `<template>` and `<body>` tags.
  */

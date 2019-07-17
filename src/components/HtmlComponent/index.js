@@ -10,13 +10,18 @@ import $ from '../$';
 
 const DEFAULT_TAG = 'component-wc';
 
+/**
+ * Base class to extend to build custom HTML component, which is HTML node by itself.
+ *
+ * @memberOf module:HtmlComponent
+ * @alias HtmlComponent
+ */
 class HtmlComponent {
 
   /**
-   * @class
-   * @memberOf module:HtmlComponent
-   * @param {object} config - Associative array (Object) with objects to be assigned as instance properties.
-   * @param {Iterable} children - Child nodes for current node.
+   * @constructs HtmlComponent
+   * @param {object} [config] - Associative array (Object) with objects to be assigned as instance properties.
+   * @param {Iterable} [children] - Child nodes for current node.
    * @returns {HTMLElement}
    */
   constructor(config, children) {
@@ -25,7 +30,7 @@ class HtmlComponent {
     /**
      * Tag name of HTML element created after instantiation.
      *
-     * @memberOf module:HtmlComponent.HtmlComponent
+     * @memberOf HtmlComponent
      * @name tag
      * @type {string}
      * @default component-wc
@@ -51,7 +56,7 @@ class HtmlComponent {
       /**
        * Shadow root template for instantiated component.
        *
-       * @memberOf module:HtmlComponent.HtmlComponent
+       * @memberOf HtmlComponent
        * @name template
        * @type {string}
        */

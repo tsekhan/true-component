@@ -9,11 +9,10 @@ import getRealAttributes from './getRealAttributes';
  *
  * @memberOf module:html
  * @param {Node} root - Node to start from.
- * @param {Map<string, PLACEHOLDER_ROLES>} placeholders - Kinds of places, where data passed, mapped to tokens.
- * @param {Map<string, any>} tokenToData - Tokens mapped to data substituted by them.
+ * @param {TokenToParamMap} tokenToData - Tokens mapped to data substituted by them.
  * @returns {NodeListOf<ChildNode>} Returns DOM node with instantiated custom components.
  */
-const instantiateNodes = function (root, placeholders, tokenToData) {
+const instantiateNodes = function (root, tokenToData) {
   root.childNodes.forEach(child => {
     let currentChild = child;
     let potentialId;
@@ -24,7 +23,7 @@ const instantiateNodes = function (root, placeholders, tokenToData) {
 
     if (
       potentialId &&
-      placeholders.has(potentialId)
+      tokenToData.has(potentialId)
     ) {
       // If current child node is a <template> and first attribute name matches with name of placeholder,
       // then element has been inserted in markup as an object
@@ -66,7 +65,7 @@ const instantiateNodes = function (root, placeholders, tokenToData) {
         const Class = nodeRegistry.get(childNodeName);
         const params = {};
 
-        getRealAttributes(child, tokenToData, placeholders)
+        getRealAttributes(child, tokenToData)
           .forEach((attributeValue, attributeName) => params[attributeName] = attributeValue);
 
         currentChild = new Class(params, child.childNodes);
@@ -75,7 +74,7 @@ const instantiateNodes = function (root, placeholders, tokenToData) {
       } else {
         // if it's a plain Node descendant
 
-        getRealAttributes(child, tokenToData, placeholders).forEach((attributeName, attributeValue) => {
+        getRealAttributes(child, tokenToData).forEach((attributeName, attributeValue) => {
           if (attributeName.toLowerCase() === 'ref' && attributeValue instanceof Ref) {
             attributeValue.node = child;
 
@@ -87,7 +86,7 @@ const instantiateNodes = function (root, placeholders, tokenToData) {
         });
       }
 
-      instantiateNodes(currentChild, placeholders, tokenToData);
+      instantiateNodes(currentChild, tokenToData);
     }
   });
 

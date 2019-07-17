@@ -1,13 +1,13 @@
 /**
  * Get real data passed into HTML markup as attributes of tags by placeholders.
  *
+ * @memberOf module:html
  * @param {Node} child - DOM node to analyze
- * @param {Map<string, any>} tokenToData - Tokens mapped to data substituted by them.
- * @param {Map<string, PLACEHOLDER_ROLES>} placeholders - Kinds of places, where data passed, mapped to tokens.
- * @returns {Map<string, any>} Returns real data passed into HTML markup as attributes of tags mapped to attribute
+ * @param {TokenToParamMap} tokenToData - Tokens mapped to data substituted by them.
+ * @returns {TokenToParamMap} Returns real data passed into HTML markup as attributes of tags mapped to attribute
  * names.
  */
-const getRealAttributes = (child, tokenToData, placeholders) => {
+const getRealAttributes = (child, tokenToData) => {
   const attributes = new Map();
 
   if (child.attributes) {
@@ -16,7 +16,7 @@ const getRealAttributes = (child, tokenToData, placeholders) => {
 
       let attributeValue = attribute.value;
 
-      if (placeholders.has(attributeValue)) {
+      if (tokenToData.has(attributeValue)) {
         attributeValue = tokenToData.get(attributeValue);
       }
 

@@ -1,13 +1,15 @@
+/**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/Text|`Text`} node descendant which provides data binding.
+ *
+ * Displayed value would be updated as soon as {@link $#value|value} param was updated.
+ */
 class $ extends Text{
   // XXX Extendable Text is an experimental technology (https://developer.mozilla.org/en-US/docs/Web/API/Text/Text)
 
   /**
-   * {@link https://developer.mozilla.org/en-US/docs/Web/API/Text|`Text`} node descendant which provides data binding.
-   *
-   * Displayed value would be updated as soon as {@link $#value|value} param was updated.
-   * @class
+   * @constructs $
    * @extends Text
-   * @param {any} value - Value to be stored.
+   * @param {any} [value] - Value to be stored.
    */
   constructor(value) {
     super();
