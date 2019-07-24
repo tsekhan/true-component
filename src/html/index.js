@@ -14,7 +14,7 @@ import buildFakeHtml from './buildFakeHtml';
  *
  * @global
  * @param {string[]} strings - Plain strings.
- * @param {any[]} params - Data to be inserted into markup.
+ * @param {any} params - Data to be inserted into markup.
  * @returns {ChildNode|NodeListOf<ChildNode>} Returns root element of parsed markup or list of elements if there are
  * more than one.
  */
@@ -22,15 +22,18 @@ const html = (strings, ...params) => {
   const {
     tokenToParam: plainKeyToParam,
     indexToToken: indexToPlainKey,
+    tokens: plainKeyTokens,
   } = generateTemplateParams(strings, params);
 
-  const fakeAttributeMarkup = buildFakeMarkup(plainKeyToParam, indexToPlainKey, strings);
+  const fakeAttributeMarkup = buildFakeMarkup(plainKeyTokens, indexToPlainKey, strings);
 
   const placeholders = getAttributePlaceholders(fakeAttributeMarkup, plainKeyToParam);
 
+  // TODO Check why calling generateTemplateParams() twice with same params.
   const {
     tokenToParam: tagNameToParam,
     indexToToken: indexToTagName,
+    tokens: tagTokens,
   } = generateTemplateParams(strings, params);
 
   // Don't substitute params already detected as attribute placeholders.
@@ -43,7 +46,7 @@ const html = (strings, ...params) => {
   });
 
   const fakeTagMarkup = buildFakeMarkup(
-    tagNameToParam, indexToTagName, strings, true,
+    tagTokens, indexToTagName, strings, true,
   );
 
   const fakeDom = buildFakeHtml(fakeTagMarkup);
