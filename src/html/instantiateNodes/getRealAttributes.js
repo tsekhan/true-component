@@ -4,8 +4,7 @@
  * @memberOf module:html
  * @param {Node} child - DOM node to analyze
  * @param {TokenToParamMap} tokenToData - Tokens mapped to data substituted by them.
- * @returns {TokenToParamMap} Returns real data passed into HTML markup as attributes of tags mapped to attribute
- * names.
+ * @returns {Map<string, any>} Returns map where tag attribute names are mapped to real data passed into HTML markup.
  */
 const getRealAttributes = (child, tokenToData) => {
   const attributes = new Map();

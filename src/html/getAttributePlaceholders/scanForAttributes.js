@@ -10,13 +10,13 @@ import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
 
 /**
  * Get all placeholders which acts as tag name, attribute value, part of attribute or value and attribute or attribute
- * name. Attribute or attribute name not differentiated one from another.
+ * name. Unlike in {@link module:html.getAttributePlaceholders|getAttributePlaceholders()} attribute or attribute name
+ * roles are not differentiated from each other.
  *
  * @memberOf module:html
  * @param {Node} node - Node to start from.
- * @param {TokenToParamMap} tokenToParam - Map where key is a generated unique token and value is a matching parameter.
- * @returns {PlaceholderMap} Placeholders to try to find.
- * to their roles.
+ * @param {TokenToParamMap} tokenToParam - Tokens to try to find.
+ * @returns {PlaceholderMap} Tokens which are attributes, attribute names or parts of attribute by their nature.
  */
 const scanForAttributes = (node, tokenToParam) => {
   let potentialId;
@@ -32,6 +32,7 @@ const scanForAttributes = (node, tokenToParam) => {
     placeholders.set(potentialId, PLACEHOLDER_ROLES.TAG_NAME);
   } else {
     node.childNodes.forEach(child => {
+      // TODO Why setting value instead of role? Check this.
       scanForAttributes(child, tokenToParam).forEach((value, key) => placeholders.set(key, value));
     });
 

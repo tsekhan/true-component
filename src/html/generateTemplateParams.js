@@ -24,8 +24,8 @@ const isString = (obj) => !(obj instanceof String) && typeof obj !== 'string';
  * @param {any[]} params - Ordered array of parameters passed to template literal with HTML markup.
  * @returns {{indexToToken: string[], tokenToParam: TokenToParamMap}} Returns object with two fields: `indexToToken`,
  * which is array where index matches index of element from `params` array, and associated string is a unique string
- * token; `tokenToParam` is a map, where key is a generated unique token and value is a matching parameter. Sets of
- * tokens in both fields are the same.
+ * token; `tokenToParam` with generated tokens mapped to real data they substitute. Sets of tokens in both fields
+ * are the same.
  */
 const generateTemplateParams = (strings, params) => {
   const tokenToParam = new Map();
