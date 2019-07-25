@@ -31,8 +31,8 @@ const isString = (obj) => !(obj instanceof String) && typeof obj !== 'string';
  * @returns {{indexToToken: string[], tokenToParam: TokenToParamMap, tokens: Set.<string>}} Returns object with three
  * fields:
  *
- * `indexToToken`, which is array where index matches index of element from `params` array, and associated string is
- * a unique string token;
+ * `paramIndexToToken`, which is array where index matches index of element from `params` array, and associated string
+ * is a unique string token;
  *
  * `tokenToParam` with generated tokens mapped to real data they substitute.
  *
@@ -46,7 +46,7 @@ const generateTemplateParams = (strings, params) => {
 
   const templateWithoutParams = strings.join();
 
-  const indexToToken = params.map(param => {
+  const paramIndexToToken = params.map(param => {
     let key;
 
     // Generate unique token
@@ -66,7 +66,7 @@ const generateTemplateParams = (strings, params) => {
   });
 
   return {
-    indexToToken,
+    paramIndexToToken,
     tokenToParam,
     tokens,
   };

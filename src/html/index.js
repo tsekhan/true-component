@@ -4,9 +4,8 @@ import buildFakeMarkup from './buildFakeMarkup';
 import generateTemplateParams from './generateTemplateParams';
 import getAttributePlaceholders from './getAttributePlaceholders';
 import getTagPlaceholders from './getTagPlaceholders';
-import generateTagByKey from './generateTagByKey';
 import instantiateNodes from '../html/instantiateNodes';
-import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
+import buildFinalHtml from './buildFinalHtml';
 
 /**
  * Template literal tag function, which converts template literal to DOM.
@@ -19,68 +18,39 @@ import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
  */
 const html = (strings, ...params) => {
   const {
-    indexToToken,
+    paramIndexToToken,
     tokenToParam,
     tokens,
   } = generateTemplateParams(strings, params);
 
-  const fakeAttributeMarkup = buildFakeMarkup(tokens, indexToToken, strings);
-  const placeholders = getAttributePlaceholders(fakeAttributeMarkup, tokens);
+  const fakeAttributeMarkup = buildFakeMarkup(tokens, paramIndexToToken, strings);
+  const attributePlaceholders = getAttributePlaceholders(fakeAttributeMarkup, tokens);
 
   const potentialTagTokens = new Set();
 
   tokens.forEach(token => {
-    if (!placeholders.has(token)) { // On this step `placeholders` set contains only attribute placeholders.
+    if (!attributePlaceholders.has(token)) { // On this step `placeholders` set contains only attribute placeholders.
       potentialTagTokens.add(token);
     }
   });
 
   const fakeTagMarkup = buildFakeMarkup(
-    potentialTagTokens, indexToToken, strings, true,
+    potentialTagTokens, paramIndexToToken, strings, true,
   );
 
-  getTagPlaceholders(fakeTagMarkup, potentialTagTokens)
-    .forEach((role, key) => placeholders.set(key, role));
+  const tagPlaceholders = getTagPlaceholders(fakeTagMarkup, potentialTagTokens);
 
-  let markup = '';
-
-  strings.forEach((string, index) => {
-    markup += string;
-
-    if (placeholders.get(indexToToken[index]) === PLACEHOLDER_ROLES.TAG) {
-      // If param was placed as a child of a tag then wrap token in tag and insert it to the markup.
-
-      markup += generateTagByKey(indexToToken[index]);
-    } else if (placeholders.has(indexToToken[index])) {
-      // If param was placed on place of attribute then insert plain unwrapped token to the markup.
-
-      markup += indexToToken[index];
-    } else if (index < params.length) {
-      // If param was placed somewhere else then in could be processed only as a plain string. Just put it as a string.
-
-      markup += params[index];
-    }
+  const container = buildFinalHtml({
+    strings,
+    paramIndexToToken,
+    attributePlaceholders,
+    tagPlaceholders,
+    passedData: params,
   });
 
-  const tokenToData = new Map();
-  placeholders.forEach((role, token) => tokenToData.set(token, tokenToParam.get(token)));
+  instantiateNodes(container, tokenToParam);
 
-  const templateContainer = document.createElement('template');
-  templateContainer.innerHTML = markup.trim();
-
-  const container = document.createElement('div');
-  const templateContainerChildren = Array.from(templateContainer.content.childNodes);
-  templateContainerChildren.forEach(child => {
-    container.appendChild(child);
-  });
-
-  instantiateNodes(container, tokenToData);
-
-  if (container.childNodes.length === 1) {
-    return container.firstChild;
-  } else {
-    return container.childNodes;
-  }
+  return (container.childNodes.length === 1) ? container.firstChild : container.childNodes;
 };
 
 export default html;
