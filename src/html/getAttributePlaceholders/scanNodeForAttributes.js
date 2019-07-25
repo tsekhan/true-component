@@ -18,7 +18,7 @@ import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
  * @param {Set.<string>} tokens - Tokens to try to find.
  * @returns {PlaceholderMap} Tokens which are attributes, attribute names or parts of attribute by their nature.
  */
-const scanForAttributes = (node, tokens) => {
+const scanNodeForAttributes = (node, tokens) => {
   let potentialId;
 
   if (node.nodeName.toLowerCase() === 'template') {
@@ -32,7 +32,7 @@ const scanForAttributes = (node, tokens) => {
     placeholders.set(potentialId, PLACEHOLDER_ROLES.TAG_NAME);
   } else {
     node.childNodes.forEach(child => {
-      scanForAttributes(child, tokens).forEach((role, key) => placeholders.set(key, role));
+      scanNodeForAttributes(child, tokens).forEach((role, key) => placeholders.set(key, role));
     });
 
     const { attributes: nodeAttributes } = node;
@@ -67,4 +67,4 @@ const scanForAttributes = (node, tokens) => {
   return placeholders;
 };
 
-export default scanForAttributes;
+export default scanNodeForAttributes;

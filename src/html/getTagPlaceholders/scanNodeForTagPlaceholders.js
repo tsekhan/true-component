@@ -1,4 +1,4 @@
-import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
+import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
 
 /**
  * Find tags which has name mentioned in provided token map.
@@ -9,7 +9,7 @@ import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
  * @returns {Map<string, PLACEHOLDER_ROLES.TAG>} Returns map of placeholders which contains only `PLACEHOLDER_ROLES.TAG`
  * roles mapped to tokens.
  */
-const getTagPlaceholders = (node, tokens) => {
+const scanNodeForTagPlaceholders = (node, tokens) => {
   const placeholders = new Map();
 
   if (node.nodeName.toLowerCase() === 'template') {
@@ -21,11 +21,11 @@ const getTagPlaceholders = (node, tokens) => {
   }
 
   node.childNodes.forEach(child => {
-    getTagPlaceholders(child, tokens)
+    scanNodeForTagPlaceholders(child, tokens)
       .forEach((value, token) => placeholders.set(token, value));
   });
 
   return placeholders;
 };
 
-export default getTagPlaceholders;
+export default scanNodeForTagPlaceholders;

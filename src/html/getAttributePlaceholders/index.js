@@ -1,6 +1,6 @@
 import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
 import buildFakeHtml from '../buildFakeHtml';
-import scanForAttributes from './scanForAttributes';
+import scanNodeForAttributes from './scanNodeForAttributes';
 
 /**
  * Parse markup and get all placeholders which acts as tag name, attribute value, part of attribute or value and
@@ -14,7 +14,7 @@ import scanForAttributes from './scanForAttributes';
 const getAttributePlaceholders = (fakeMarkup, tokens) => {
   const fakeHtml = buildFakeHtml(fakeMarkup);
 
-  const placeholders = scanForAttributes(fakeHtml, tokens);
+  const placeholders = scanNodeForAttributes(fakeHtml, tokens);
 
   // Differentiate cases like <tag ${var}></tag> and <tag ${var}="123"></tag>
   placeholders.forEach((role, key) => {

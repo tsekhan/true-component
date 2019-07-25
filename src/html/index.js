@@ -7,7 +7,6 @@ import getTagPlaceholders from './getTagPlaceholders';
 import generateTagByKey from './generateTagByKey';
 import instantiateNodes from '../html/instantiateNodes';
 import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
-import buildFakeHtml from './buildFakeHtml';
 
 /**
  * Template literal tag function, which converts template literal to DOM.
@@ -20,63 +19,51 @@ import buildFakeHtml from './buildFakeHtml';
  */
 const html = (strings, ...params) => {
   const {
-    tokenToParam: plainKeyToParam,
-    indexToToken: indexToPlainKey,
-    tokens: plainKeyTokens,
+    indexToToken,
+    tokenToParam,
+    tokens,
   } = generateTemplateParams(strings, params);
 
-  const fakeAttributeMarkup = buildFakeMarkup(plainKeyTokens, indexToPlainKey, strings);
+  const fakeAttributeMarkup = buildFakeMarkup(tokens, indexToToken, strings);
+  const placeholders = getAttributePlaceholders(fakeAttributeMarkup, tokens);
 
-  const placeholders = getAttributePlaceholders(fakeAttributeMarkup, plainKeyTokens);
+  const potentialTagTokens = new Set();
 
-  // TODO Check why calling generateTemplateParams() twice with same params.
-  const {
-    tokenToParam: tagNameToParam,
-    indexToToken: indexToTagName,
-    tokens: tagTokens,
-  } = generateTemplateParams(strings, params);
-
-  // Don't substitute params already detected as attribute placeholders.
-  indexToTagName.forEach((tag, index) => {
-    const matchingKey = indexToPlainKey[index];
-
-    if (placeholders.has(matchingKey)) {
-      tagNameToParam.delete(tag);
+  tokens.forEach(token => {
+    if (!placeholders.has(token)) { // On this step `placeholders` set contains only attribute placeholders.
+      potentialTagTokens.add(token);
     }
   });
 
   const fakeTagMarkup = buildFakeMarkup(
-    tagTokens, indexToTagName, strings, true,
+    potentialTagTokens, indexToToken, strings, true,
   );
 
-  const fakeDom = buildFakeHtml(fakeTagMarkup);
-
-  getTagPlaceholders(fakeDom, tagTokens)
-    .forEach((value, key) => placeholders.set(key, value));
+  getTagPlaceholders(fakeTagMarkup, potentialTagTokens)
+    .forEach((role, key) => placeholders.set(key, role));
 
   let markup = '';
 
   strings.forEach((string, index) => {
     markup += string;
 
-    if (placeholders.has(indexToPlainKey[index])) {
-      markup += indexToPlainKey[index];
-    } else if (placeholders.has(indexToTagName[index])) {
-      markup += generateTagByKey(indexToTagName[index]);
+    if (placeholders.get(indexToToken[index]) === PLACEHOLDER_ROLES.TAG) {
+      // If param was placed as a child of a tag then wrap token in tag and insert it to the markup.
+
+      markup += generateTagByKey(indexToToken[index]);
+    } else if (placeholders.has(indexToToken[index])) {
+      // If param was placed on place of attribute then insert plain unwrapped token to the markup.
+
+      markup += indexToToken[index];
     } else if (index < params.length) {
+      // If param was placed somewhere else then in could be processed only as a plain string. Just put it as a string.
+
       markup += params[index];
     }
   });
 
   const tokenToData = new Map();
-
-  placeholders.forEach((role, token) => {
-    if (role === PLACEHOLDER_ROLES.TAG) {
-      tokenToData.set(token, tagNameToParam.get(token));
-    } else {
-      tokenToData.set(token, plainKeyToParam.get(token));
-    }
-  });
+  placeholders.forEach((role, token) => tokenToData.set(token, tokenToParam.get(token)));
 
   const templateContainer = document.createElement('template');
   templateContainer.innerHTML = markup.trim();
