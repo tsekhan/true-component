@@ -15,10 +15,10 @@ import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
  *
  * @memberOf module:html
  * @param {Node} node - Node to start from.
- * @param {TokenToParamMap} tokenToParam - Tokens to try to find.
+ * @param {Set.<string>} tokens - Tokens to try to find.
  * @returns {PlaceholderMap} Tokens which are attributes, attribute names or parts of attribute by their nature.
  */
-const scanForAttributes = (node, tokenToParam) => {
+const scanForAttributes = (node, tokens) => {
   let potentialId;
 
   if (node.nodeName.toLowerCase() === 'template') {
@@ -28,12 +28,11 @@ const scanForAttributes = (node, tokenToParam) => {
 
   const placeholders = new Map();
 
-  if (tokenToParam.has(node.nodeName.toLowerCase())) { // if it's a tag name
+  if (tokens.has(node.nodeName.toLowerCase())) { // if it's a tag name
     placeholders.set(potentialId, PLACEHOLDER_ROLES.TAG_NAME);
   } else {
     node.childNodes.forEach(child => {
-      // TODO Why setting value instead of role? Check this.
-      scanForAttributes(child, tokenToParam).forEach((value, key) => placeholders.set(key, value));
+      scanForAttributes(child, tokens).forEach((role, key) => placeholders.set(key, role));
     });
 
     const { attributes: nodeAttributes } = node;
@@ -43,12 +42,12 @@ const scanForAttributes = (node, tokenToParam) => {
         const attributeName = nodeAttributes[i].name;
         const attributeValue = nodeAttributes[i].value;
 
-        if (tokenToParam.has(attributeName)) { // if it's mentioned like <tag ${var}></tag> or <tag ${var}="123"></tag>
+        if (tokens.has(attributeName)) { // if it's mentioned like <tag ${var}></tag> or <tag ${var}="123"></tag>
           placeholders.set(attributeName, PLACEHOLDER_ROLES.ATTRIBUTE_OR_ATTRIBUTE_NAME);
-        } else if (tokenToParam.has(attributeValue)) { // if it was mentioned like <tag attr=${var}></tag>
+        } else if (tokens.has(attributeValue)) { // if it was mentioned like <tag attr=${var}></tag>
           placeholders.set(attributeValue, PLACEHOLDER_ROLES.ATTRIBUTE_VALUE);
         } else {
-          Array.from(tokenToParam.keys()).some(token => {
+          Array.from(tokens.keys()).some(token => {
             if (
               attributeName.indexOf(token) ||
               attributeValue.indexOf(token)

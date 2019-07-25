@@ -8,13 +8,13 @@ import scanForAttributes from './scanForAttributes';
  *
  * @memberOf module:html
  * @param {string} fakeMarkup - Markup where variables are replaced by generated placeholders.
- * @param {TokenToParamMap} tokenToParam - Tokens to try to find.
+ * @param {Set.<string>} tokens - Tokens to try to find.
  * @returns {PlaceholderMap} Tokens which are attributes, attribute names or parts of attribute by their nature.
  */
-const getAttributePlaceholders = (fakeMarkup, tokenToParam) => {
+const getAttributePlaceholders = (fakeMarkup, tokens) => {
   const fakeHtml = buildFakeHtml(fakeMarkup);
 
-  const placeholders = scanForAttributes(fakeHtml, tokenToParam);
+  const placeholders = scanForAttributes(fakeHtml, tokens);
 
   // Differentiate cases like <tag ${var}></tag> and <tag ${var}="123"></tag>
   placeholders.forEach((role, key) => {

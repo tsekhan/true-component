@@ -1,5 +1,0 @@
-/**
- * Generated unique tokens mapped to the matching data.
-
- * @typedef {Map<string, any>} TokenToParamMap
- */

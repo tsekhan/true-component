@@ -5,23 +5,23 @@ import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
  *
  * @memberOf module:html
  * @param {Node} node - Node to start from.
- * @param {TokenToParamMap} tokenToParam - Tokens to try to find.
+ * @param {Set.<string>} tokens - Tokens to try to find.
  * @returns {Map<string, PLACEHOLDER_ROLES.TAG>} Returns map of placeholders which contains only `PLACEHOLDER_ROLES.TAG`
  * roles mapped to tokens.
  */
-const getTagPlaceholders = (node, tokenToParam) => {
+const getTagPlaceholders = (node, tokens) => {
   const placeholders = new Map();
 
   if (node.nodeName.toLowerCase() === 'template') {
     const potentialId = node.attributes[0].name;
 
-    if (tokenToParam.has(potentialId)) { // if node name in dataMap
+    if (tokens.has(potentialId)) { // if node name in dataMap
       placeholders.set(potentialId, PLACEHOLDER_ROLES.TAG);
     }
   }
 
   node.childNodes.forEach(child => {
-    getTagPlaceholders(child, tokenToParam)
+    getTagPlaceholders(child, tokens)
       .forEach((value, token) => placeholders.set(token, value));
   });
 

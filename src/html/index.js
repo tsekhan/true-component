@@ -27,7 +27,7 @@ const html = (strings, ...params) => {
 
   const fakeAttributeMarkup = buildFakeMarkup(plainKeyTokens, indexToPlainKey, strings);
 
-  const placeholders = getAttributePlaceholders(fakeAttributeMarkup, plainKeyToParam);
+  const placeholders = getAttributePlaceholders(fakeAttributeMarkup, plainKeyTokens);
 
   // TODO Check why calling generateTemplateParams() twice with same params.
   const {
@@ -51,7 +51,7 @@ const html = (strings, ...params) => {
 
   const fakeDom = buildFakeHtml(fakeTagMarkup);
 
-  getTagPlaceholders(fakeDom, tagNameToParam)
+  getTagPlaceholders(fakeDom, tagTokens)
     .forEach((value, key) => placeholders.set(key, value));
 
   let markup = '';

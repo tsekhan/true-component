@@ -16,6 +16,12 @@ const getRandomizedToken = () => Math.random().toString(36).substr(2);
 const isString = (obj) => !(obj instanceof String) && typeof obj !== 'string';
 
 /**
+ * Generated unique tokens mapped to the matching data.
+ *
+ * @typedef {Map<string, any>} TokenToParamMap
+ */
+
+/**
  * Match params (expressions) passed to template literal with HTML markup to randomly generated unique string tokens.
  *
  * @memberOf module:html
