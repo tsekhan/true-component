@@ -16,7 +16,7 @@ import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
  * @memberOf module:html
  * @param {Node} node - Node to start from.
  * @param {Set.<string>} tokens - Tokens to try to find.
- * @returns {PlaceholderMap} Tokens which are attributes, attribute names or parts of attribute by their nature.
+ * @returns {PlaceholderMap} Tokens which are substitutions for attributes, attribute names or parts of attribute.
  */
 const scanNodeForAttributes = (node, tokens) => {
   let potentialId;

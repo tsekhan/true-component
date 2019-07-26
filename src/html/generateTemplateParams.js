@@ -28,15 +28,12 @@ const isString = (obj) => !(obj instanceof String) && typeof obj !== 'string';
  * @param {string[]} strings - Ordered array of string, which are pieces of template literal with HTML markup,
  * delimited by expressions.
  * @param {any[]} params - Ordered array of parameters passed to template literal with HTML markup.
- * @returns {{indexToToken: string[], tokenToParam: TokenToParamMap, tokens: Set.<string>}} Returns object with three
- * fields:
- *
- * `paramIndexToToken`, which is array where index matches index of element from `params` array, and associated string
- * is a unique string token;
- *
- * `tokenToParam` with generated tokens mapped to real data they substitute.
- *
- * `tokens` with set of tokens.
+ * @returns {{paramIndexToToken: string[], tokenToParam: TokenToParamMap, tokens: Set.<string>}} Returns object with
+ * three fields:
+ * - `paramIndexToToken`, which is an array where index matches index of element from `params` array, and associated
+ * string is an unique string token;
+ * - `tokenToParam` with generated tokens mapped to real data they substitute;
+ * - `tokens` with set of tokens.
  *
  * Sets of tokens in both fields are the same.
  */

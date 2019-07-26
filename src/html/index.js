@@ -11,7 +11,7 @@ import buildFinalHtml from './buildFinalHtml';
  * Template literal tag function, which converts template literal to DOM.
  *
  * @global
- * @param {string[]} strings - Plain strings.
+ * @param {string[]} strings - Plain strings from provided template.
  * @param {any} params - Data to be inserted into markup.
  * @returns {ChildNode|NodeListOf<ChildNode>} Returns root element of parsed markup or list of elements if there are
  * more than one.
