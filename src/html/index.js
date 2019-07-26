@@ -4,7 +4,7 @@ import buildFakeMarkup from './buildFakeMarkup';
 import generateTemplateParams from './generateTemplateParams';
 import getAttributePlaceholders from './getAttributePlaceholders';
 import getTagPlaceholders from './getTagPlaceholders';
-import instantiateNodes from '../html/instantiateNodes';
+import instantiateNodes from './instantiateNodes';
 import buildFinalHtml from './buildFinalHtml';
 
 /**

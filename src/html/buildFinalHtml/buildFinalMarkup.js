@@ -1,4 +1,4 @@
-import generateTagByKey from './generateTagByKey';
+import generateTagByKey from '../generateTagByKey';
 
 /**
  *
