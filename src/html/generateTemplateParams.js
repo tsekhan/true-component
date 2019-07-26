@@ -59,7 +59,7 @@ const generateTemplateParams = (strings, params) => {
 
     if (isString(param)) {
       tokenToParam.set(key, param);
-      tokens.set(key);
+      tokens.add(key);
     }
 
     return key;
