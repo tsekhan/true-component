@@ -1,6 +1,7 @@
 conf/
-jsdoc-template/
 dist/
+jsdoc-template/
+jsdoc-out/
 node_modules/
 webcomponents-sd-ce-pf.js
 webpack-karma.config.js
