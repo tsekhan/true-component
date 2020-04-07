@@ -1,5 +1,5 @@
 {
-  "name": "web-component",
+  "name": "true-component",
   "version": "0.0.0",
   "main": "src/index.js",
   "license": "MIT",
@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tsekhan/wc.git"
+    "url": "https://github.com/tsekhan/true-component.git"
   },
   "bugs": {
-    "url": "https://github.com/tsekhan/wc/issues"
+    "url": "https://github.com/tsekhan/true-component/issues"
   },
   "directories": {
     "test": "./tests",

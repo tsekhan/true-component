@@ -4,7 +4,7 @@ import registerClass from './registerClass';
 import html from './html';
 import Ref from './Ref';
 
-window.WC = {
+window.TC = {
   HtmlComponent,
   $,
   registerClass,

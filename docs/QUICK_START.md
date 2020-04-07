@@ -1,7 +1,7 @@
 # Quick start guide
 
-## Adding WC to a website
+## Adding TC to a website
 
-## Create a new WC app
+## Create a new TC app
 
 ## Main concepts

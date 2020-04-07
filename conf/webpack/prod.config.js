@@ -9,6 +9,6 @@ module.exports = merge(baseConfig, {
     path: path.resolve(__dirname, '../../dist'),
   },
   entry: {
-    'wc': 'src/index.js',
+    'tc': 'src/index.js',
   },
 });

@@ -8,7 +8,7 @@ import Ref from '../../Ref';
 import nodeRegistry from '../../nodeRegistry';
 import $ from '../$';
 
-const DEFAULT_TAG = 'component-wc';
+const DEFAULT_TAG = 'cmp-tc';
 
 /**
  * Base class to be extended to build custom HTML component. HTML node by itself.
@@ -33,7 +33,7 @@ class HtmlComponent {
      * @memberOf HtmlComponent
      * @name tag
      * @type {string}
-     * @default component-wc
+     * @default component-tc
      */
     const tag = Class.tag || DEFAULT_TAG;
 
