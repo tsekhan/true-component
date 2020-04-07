@@ -11,7 +11,7 @@ import $ from '../$';
 const DEFAULT_TAG = 'component-wc';
 
 /**
- * Base class to extend to build custom HTML component, which is HTML node by itself.
+ * Base class to be extended to build custom HTML component. HTML node by itself.
  *
  * @memberOf module:HtmlComponent
  * @alias HtmlComponent
@@ -90,7 +90,7 @@ class HtmlComponent {
       });
 
     rootElement.$ = new Proxy({}, {
-      get: function (oTarget, sKey) {
+      get: (oTarget, sKey) => {
         if (!binders.has(sKey)) {
           binders.set(sKey, new $(rootElement[sKey]));
         }
@@ -125,11 +125,11 @@ class HtmlComponent {
         return !Object.isExtensible(rootElementMixin);
       },
 
-      getOwnPropertyDescriptor: function (oTarget, sKey) {
+      getOwnPropertyDescriptor: (oTarget, sKey) => {
         return Object.getOwnPropertyDescriptor(rootElementMixin, sKey);
       },
 
-      defineProperty: function (oTarget, sKey, oDesc) {
+      defineProperty: (oTarget, sKey, oDesc) => {
         Object.defineProperty(oTarget, sKey, oDesc);
         const newDesc = { ...oDesc };
 
@@ -140,15 +140,15 @@ class HtmlComponent {
         return Object.defineProperty(rootElementMixin, sKey, newDesc);
       },
 
-      has: function (oTarget, sKey) {
+      has: (oTarget, sKey) => {
         return sKey in rootElementMixin;
       },
 
-      get: function (oTarget, sKey) {
+      get: (oTarget, sKey) => {
         return rootElementMixin[sKey];
       },
 
-      set: function (oTarget, sKey, vValue) {
+      set: (oTarget, sKey, vValue) => {
         let newValue = vValue;
 
         if (vValue instanceof $) {
@@ -175,11 +175,11 @@ class HtmlComponent {
         return true;
       },
 
-      deleteProperty: function (oTarget, sKey) {
+      deleteProperty: (oTarget, sKey) => {
         return delete rootElementMixin[sKey];
       },
 
-      ownKeys: function () {
+      ownKeys: () => {
         return Object.getOwnPropertyNames(rootElementMixin);
       },
     });

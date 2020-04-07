@@ -10,7 +10,7 @@ import nodeRegistry from './nodeRegistry';
  */
 const registerClass = (Class, tag = Class.tag) => {
   if (nodeRegistry.has(tag)) {
-    console.warn(`Re-registering of <${tag} /> may cause usage of invalid component.`);
+    console.warn(`Re-registering of <${tag} /> may cause usage of wrong component.`);
   }
 
   nodeRegistry.set(tag.toLowerCase(),

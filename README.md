@@ -13,7 +13,7 @@
 
 ## Usage
 * Check out [quick start guide](docs/QUICK_START.md).
-* See the [API docs](docs/API.md).
+* See the [reference](docs/API.md).
 
 ## Assembling
 To build WC framework run `yarn build`. It will assemble production bundle,

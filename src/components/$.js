@@ -4,12 +4,13 @@
  * Displayed value would be updated as soon as {@link $#value|value} param was updated.
  */
 class $ extends Text{
-  // XXX Extendable Text is an experimental technology (https://developer.mozilla.org/en-US/docs/Web/API/Text/Text)
+  /* XXX Extendable Text is an experimental technology but actually supported by all browsers except IE
+      (https://developer.mozilla.org/en-US/docs/Web/API/Text/Text) */
 
   /**
    * @constructs $
    * @extends Text
-   * @param {any} [value] - Value to be stored.
+   * @param {*} [value] - Value to be stored.
    */
   constructor(value) {
     super();
@@ -24,7 +25,7 @@ class $ extends Text{
        *
        * @memberOf $
        * @instance
-       * @type {any}
+       * @type {*}
        */
       value: {
         set: newValue => {

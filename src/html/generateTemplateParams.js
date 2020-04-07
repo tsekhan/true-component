@@ -18,7 +18,7 @@ const isString = (obj) => !(obj instanceof String) && typeof obj !== 'string';
 /**
  * Generated unique tokens mapped to the matching data.
  *
- * @typedef {Map<string, any>} TokenToParamMap
+ * @typedef {Map<string, *>} TokenToParamMap
  */
 
 /**
@@ -27,7 +27,7 @@ const isString = (obj) => !(obj instanceof String) && typeof obj !== 'string';
  * @memberOf module:html
  * @param {string[]} strings - Ordered array of string, which are pieces of template literal with HTML markup,
  * delimited by expressions.
- * @param {any[]} params - Ordered array of parameters passed to template literal with HTML markup.
+ * @param {Array} params - Ordered array of parameters passed to template literal with HTML markup.
  * @returns {{paramIndexToToken: string[], tokenToParam: TokenToParamMap, tokens: Set.<string>}} Returns object with
  * three fields:
  * - `paramIndexToToken`, which is an array where index matches index of element from `params` array, and associated

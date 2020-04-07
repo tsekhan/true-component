@@ -1,6 +1,9 @@
-# API reference
+# Reference
 
-## Table of contents
+* [`API reference`](#api-reference)
+* [`Data binding`](#data-binding)
+
+## API reference
 1. [`html`](#html)
 2. [`HtmlComponent`](#htmlcomponent)
 3. [`$` object](#-object)
@@ -37,15 +40,6 @@ processed.
     according to rules applicable to every particular object.
 
 * Data passed inside of tag description
-    * Expression can define tag name.
-        ```javascript
-        const tag = 'div';
-        
-        const myElement = html`<${tag}></${tag}>`;
-        
-        // will produce `<div></div>`
-        ```
-
     * If expression passed as a _tag attribute value of plain HTML tag_, it
     would be stringified.
         ```javascript
@@ -83,7 +77,7 @@ processed.
         ```
 
 ## `HtmlComponent`
-Base class.
+Base class to be extended to build custom HTML component. HTML node by itself.
 
 ## `$` object
 `$` class is a `Text` node descendant which provides data binding.
@@ -133,3 +127,5 @@ registerClass(CustomComponent);
 
 // now component is available as html`<my-class></my-class>`
 ```
+
+## Data binding

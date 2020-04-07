@@ -3,7 +3,7 @@
 /**
  * Check if provided object is iterable.
  *
- * @param {any} obj - Object to test.
+ * @param {*} obj - Object to test.
  * @returns {boolean} Returns true if `obj` can be iterated, otherwise returns false.
  */
 const isIterable = obj => {
@@ -16,7 +16,7 @@ const isIterable = obj => {
 /**
  * Expose all items from nested arrays into one-dimensional array.
  *
- * @param {(Array|any)} array - Object to be flattened.
+ * @param {(Array|*)} array - Object to be flattened.
  * @returns {Array} Returns array of non-iterable items found in `array` and it's nested objects.
  */
 const flattenArray = array => {

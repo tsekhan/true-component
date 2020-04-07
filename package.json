@@ -23,18 +23,18 @@
     "copy-webpack-plugin": "^5.1.1",
     "copyfiles": "^2.2.0",
     "eslint": "^6.8.0",
-    "eslint-plugin-import": "^2.20.1",
-    "jsdoc": "^3.6.3",
+    "eslint-plugin-import": "^2.20.2",
+    "jsdoc": "^3.6.4",
     "livereload": "^0.9.1",
-    "mocha": "^7.1.0",
+    "mocha": "^7.1.1",
     "mocha-headless-chrome": "^2.0.3",
     "nodemon": "^2.0.2",
-    "nyc": "^15.0.0",
+    "nyc": "^15.0.1",
     "rimraf": "^3.0.2",
     "source-map-support": "^0.5.16",
-    "webpack": "^4.42.0",
+    "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
-    "webpack-merge": "^4.2.1"
+    "webpack-merge": "^4.2.2"
   },
   "engines": {
     "node": ">=12.16.1",
@@ -47,12 +47,21 @@
     "build:docs": "npx jsdoc -c ./conf/jsdoc.conf.json ./src/*",
     "build:prod": "webpack --mode=production --config ./conf/webpack/prod.config.js",
     "build:tests": "webpack --mode=development --config ./conf/webpack/test.config.js",
+
     "clean": "yarn clean:tmp && rimraf coverage dist jsdoc-out",
     "clean:tmp": "rimraf .dist_tmp .nyc_output .tmp",
     "coverage": "yarn build:coverage && mocha-headless-chrome -c ./.nyc_output/out.json -f .dist_tmp/test.html || true && nyc report -r html && yarn clean:tmp",
     "lint": "eslint --fix --ignore-path ./conf/.eslintignore -c ./conf/.eslintrc.json .",
+
+    "live-reload:doc-output": "npx livereload jsdoc-out",
+    "live-reload:dist": "npx livereload dist",
+
     "watch:doc-src": "npx nodemon --config ./conf/nodemon.docs.json --exec 'yarn build:docs'",
-    "watch:doc-output": "npx livereload jsdoc-out",
-    "watch:docs": "yarn watch:doc-output & yarn watch:doc-src"
+    "watch:tests-src": "npx nodemon --config ./conf/nodemon.tests.json --exec 'yarn build:tests'",
+    "watch:coverage-src": "npx nodemon --config ./conf/nodemon.coverage.json --exec 'yarn coverage'",
+
+    "watch:docs": "yarn live-reload:doc-output & yarn watch:doc-src",
+    "watch:tests": "yarn live-reload:dist & yarn watch:tests-src",
+    "watch:coverage": "yarn watch:coverage-src"
   }
 }

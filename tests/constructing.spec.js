@@ -50,8 +50,8 @@ describe('Construction tests', () => {
       </component-example>
     `;
 
-    assert.isTrue(instance.children[0] instanceof HtmlComponent, 'Not instance of HtmlComponent');
-    assert.isTrue(instance.children[0] instanceof CustomComponent, 'Not instance of CustomComponent');
+    assert.isTrue(instance.children[0] instanceof HtmlComponent, 'Not an instance of HtmlComponent');
+    assert.isTrue(instance.children[0] instanceof CustomComponent, 'Not an instance of CustomComponent');
 
     assert.equal(instance.children[0].children[0].className, 'test');
   });

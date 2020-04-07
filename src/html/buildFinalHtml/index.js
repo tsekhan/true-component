@@ -5,7 +5,7 @@ import buildFinalMarkup from './buildFinalMarkup';
  *
  * @memberOf module:html
  * @param {string[]} strings - Plain strings from provided template.
- * @param {any[]} passedData - Data to be inserted into markup.
+ * @param {Array} passedData - Data to be inserted into markup.
  * @param {string[]} paramIndexToToken - Is an array where index matches index of element from `passedData` array, and
  * associated string is an unique string token.
  * @param {PlaceholderMap} attributePlaceholders - Tokens which are substitutions for attributes, attribute names

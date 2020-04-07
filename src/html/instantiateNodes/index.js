@@ -12,7 +12,7 @@ import getRealAttributes from './getRealAttributes';
  * @param {TokenToParamMap} tokenToData - Tokens mapped to data substituted by them.
  * @returns {NodeListOf<ChildNode>} Returns DOM node with instantiated custom components.
  */
-const instantiateNodes = function (root, tokenToData) {
+const instantiateNodes = (root, tokenToData) => {
   root.childNodes.forEach(child => {
     let currentChild = child;
     let potentialId;
