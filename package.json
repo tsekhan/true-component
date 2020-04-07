@@ -32,6 +32,7 @@
     "nyc": "^15.0.1",
     "rimraf": "^3.0.2",
     "source-map-support": "^0.5.16",
+    "terser-webpack-plugin": "^2.3.5",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-merge": "^4.2.2"
@@ -42,22 +43,22 @@
     "yarn": ">=1.22.4"
   },
   "scripts": {
-    "build": "yarn clean && yarn build:prod && yarn build:tests && yarn build:docs && yarn coverage",
+    "build": "yarn clean && yarn test && yarn coverage && yarn build:docs",
     "build:coverage": "copyfiles -a ./tests/* ./.tmp & nyc instrument ./src ./.tmp/src && webpack --mode=development --config ./conf/webpack/cover.config.js",
     "build:docs": "npx jsdoc -c ./conf/jsdoc.conf.json ./src/*",
     "build:prod": "webpack --mode=production --config ./conf/webpack/prod.config.js",
-    "build:tests": "webpack --mode=development --config ./conf/webpack/test.config.js",
 
     "clean": "yarn clean:tmp && rimraf coverage dist jsdoc-out",
     "clean:tmp": "rimraf .dist_tmp .nyc_output .tmp",
-    "coverage": "yarn build:coverage && mocha-headless-chrome -c ./.nyc_output/out.json -f .dist_tmp/test.html || true && nyc report -r html && yarn clean:tmp",
+    "coverage": "yarn build:coverage && mocha-headless-chrome -c ./.nyc_output/out.json -f .dist_tmp/coverage-test.html || true && nyc report -r html && yarn clean:tmp",
+    "test": "yarn build:prod && mocha-headless-chrome -f dist/test.html",
     "lint": "eslint --fix --ignore-path ./conf/.eslintignore -c ./conf/.eslintrc.json .",
 
     "live-reload:doc-output": "npx livereload jsdoc-out",
     "live-reload:dist": "npx livereload dist",
 
     "watch:doc-src": "npx nodemon --config ./conf/nodemon.docs.json --exec 'yarn build:docs'",
-    "watch:tests-src": "npx nodemon --config ./conf/nodemon.tests.json --exec 'yarn build:tests'",
+    "watch:tests-src": "npx nodemon --config ./conf/nodemon.tests.json --exec 'yarn build:prod'",
     "watch:coverage-src": "npx nodemon --config ./conf/nodemon.coverage.json --exec 'yarn coverage'",
 
     "watch:docs": "yarn live-reload:doc-output & yarn watch:doc-src",

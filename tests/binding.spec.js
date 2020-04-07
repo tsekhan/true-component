@@ -4,7 +4,7 @@ const { assert } = chai;
 
 import {
   $, html, HtmlComponent, registerClass,
-} from '../src';
+} from './import';
 
 describe('Binders', () => {
   it('should update text', () => {

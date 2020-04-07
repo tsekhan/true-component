@@ -2,7 +2,7 @@ import chai from 'chai';
 
 const { assert } = chai;
 
-import { HtmlComponent, html, registerClass } from '../src';
+import { HtmlComponent, html, registerClass } from './import';
 
 describe('Construction tests', () => {
   let CustomComponent;

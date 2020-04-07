@@ -11,7 +11,7 @@ module.exports = merge(baseConfig, {
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: 'tests/test.html' },
+      { from: 'tests/coverage-test.html' },
       { from: 'node_modules/mocha', to: 'test-resources/mocha' },
       { from: 'node_modules/chai', to: 'test-resources/chai' },
     ])
