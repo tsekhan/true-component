@@ -170,7 +170,14 @@ class HtmlComponent {
           boundValues.delete(sKey);
         }
 
-        rootElementMixin[sKey] = newValue;
+        try {
+          // XXX Attribute `style` (and, probably some other) can't be set as a property but can be assigned
+          //  as an attribute. If next line throws an exception - it tried to assign such property.
+          rootElementMixin[sKey] = newValue;
+        } catch (e) {
+        }
+
+        rootElement.setAttribute(sKey, String(newValue));
 
         if (binders.has(sKey)) {
           binders.get(sKey).value = newValue;
