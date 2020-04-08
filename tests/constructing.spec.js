@@ -60,17 +60,24 @@ describe('Construction tests', () => {
     const TEMPLATE_1 = '123';
     const TEMPLATE_2 = '456';
 
-    let Component = class extends HtmlComponent {
+    const Component = class extends HtmlComponent {
       static get template() {
         return TEMPLATE_1;
       }
     };
 
-    let instance = new Component();
+    const instance = new Component();
 
     assert.equal(instance.shadowRoot.textContent, TEMPLATE_1);
 
     instance.template = TEMPLATE_2;
     assert.equal(instance.shadowRoot.textContent, TEMPLATE_2);
+  });
+
+  it('Pass variable into html``', () => {
+    const CONTENT = 'ABC';
+    const instance = html`<div>${CONTENT}</div>`;
+
+    assert.equal(instance.textContent, CONTENT);
   });
 });

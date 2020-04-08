@@ -49,8 +49,8 @@ const scanNodeForAttributes = (node, tokens) => {
         } else {
           Array.from(tokens.keys()).some(token => {
             if (
-              attributeName.indexOf(token) ||
-              attributeValue.indexOf(token)
+              attributeName.includes(token) ||
+              attributeValue.includes(token)
             ) {
               placeholders.set(token, PLACEHOLDER_ROLES.PART_OF_ATTRIBUTE_OR_VALUE);
 
