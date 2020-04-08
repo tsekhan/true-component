@@ -14,7 +14,7 @@ module.exports = {
         terserOptions: {
           mangle: {
             properties: {
-              reserved: ["HtmlComponent", "$", "registerClass", "html", "Ref"],
+              reserved: ["HtmlComponent", "$", "registerClass", "html", "Ref", "template"],
             },
           },
         },

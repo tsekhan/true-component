@@ -89,6 +89,10 @@ class HtmlComponent {
         },
       });
 
+    if (Class.template !== undefined) {
+      rootElement.template = Class.template;
+    }
+
     rootElement.$ = new Proxy({}, {
       get: (oTarget, sKey) => {
         if (!binders.has(sKey)) {
