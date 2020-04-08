@@ -74,7 +74,7 @@ const instantiateNodes = (root, tokenToData) => {
       } else {
         // if it's a plain Node descendant
 
-        getRealAttributes(child, tokenToData).forEach((attributeName, attributeValue) => {
+        getRealAttributes(child, tokenToData).forEach((attributeValue, attributeName) => {
           if (attributeName.toLowerCase() === 'ref' && attributeValue instanceof Ref) {
             attributeValue.node = child;
 
