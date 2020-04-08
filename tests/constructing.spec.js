@@ -55,4 +55,22 @@ describe('Construction tests', () => {
 
     assert.equal(instance.children[0].children[0].className, 'test');
   });
+
+  it('Set and change custom component template', () => {
+    const TEMPLATE_1 = '123';
+    const TEMPLATE_2 = '456';
+
+    let Component = class extends HtmlComponent {
+      static get template() {
+        return TEMPLATE_1;
+      }
+    };
+
+    let instance = new Component();
+
+    assert.equal(instance.shadowRoot.textContent, TEMPLATE_1);
+
+    instance.template = TEMPLATE_2;
+    assert.equal(instance.shadowRoot.textContent, TEMPLATE_2);
+  });
 });
