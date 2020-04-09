@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Address Book. TrueComponent Example</title>
+    <meta charset="UTF-8">
+
+    <script>
+      document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+        ':35729/livereload.js?snipver=1"></' + 'script>');
+    </script>
+
+    <script src="../../dist/tc.js"></script>
+    <script src="./AddressBook.js"></script>
+
+    <script>
+        window.onload = () => {
+          document.body.append(new AddressBook());
+        };
+    </script>
+</head>
+<body>
+</body>
+</html>

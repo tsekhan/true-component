@@ -63,6 +63,7 @@
 
     "watch:docs": "yarn live-reload:doc-output & yarn watch:doc-src",
     "watch:tests": "yarn live-reload:dist & yarn watch:tests-src",
+    "watch:examples": "npx livereload examples",
     "watch:coverage": "yarn watch:coverage-src"
   }
 }

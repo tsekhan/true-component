@@ -20,11 +20,11 @@ class HtmlComponent {
 
   /**
    * @constructs HtmlComponent
-   * @param {object} [config] - Associative array (Object) with objects to be assigned as instance properties.
+   * @param {object} [params] - Associative array (Object) with objects to be assigned as instance properties.
    * @param {Iterable} [children] - Child nodes for current node.
    * @returns {HTMLElement}
    */
-  constructor(config, children) {
+  constructor(params, children) {
     const Class = Object.getPrototypeOf(this).constructor;
 
     /**
@@ -212,11 +212,11 @@ class HtmlComponent {
       });
     }
 
-    if (config) {
-      Object.assign(rootElement, config);
+    if (params) {
+      Object.assign(rootElement, params);
 
-      if (config.ref && config.ref instanceof Ref) {
-        config.ref.node = rootElement;
+      if (params.ref && params.ref instanceof Ref) {
+        params.ref.node = rootElement;
       }
     }
 
