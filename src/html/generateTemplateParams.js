@@ -1,11 +1,4 @@
-/**
- * Determine if provided object is string
- *
- * @memberOf module:html
- * @param {*} obj - object to test.
- * @returns {boolean} Returns true if provided object is string.
- */
-const isString = (obj) => !(obj instanceof String) && typeof obj !== 'string';
+import { isString } from '../utils';
 
 /**
  * Generated unique tokens mapped to the matching data.
@@ -39,7 +32,7 @@ const generateTemplateParams = (strings, params) => {
   const paramIndexToToken = params.map(param => {
     const key = `token-${tokenPrefix}-${tokenIndex++}`;
 
-    if (isString(param)) {
+    if (!isString(param)) {
       tokenToParam.set(key, param);
       tokens.add(key);
     }

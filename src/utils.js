@@ -1,6 +1,15 @@
 /** @module utils */
 
 /**
+ * Determine if provided object is string
+ *
+ * @memberOf module:html
+ * @param {*} obj - object to test.
+ * @returns {boolean} Returns true if provided object is string.
+ */
+const isString = (obj) => obj instanceof String || typeof obj === 'string';
+
+/**
  * Check if provided object is iterable.
  *
  * @param {*} obj - Object to test.
@@ -8,8 +17,7 @@
  */
 const isIterable = obj => {
   return obj &&
-    typeof obj !== 'string' &&
-    !(obj instanceof String) &&
+    !isString(obj) &&
     typeof obj[Symbol.iterator] === 'function';
 };
 
@@ -33,4 +41,4 @@ const flattenArray = array => {
   return result;
 };
 
-export { isIterable, flattenArray };
+export { isString, isIterable, flattenArray };
