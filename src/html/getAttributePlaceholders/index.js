@@ -7,11 +7,12 @@ import scanNodeForAttributes from './scanNodeForAttributes';
  * attribute or attribute name.
  *
  * @memberOf module:html
+ * @name getAttributePlaceholders
  * @param {string} fakeMarkup - Markup where variables are replaced by generated placeholders.
  * @param {Set.<string>} tokens - Tokens to try to find.
  * @returns {PlaceholderMap} Tokens which are substitutions for attributes, attribute names or parts of attribute.
  */
-const getAttributePlaceholders = (fakeMarkup, tokens) => {
+export default (fakeMarkup, tokens) => {
   const fakeHtml = buildFakeHtml(fakeMarkup);
 
   const placeholders = scanNodeForAttributes(fakeHtml, tokens);
@@ -29,5 +30,3 @@ const getAttributePlaceholders = (fakeMarkup, tokens) => {
 
   return placeholders;
 };
-
-export default getAttributePlaceholders;

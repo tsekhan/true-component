@@ -3,7 +3,7 @@
  *
  * Displayed value would be updated as soon as {@link $#value|value} param was updated.
  */
-class $ extends Text{
+export default class $ extends Text{
   /* XXX Extendable Text is an experimental technology but actually supported by all browsers except IE
       (https://developer.mozilla.org/en-US/docs/Web/API/Text/Text) */
 
@@ -60,5 +60,3 @@ class $ extends Text{
     this.value = value;
   }
 }
-
-export default $;

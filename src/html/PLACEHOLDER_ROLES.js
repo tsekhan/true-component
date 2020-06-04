@@ -2,10 +2,11 @@
  * Enum for variants of usage for placeholders used instead of template literal parameters (expressions).
  *
  * @memberOf module:html
+ * @const
  * @alias PLACEHOLDER_ROLES
  * @enum {Symbol}
  */
-const PLACEHOLDER_ROLES = {
+export default {
 
   /**
    * Expression placed instead of tag name (like `<${expr}></${expr}>`).
@@ -45,5 +46,3 @@ const PLACEHOLDER_ROLES = {
    */
   TAG: 6,
 };
-
-export default PLACEHOLDER_ROLES;

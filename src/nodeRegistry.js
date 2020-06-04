@@ -6,6 +6,4 @@
  * @static
  * @type {Map<string, HtmlComponent>}
  */
-const nodeRegistry = new Map();
-
-export default nodeRegistry;
+export default new Map();

@@ -4,6 +4,7 @@ import generateTagByKey from './generateTagByKey';
  * Build markup from template and replace data with placeholders (tokens).
  *
  * @memberOf module:html
+ * @name buildFakeMarkup
  * @param {Set.<string>} tokens - Set of tokens used for replacing of real data passed to markup.
  * @param {string[]} indexToToken - Array where index matches index of element from `params` array, and associated
  * string is a unique string token.
@@ -13,7 +14,7 @@ import generateTagByKey from './generateTagByKey';
  * @returns {string} Returns markup for HTML document where data placeholders are tokens. Resulting markup is wrapped in
  * `<template>` and `<body>` tags.
  */
-const buildFakeMarkup = (
+export default (
   tokens,
   indexToToken,
   strings,
@@ -33,5 +34,3 @@ const buildFakeMarkup = (
 
   return `<body><template>${fakeMarkup}</template></body>`;
 };
-
-export default buildFakeMarkup;

@@ -20,10 +20,4 @@ export {
   Ref,
 };
 
-export default {
-  HtmlComponent,
-  $,
-  registerClass,
-  html,
-  Ref,
-};
+export default window.TC;

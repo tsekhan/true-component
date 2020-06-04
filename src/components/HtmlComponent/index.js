@@ -16,7 +16,7 @@ const DEFAULT_TAG = 'cmp-tc';
  * @memberOf module:HtmlComponent
  * @alias HtmlComponent
  */
-class HtmlComponent {
+export default class HtmlComponent {
 
   /**
    * @constructs HtmlComponent
@@ -219,5 +219,3 @@ class HtmlComponent {
     return rootElement;
   }
 }
-
-export default HtmlComponent;

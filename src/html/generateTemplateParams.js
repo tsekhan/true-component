@@ -13,6 +13,7 @@ let tokenIndex = 0;
  * Match params (expressions) passed to template literal with HTML markup to randomly generated unique string tokens.
  *
  * @memberOf module:html
+ * @name generateTemplateParams
  * @param {string[]} strings - Ordered array of string, which are pieces of template literal with HTML markup,
  * delimited by expressions.
  * @param {Array} params - Ordered array of parameters passed to template literal with HTML markup.
@@ -25,7 +26,7 @@ let tokenIndex = 0;
  *
  * Sets of tokens in both fields are the same.
  */
-const generateTemplateParams = (strings, params) => {
+export default (strings, params) => {
   const tokenToParam = new Map();
   const tokens = new Set();
 
@@ -46,5 +47,3 @@ const generateTemplateParams = (strings, params) => {
     tokens,
   };
 };
-
-export default generateTemplateParams;

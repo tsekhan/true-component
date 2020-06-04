@@ -2,11 +2,12 @@
  * Get real data passed into HTML markup as attributes of tags by placeholders.
  *
  * @memberOf module:html
+ * @name getRealAttributes
  * @param {Node} child - DOM node to analyze
  * @param {TokenToParamMap} tokenToData - Tokens mapped to data substituted by them.
  * @returns {Map<string, *>} Returns map where tag attribute names are mapped to real data passed into HTML markup.
  */
-const getRealAttributes = (child, tokenToData) => {
+export default (child, tokenToData) => {
   const attributes = new Map();
 
   if (child.attributes) { // Text nodes has no attributes
@@ -22,5 +23,3 @@ const getRealAttributes = (child, tokenToData) => {
 
   return attributes;
 };
-
-export default getRealAttributes;

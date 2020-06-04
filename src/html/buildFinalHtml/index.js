@@ -4,6 +4,7 @@ import buildFinalMarkup from './buildFinalMarkup';
  * Build DOM node with data replaced by bound tokens.
  *
  * @memberOf module:html
+ * @name buildFinalHtml
  * @param {string[]} strings - Plain strings from provided template.
  * @param {Array} passedData - Data to be inserted into markup.
  * @param {string[]} paramIndexToToken - Is an array where index matches index of element from `passedData` array, and
@@ -13,7 +14,7 @@ import buildFinalMarkup from './buildFinalMarkup';
  * @param {PlaceholderMap} tagPlaceholders - Tokens which are substitutions for tags.
  * @returns {HTMLDivElement} Returns generated DOM node.
  */
-const buildFinalHtml = ({
+export default ({
   strings,
   passedData,
   paramIndexToToken,
@@ -38,5 +39,3 @@ const buildFinalHtml = ({
 
   return container;
 };
-
-export default buildFinalHtml;

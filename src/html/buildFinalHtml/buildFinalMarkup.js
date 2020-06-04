@@ -4,6 +4,7 @@ import generateTagByKey from '../generateTagByKey';
  * Build markup for creation of DOM node with data replaced by bound tokens.
  *
  * @memberOf module:html
+ * @name buildFinalMarkup
  * @param {string[]} strings - Plain strings from provided template.
  * @param {Array} passedData - Data to be inserted into markup.
  * @param {string[]} paramIndexToToken - Is an array where index matches index of element from `passedData` array, and
@@ -13,7 +14,7 @@ import generateTagByKey from '../generateTagByKey';
  * @param {PlaceholderMap} tagPlaceholders - Tokens which are substitutions for tags.
  * @returns {string} Returns string with generated HTML markup.
  */
-const buildFinalMarkup = ({
+export default ({
   strings,
   passedData,
   paramIndexToToken,
@@ -42,5 +43,3 @@ const buildFinalMarkup = ({
 
   return markup;
 };
-
-export default buildFinalMarkup;
