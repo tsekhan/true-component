@@ -9,17 +9,14 @@
 const getRealAttributes = (child, tokenToData) => {
   const attributes = new Map();
 
-  if (child.attributes) {
+  if (child.attributes) { // Text nodes has no attributes
     for (let i = 0; i < child.attributes.length; i++) {
-      const attribute = child.attributes[i];
+      const attr = child.attributes[i];
 
-      let attributeValue = attribute.value;
-
-      if (tokenToData.has(attributeValue)) {
-        attributeValue = tokenToData.get(attributeValue);
-      }
-
-      attributes.set(attribute.name, attributeValue);
+      attributes.set(
+        attr.name,
+        tokenToData.has(attr.value) ? tokenToData.get(attr.value) : attr.value
+      );
     }
   }
 
