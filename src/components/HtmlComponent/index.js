@@ -3,7 +3,7 @@
 import getAllPropertyNames from './getAllPropertyNames';
 import getPropertyDescriptor from './getPropertyDescriptor';
 import registerClass from '../../registerClass';
-import { isIterable } from '../../utils';
+import {isIterable} from '../../utils';
 import Ref from '../../Ref';
 import nodeRegistry from '../../nodeRegistry';
 import $ from '../$';
@@ -43,7 +43,7 @@ export default class HtmlComponent {
 
     const rootElement = document.createElement(tag);
 
-    const shadowRoot = rootElement.attachShadow({ mode: 'open' });
+    const shadowRoot = rootElement.attachShadow({mode: 'open'});
 
     const binders = new Map();
 
@@ -66,9 +66,9 @@ export default class HtmlComponent {
 
             shadowRoot.innerHTML = template;
           } else if (isIterable(template)) {
-            Array.from(template).forEach(templateItem => {
-              shadowRoot.appendChild(templateItem);
-            });
+            Array.from(template).forEach(
+              templateItem => shadowRoot.appendChild(templateItem)
+            );
           } else {
             shadowRoot.appendChild(template);
           }
@@ -131,7 +131,7 @@ export default class HtmlComponent {
 
       defineProperty: (oTarget, sKey, oDesc) => {
         Object.defineProperty(oTarget, sKey, oDesc);
-        const newDesc = { ...oDesc };
+        const newDesc = {...oDesc};
 
         if (oDesc.get) {
           newDesc.get = oDesc.get.bind(rootElement);
@@ -161,7 +161,7 @@ export default class HtmlComponent {
             if (binders.has(sKey)) {
               binders.get(sKey).value = vValue.value;
             }
-          }, false);
+          });
         } else if (boundValues.has(sKey)) {
           boundValues.delete(sKey);
         }
@@ -203,9 +203,7 @@ export default class HtmlComponent {
     Object.setPrototypeOf(rootElement, fakePrototype);
 
     if (children) {
-      Array.from(children).forEach(child => {
-        rootElement.appendChild(child);
-      });
+      Array.from(children).forEach(child => rootElement.appendChild(child));
     }
 
     if (params) {

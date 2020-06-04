@@ -31,11 +31,11 @@ const scanNodeForAttributes = (node, tokens) => {
   if (tokens.has(node.nodeName.toLowerCase())) { // if it's a tag name
     placeholders.set(potentialId, PLACEHOLDER_ROLES.TAG_NAME);
   } else {
-    node.childNodes.forEach(child => {
-      scanNodeForAttributes(child, tokens).forEach((role, key) => placeholders.set(key, role));
-    });
+    node.childNodes.forEach(child =>
+      scanNodeForAttributes(child, tokens).forEach((role, key) => placeholders.set(key, role))
+    );
 
-    const { attributes: nodeAttributes } = node;
+    const {attributes: nodeAttributes} = node;
 
     if (nodeAttributes !== undefined) {
       for (let i = 0; i < nodeAttributes.length; i++) {

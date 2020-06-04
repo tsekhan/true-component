@@ -33,9 +33,7 @@ export default ({
 
   const container = document.createElement('div');
 
-  Array.from(templateContainer.content.childNodes).forEach(child => {
-    container.appendChild(child);
-  });
+  Array.from(templateContainer.content.childNodes).forEach(child => container.appendChild(child));
 
   return container;
 };

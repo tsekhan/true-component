@@ -20,10 +20,10 @@ const scanNodeForTagPlaceholders = (node, tokens) => {
     }
   }
 
-  node.childNodes.forEach(child => {
+  node.childNodes.forEach(child =>
     scanNodeForTagPlaceholders(child, tokens)
-      .forEach((value, token) => placeholders.set(token, value));
-  });
+      .forEach((value, token) => placeholders.set(token, value))
+  );
 
   return placeholders;
 };
