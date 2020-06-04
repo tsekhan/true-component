@@ -9,11 +9,13 @@ module.exports = merge(baseConfig, {
     path: path.resolve(__dirname, '../../dist'),
   },
   plugins: [
-    new CopyWebpackPlugin([
-      { from: 'tests/test.html' },
-      { from: 'node_modules/mocha', to: 'test-resources/mocha' },
-      { from: 'node_modules/chai', to: 'test-resources/chai' },
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'tests/test.html'},
+        { from: 'node_modules/mocha', to: 'test-resources/mocha' },
+        { from: 'node_modules/chai', to: 'test-resources/chai' },
+      ]
+    })
   ],
   entry: {
     'tc': 'src/index.js',

@@ -37,11 +37,7 @@ class HtmlComponent {
      */
     const tag = Class.tag || DEFAULT_TAG;
 
-    if (
-      tag &&
-      tag.indexOf('-') !== -1
-      && !nodeRegistry.has(tag)
-    ) {
+    if (tag.includes('-') && !nodeRegistry.has(tag)) {
       registerClass(Class, tag);
     }
 

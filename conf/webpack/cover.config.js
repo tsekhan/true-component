@@ -10,11 +10,13 @@ module.exports = merge(baseConfig, {
     path: path.resolve(__dirname, '../../.dist_tmp'),
   },
   plugins: [
-    new CopyWebpackPlugin([
-      { from: 'tests/coverage-test.html' },
-      { from: 'node_modules/mocha', to: 'test-resources/mocha' },
-      { from: 'node_modules/chai', to: 'test-resources/chai' },
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'tests/coverage-test.html' },
+        { from: 'node_modules/mocha', to: 'test-resources/mocha' },
+        { from: 'node_modules/chai', to: 'test-resources/chai' },
+      ]
+    })
   ],
   entry: {
     'tests': '.tmp/tests/index.js',
