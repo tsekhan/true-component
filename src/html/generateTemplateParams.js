@@ -1,12 +1,4 @@
 /**
- * Generate random token.
- *
- * @memberOf module:html
- * @returns {string} Returns 11-symbol alphanumeric token.
- */
-const getRandomizedToken = () => Math.random().toString(36).substr(2);
-
-/**
  * Determine if provided object is string
  *
  * @memberOf module:html
@@ -20,6 +12,9 @@ const isString = (obj) => !(obj instanceof String) && typeof obj !== 'string';
  *
  * @typedef {Map<string, *>} TokenToParamMap
  */
+
+const tokenPrefix = Math.random().toString(36).substr(2);
+let tokenIndex = 0;
 
 /**
  * Match params (expressions) passed to template literal with HTML markup to randomly generated unique string tokens.
@@ -41,18 +36,8 @@ const generateTemplateParams = (strings, params) => {
   const tokenToParam = new Map();
   const tokens = new Set();
 
-  const templateWithoutParams = strings.join();
-
   const paramIndexToToken = params.map(param => {
-    let key;
-
-    // Generate unique token
-    do {
-      key = `token-${getRandomizedToken()}`;
-    } while (
-      tokenToParam.has(key) &&
-      templateWithoutParams.indexOf(key) === '-1'
-    );
+    const key = `token-${tokenPrefix}-${tokenIndex++}`;
 
     if (isString(param)) {
       tokenToParam.set(key, param);
