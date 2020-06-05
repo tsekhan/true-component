@@ -10,15 +10,11 @@
 const getPropertyDescriptor = (obj, property) => {
   if (Object.prototype.hasOwnProperty.call(obj, property)) {
     return Object.getOwnPropertyDescriptor(obj, property);
-  } else {
-    const objPrototype = Object.getPrototypeOf(obj);
-
-    if (objPrototype === null) {
-      return undefined;
-    }
-
-    return getPropertyDescriptor(objPrototype, property);
   }
+
+  const objPrototype = Object.getPrototypeOf(obj);
+
+  return objPrototype === null ? undefined : getPropertyDescriptor(objPrototype, property);
 };
 
 export default getPropertyDescriptor;

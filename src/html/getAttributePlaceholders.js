@@ -1,5 +1,5 @@
-import generateTagByKey from '../generateTagByKey';
-import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
+import generateTagByKey from './generateTagByKey';
+import PLACEHOLDER_ROLES from './PLACEHOLDER_ROLES';
 
 /**
  * Map of tokens to roles.
@@ -10,15 +10,14 @@ import PLACEHOLDER_ROLES from '../PLACEHOLDER_ROLES';
 
 /**
  * Get all placeholders which acts as tag name, attribute value, part of attribute or value and attribute or attribute
- * name. Unlike in {@link module:html.getAttributePlaceholders|getAttributePlaceholders()} attribute or attribute name
- * roles are not differentiated from each other.
+ * name.
  *
  * @memberOf module:html
  * @param {Node} node - Node to start from.
  * @param {Set.<string>} tokens - Tokens to try to find.
  * @returns {PlaceholderMap} Tokens which are substitutions for attributes, attribute names or parts of attribute.
  */
-const scanNodeForAttributes = (node, tokens) => {
+const getAttributePlaceholders = (node, tokens) => {
   let potentialId;
 
   if (node.nodeName.toLowerCase() === 'template') {
@@ -32,7 +31,8 @@ const scanNodeForAttributes = (node, tokens) => {
     placeholders.set(potentialId, PLACEHOLDER_ROLES.TAG_NAME);
   } else {
     node.childNodes.forEach(child =>
-      scanNodeForAttributes(child, tokens).forEach((role, key) => placeholders.set(key, role))
+      getAttributePlaceholders(child, tokens)
+        .forEach((role, key) => placeholders.set(key, role))
     );
 
     const {attributes: nodeAttributes} = node;
@@ -43,7 +43,12 @@ const scanNodeForAttributes = (node, tokens) => {
         const attributeValue = nodeAttributes[i].value;
 
         if (tokens.has(attributeName)) { // if it's mentioned like <tag ${var}></tag> or <tag ${var}="123"></tag>
-          placeholders.set(attributeName, PLACEHOLDER_ROLES.ATTRIBUTE_OR_ATTRIBUTE_NAME);
+          placeholders.set(
+            attributeName,
+
+            // Differentiate cases like <tag ${var}></tag> and <tag ${var}="123"></tag>
+            node.outerHTML.includes(`${key}=`) ? PLACEHOLDER_ROLES.ATTRIBUTE_NAME : PLACEHOLDER_ROLES.ATTRIBUTE,
+          );
         } else if (tokens.has(attributeValue)) { // if it was mentioned like <tag attr=${var}></tag>
           placeholders.set(attributeValue, PLACEHOLDER_ROLES.ATTRIBUTE_VALUE);
         } else {
@@ -67,4 +72,4 @@ const scanNodeForAttributes = (node, tokens) => {
   return placeholders;
 };
 
-export default scanNodeForAttributes;
+export default getAttributePlaceholders;

@@ -32,14 +32,10 @@ export default class $ extends Text{
           _value = newValue;
           this.nodeValue = String(newValue);
 
-          for (let i = 0; i < callbacks.length; i++) {
-            callbacks[i].call(null, newValue);
-          }
+          callbacks.forEach(callback => callback.call(null, newValue));
         },
 
-        get: () => {
-          return _value;
-        },
+        get: () => _value,
       },
 
       /**
@@ -51,7 +47,7 @@ export default class $ extends Text{
        * @param {function} callback - Callback function to be called on {@link $#value|value} change.
        */
       registerCallback: {
-        value: (callback) => {
+        value: callback => {
           callbacks.push(callback);
         },
       },

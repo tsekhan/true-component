@@ -99,30 +99,22 @@ export default class HtmlComponent {
     const boundValues = new Map();
 
     const fakePrototype = new Proxy({}, {
-      getPrototypeOf: () => {
-        return rootElementMixin;
-      },
+      getPrototypeOf: () => rootElementMixin,
 
-      setPrototypeOf: (target, prototype) => {
-        Object.setPrototypeOf(rootElementMixin, prototype);
+      setPrototypeOf: (target, prototype) =>
+        Object.setPrototypeOf(rootElementMixin, prototype),
 
-        return true;
-      },
+      isExtensible: () => Object.isExtensible(rootElementMixin),
 
-      isExtensible: () => {
-        return Object.isExtensible(rootElementMixin);
-      },
-
-      preventExtensions: (oTarget) => {
+      preventExtensions: oTarget => {
         Object.preventExtensions(oTarget);
         Object.preventExtensions(rootElementMixin);
 
         return !Object.isExtensible(rootElementMixin);
       },
 
-      getOwnPropertyDescriptor: (oTarget, sKey) => {
-        return Object.getOwnPropertyDescriptor(rootElementMixin, sKey);
-      },
+      getOwnPropertyDescriptor: (oTarget, sKey) =>
+        Object.getOwnPropertyDescriptor(rootElementMixin, sKey),
 
       defineProperty: (oTarget, sKey, oDesc) => {
         Object.defineProperty(oTarget, sKey, oDesc);
@@ -135,13 +127,9 @@ export default class HtmlComponent {
         return Object.defineProperty(rootElementMixin, sKey, newDesc);
       },
 
-      has: (oTarget, sKey) => {
-        return sKey in rootElementMixin;
-      },
+      has: (oTarget, sKey) => sKey in rootElementMixin,
 
-      get: (oTarget, sKey) => {
-        return rootElementMixin[sKey];
-      },
+      get: (oTarget, sKey) => rootElementMixin[sKey],
 
       set: (oTarget, sKey, vValue) => {
         let newValue = vValue;
@@ -177,21 +165,20 @@ export default class HtmlComponent {
         return true;
       },
 
-      deleteProperty: (oTarget, sKey) => {
-        return delete rootElementMixin[sKey];
-      },
+      deleteProperty: (oTarget, sKey) => delete rootElementMixin[sKey],
 
-      ownKeys: () => {
-        return Object.getOwnPropertyNames(rootElementMixin);
-      },
+      ownKeys: () => Object.getOwnPropertyNames(rootElementMixin),
     });
 
     Object.setPrototypeOf(rootElementMixin, Object.getPrototypeOf(this));
 
     getAllPropertyNames(rootElement).forEach(propertyName => {
       if (!(propertyName in this)) {
-        const propertyDescriptor = getPropertyDescriptor(rootElement, propertyName);
-        Object.defineProperty(fakePrototype, propertyName, propertyDescriptor);
+        Object.defineProperty(
+          fakePrototype,
+          propertyName,
+          getPropertyDescriptor(rootElement, propertyName),
+        );
       }
     });
 

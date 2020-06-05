@@ -15,11 +15,9 @@ const isString = (obj) => obj instanceof String || typeof obj === 'string';
  * @param {*} obj - Object to test.
  * @returns {boolean} Returns true if `obj` can be iterated, otherwise returns false.
  */
-const isIterable = obj => {
-  return obj &&
-    !isString(obj) &&
-    typeof obj[Symbol.iterator] === 'function';
-};
+const isIterable = obj => obj &&
+  !isString(obj) &&
+  typeof obj[Symbol.iterator] === 'function';
 
 /**
  * Expose all items from nested arrays into one-dimensional array.

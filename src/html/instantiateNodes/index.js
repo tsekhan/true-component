@@ -26,8 +26,8 @@ const instantiateNodes = (rootNode, tokenToData) => {
       if (isIterable(dataToInsert)) {
         // If it's array or something iterable...
 
-        const flatArray = flattenArray(Array.from(dataToInsert));
-        flatArray.forEach(
+        const flattenedDataToInsert = flattenArray(Array.from(dataToInsert));
+        flattenedDataToInsert.forEach(
           item => rootNode.insertBefore(
             isString(item) ? new Text(item) : item,
             child,

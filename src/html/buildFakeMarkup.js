@@ -19,18 +19,17 @@ export default (
   indexToToken,
   strings,
   wrapInTag = false,
-) => {
-  let fakeMarkup = '';
+) =>
+  `<body><template>${
+    strings.reduce((accumulator, string, index) => {
+      let result = accumulator + string;
 
-  strings.forEach((string, index) => {
-    fakeMarkup += string;
+      const fakeDataToken = indexToToken[index];
 
-    const fakeDataToken = indexToToken[index];
+      if (fakeDataToken && tokens.has(fakeDataToken)) {
+        result += wrapInTag ? generateTagByKey(fakeDataToken) : fakeDataToken;
+      }
 
-    if (fakeDataToken && tokens.has(fakeDataToken)) {
-      fakeMarkup += wrapInTag ? generateTagByKey(fakeDataToken) : fakeDataToken;
-    }
-  });
-
-  return `<body><template>${fakeMarkup}</template></body>`;
-};
+      return result;
+    }, '')
+  }</template></body>`;

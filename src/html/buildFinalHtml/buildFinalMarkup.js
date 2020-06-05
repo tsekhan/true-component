@@ -20,26 +20,22 @@ export default ({
   paramIndexToToken,
   attributePlaceholders,
   tagPlaceholders,
-}) => {
-  let markup = '';
+}) => strings.reduce((accumulator, string, index) => {
+  let result = accumulator + string;
 
-  strings.forEach((string, index) => {
-    markup += string;
+  if (tagPlaceholders.has(paramIndexToToken[index])) {
+    // If param was placed as a child of a tag then wrap token in tag and insert it to the markup.
 
-    if (tagPlaceholders.has(paramIndexToToken[index])) {
-      // If param was placed as a child of a tag then wrap token in tag and insert it to the markup.
+    result += generateTagByKey(paramIndexToToken[index]);
+  } else if (attributePlaceholders.has(paramIndexToToken[index])) {
+    // If param was placed on place of attribute then insert plain unwrapped token to the markup.
 
-      markup += generateTagByKey(paramIndexToToken[index]);
-    } else if (attributePlaceholders.has(paramIndexToToken[index])) {
-      // If param was placed on place of attribute then insert plain unwrapped token to the markup.
+    result += paramIndexToToken[index];
+  } else if (index < passedData.length) {
+    // If param was placed somewhere else then in could be processed only as a plain string. Just put it as a string.
 
-      markup += paramIndexToToken[index];
-    } else if (index < passedData.length) {
-      // If param was placed somewhere else then in could be processed only as a plain string. Just put it as a string.
+    result += passedData[index];
+  }
 
-      markup += passedData[index];
-    }
-  });
-
-  return markup;
-};
+  return result;
+}, '');
