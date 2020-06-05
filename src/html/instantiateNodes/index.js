@@ -1,6 +1,6 @@
 import nodeRegistry from '../../nodeRegistry';
 import HtmlComponent from '../../components/HtmlComponent';
-import {flattenArray, isIterable} from '../../utils';
+import {flattenArray, isIterable, isString} from '../../utils';
 import Ref from '../../Ref';
 import getRealAttributes from './getRealAttributes';
 
@@ -27,10 +27,12 @@ const instantiateNodes = (rootNode, tokenToData) => {
         // If it's array or something iterable...
 
         const flatArray = flattenArray(Array.from(dataToInsert));
-        flatArray.forEach(item => rootNode.insertBefore(
-          typeof item === 'string' || item instanceof String ? new Text(item) : item,
-          child
-        ));
+        flatArray.forEach(
+          item => rootNode.insertBefore(
+            isString(item) ? new Text(item) : item,
+            child,
+          )
+        );
       } else {
         if (
           !(dataToInsert instanceof HtmlComponent) &&

@@ -3,7 +3,7 @@
 import getAllPropertyNames from './getAllPropertyNames';
 import getPropertyDescriptor from './getPropertyDescriptor';
 import registerClass from '../../registerClass';
-import {isIterable} from '../../utils';
+import {isString, isIterable} from '../../utils';
 import Ref from '../../Ref';
 import nodeRegistry from '../../nodeRegistry';
 import $ from '../$';
@@ -62,8 +62,7 @@ export default class HtmlComponent {
             shadowRoot.removeChild(shadowRoot.firstChild);
           }
 
-          if (typeof template === 'string' || template instanceof String) {
-
+          if (isString(template)) {
             shadowRoot.innerHTML = template;
           } else if (isIterable(template)) {
             Array.from(template).forEach(
@@ -75,13 +74,9 @@ export default class HtmlComponent {
         },
 
         get: () => {
-          if (shadowRoot.childNodes.length === 0) {
-            return undefined;
-          } else if (shadowRoot.childNodes.length === 1) {
-            return shadowRoot.firstChild;
-          }
+          const children = shadowRoot.childNodes;
 
-          return shadowRoot.childNodes;
+          return children.length < 2 ? children[0] : children;
         },
       });
 
