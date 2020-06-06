@@ -96,9 +96,7 @@ export default class HtmlComponent {
 
     const rootElementMixin = {};
 
-    const boundValues = new Map();
-
-    const fakePrototype = new Proxy({}, {
+    const artificialPrototype = new Proxy({}, {
       getPrototypeOf: () => rootElementMixin,
 
       setPrototypeOf: (target, prototype) =>
@@ -107,6 +105,7 @@ export default class HtmlComponent {
       isExtensible: () => Object.isExtensible(rootElementMixin),
 
       preventExtensions: oTarget => {
+        // TODO Check why we need to do both
         Object.preventExtensions(oTarget);
         Object.preventExtensions(rootElementMixin);
 
@@ -135,7 +134,6 @@ export default class HtmlComponent {
         let newValue = vValue;
 
         if (vValue instanceof $) {
-          boundValues.set(sKey, vValue);
           newValue = vValue.value;
 
           vValue.registerCallback(() => {
@@ -145,8 +143,6 @@ export default class HtmlComponent {
               binders.get(sKey).value = vValue.value;
             }
           });
-        } else if (boundValues.has(sKey)) {
-          boundValues.delete(sKey);
         }
 
         try {
@@ -175,14 +171,14 @@ export default class HtmlComponent {
     getAllPropertyNames(rootElement).forEach(propertyName => {
       if (!(propertyName in this)) {
         Object.defineProperty(
-          fakePrototype,
+          artificialPrototype,
           propertyName,
           getPropertyDescriptor(rootElement, propertyName),
         );
       }
     });
 
-    Object.setPrototypeOf(rootElement, fakePrototype);
+    Object.setPrototypeOf(rootElement, artificialPrototype);
 
     if (children) {
       Array.from(children).forEach(child => rootElement.appendChild(child));

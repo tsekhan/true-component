@@ -75,7 +75,7 @@ export default (strings, ...params) => {
     passedData: params,
   });
 
-  instantiateNodes(container, tokenToParam);
+  const children = instantiateNodes(container, tokenToParam);
 
-  return (container.childNodes.length === 1) ? container.firstChild : container.childNodes;
+  return children.length > 1 ? children : children[0];
 };
