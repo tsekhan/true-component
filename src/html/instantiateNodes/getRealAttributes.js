@@ -14,10 +14,8 @@ export default (child, tokenToData) => {
     for (let i = 0; i < child.attributes.length; i++) {
       const attr = child.attributes[i];
 
-      attributes.set(
-        attr.name,
-        tokenToData.has(attr.value) ? tokenToData.get(attr.value) : attr.value
-      );
+      attributes.set(attr.name,
+        tokenToData.has(attr.value) ? tokenToData.get(attr.value) : attr.value);
     }
   }
 

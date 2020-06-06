@@ -149,7 +149,8 @@
         "ignore": [
           -1,
           0,
-          1
+          1,
+          2
         ],
         "detectObjects": true,
         "enforceConst": true

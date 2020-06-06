@@ -3,10 +3,10 @@
 import buildFakeMarkup from './buildFakeMarkup';
 import instantiateNodes from './instantiateNodes';
 import buildFinalHtml from './buildFinalHtml';
-import buildFakeHtml from "./buildFakeHtml";
-import getAttributePlaceholders from "./getAttributePlaceholders";
-import getTagPlaceholders from "./getTagPlaceholders";
-import {isString} from "../utils";
+import buildFakeHtml from './buildFakeHtml';
+import getAttributePlaceholders from './getAttributePlaceholders';
+import getTagPlaceholders from './getTagPlaceholders';
+import { isString } from '../utils';
 
 /**
  * Generated unique tokens mapped to the matching data.
@@ -42,10 +42,8 @@ export default (strings, ...params) => {
     return key;
   });
 
-  const attributePlaceholders = getAttributePlaceholders(
-    buildFakeHtml(buildFakeMarkup(tokens, paramIndexToToken, strings)),
-    tokens,
-  );
+  const attributePlaceholders = getAttributePlaceholders(buildFakeHtml(buildFakeMarkup(tokens, paramIndexToToken, strings)),
+    tokens);
 
   const potentialTagTokens = new Set();
 
@@ -55,17 +53,13 @@ export default (strings, ...params) => {
     }
   });
 
-  const tagPlaceholders = getTagPlaceholders(
-    buildFakeHtml(
-      buildFakeMarkup(
-        potentialTagTokens,
-        paramIndexToToken,
-        strings,
-        true,
-      )
-    ),
+  const tagPlaceholders = getTagPlaceholders(buildFakeHtml(buildFakeMarkup(
     potentialTagTokens,
-  );
+    paramIndexToToken,
+    strings,
+    true,
+  )),
+  potentialTagTokens);
 
   const container = buildFinalHtml({
     strings,

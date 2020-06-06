@@ -14,12 +14,10 @@ export default (Class, tag = Class.tag) => {
     console.warn(`Re-registering of <${tag} /> may cause usage of wrong component.`);
   }
 
-  nodeRegistry.set(
-    tag.toLowerCase(),
+  nodeRegistry.set(tag.toLowerCase(),
     Class.tag ? Class : (class extends Class {
       static get tag() {
         return tag;
       }
-    }),
-  );
+    }));
 };

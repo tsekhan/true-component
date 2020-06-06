@@ -6,4 +6,4 @@
  * @class
  * @name Ref
  */
-export default class Ref {};
+export default class Ref {}

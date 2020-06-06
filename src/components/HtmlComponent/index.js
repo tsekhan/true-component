@@ -3,7 +3,7 @@
 import getAllPropertyNames from './getAllPropertyNames';
 import getPropertyDescriptor from './getPropertyDescriptor';
 import registerClass from '../../registerClass';
-import {isString, isIterable} from '../../utils';
+import { isIterable, isString } from '../../utils';
 import Ref from '../../Ref';
 import nodeRegistry from '../../nodeRegistry';
 import $ from '../$';
@@ -43,7 +43,7 @@ export default class HtmlComponent {
 
     const rootElement = document.createElement(tag);
 
-    const shadowRoot = rootElement.attachShadow({mode: 'open'});
+    const shadowRoot = rootElement.attachShadow({ mode: 'open' });
 
     const binders = new Map();
 
@@ -65,9 +65,8 @@ export default class HtmlComponent {
           if (isString(template)) {
             shadowRoot.innerHTML = template;
           } else if (isIterable(template)) {
-            Array.from(template).forEach(
-              templateItem => shadowRoot.appendChild(templateItem)
-            );
+            Array.from(template)
+              .forEach(templateItem => shadowRoot.appendChild(templateItem));
           } else {
             shadowRoot.appendChild(template);
           }
@@ -117,7 +116,7 @@ export default class HtmlComponent {
 
       defineProperty: (oTarget, sKey, oDesc) => {
         Object.defineProperty(oTarget, sKey, oDesc);
-        const newDesc = {...oDesc};
+        const newDesc = { ...oDesc };
 
         if (oDesc.get) {
           newDesc.get = oDesc.get.bind(rootElement);
@@ -168,20 +167,20 @@ export default class HtmlComponent {
 
     Object.setPrototypeOf(rootElementMixin, Object.getPrototypeOf(this));
 
-    getAllPropertyNames(rootElement).forEach(propertyName => {
-      if (!(propertyName in this)) {
-        Object.defineProperty(
-          artificialPrototype,
-          propertyName,
-          getPropertyDescriptor(rootElement, propertyName),
-        );
-      }
-    });
+    getAllPropertyNames(rootElement)
+      .forEach(propertyName => {
+        if (!(propertyName in this)) {
+          Object.defineProperty(artificialPrototype,
+            propertyName,
+            getPropertyDescriptor(rootElement, propertyName));
+        }
+      });
 
     Object.setPrototypeOf(rootElement, artificialPrototype);
 
     if (children) {
-      Array.from(children).forEach(child => rootElement.appendChild(child));
+      Array.from(children)
+        .forEach(child => rootElement.appendChild(child));
     }
 
     if (params) {

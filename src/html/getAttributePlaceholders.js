@@ -32,10 +32,9 @@ const getAttributePlaceholders = (node, tokens) => {
   } else {
     node.childNodes.forEach(child =>
       getAttributePlaceholders(child, tokens)
-        .forEach((role, key) => placeholders.set(key, role))
-    );
+        .forEach((role, key) => placeholders.set(key, role)));
 
-    const {attributes: nodeAttributes} = node;
+    const { attributes: nodeAttributes } = node;
 
     if (nodeAttributes !== undefined) {
       for (let i = 0; i < nodeAttributes.length; i++) {
@@ -43,12 +42,10 @@ const getAttributePlaceholders = (node, tokens) => {
         const attributeValue = nodeAttributes[i].value;
 
         if (tokens.has(attributeName)) { // if it's mentioned like <tag ${var}></tag> or <tag ${var}="123"></tag>
-          placeholders.set(
-            attributeName,
+          placeholders.set(attributeName,
 
             // Differentiate cases like <tag ${var}></tag> and <tag ${var}="123"></tag>
-            node.outerHTML.includes(`${key}=`) ? PLACEHOLDER_ROLES.ATTRIBUTE_NAME : PLACEHOLDER_ROLES.ATTRIBUTE,
-          );
+            node.outerHTML.includes(`${attributeName}=`) ? PLACEHOLDER_ROLES.ATTRIBUTE_NAME : PLACEHOLDER_ROLES.ATTRIBUTE);
         } else if (tokens.has(attributeValue)) { // if it was mentioned like <tag attr=${var}></tag>
           placeholders.set(attributeValue, PLACEHOLDER_ROLES.ATTRIBUTE_VALUE);
         } else {

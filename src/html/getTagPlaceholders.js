@@ -22,8 +22,7 @@ const getTagPlaceholders = (node, tokens) => {
 
   node.childNodes.forEach(child =>
     getTagPlaceholders(child, tokens)
-      .forEach((value, token) => placeholders.set(token, value))
-  );
+      .forEach((value, token) => placeholders.set(token, value)));
 
   return placeholders;
 };
