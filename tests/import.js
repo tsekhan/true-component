@@ -6,11 +6,7 @@ if (window.CoverageTest) {
   TC = window.TC;
 }
 
-const { HtmlComponent } = TC;
-const { $ } = TC;
-const { html } = TC;
-const { registerClass } = TC;
-const { Ref } = TC;
+const { HtmlComponent, $, html, registerClass, Ref } = TC;
 
 export {
   HtmlComponent, $, html, registerClass, Ref,

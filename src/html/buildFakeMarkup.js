@@ -18,7 +18,7 @@ export default (
   tokens,
   indexToToken,
   strings,
-  wrapInTag = false,
+  wrapInTag = false
 ) =>
   `<body><template>${
     strings.reduce((accumulator, string, index) => {

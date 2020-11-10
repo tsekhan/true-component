@@ -11,13 +11,13 @@ import nodeRegistry from './nodeRegistry';
  */
 export default (Class, tag = Class.tag) => {
   if (nodeRegistry.has(tag)) {
-    console.warn(`Re-registering of <${tag} /> may cause usage of wrong component.`);
+    console.warn(`Re-registering component <${tag} />.`);
   }
 
   nodeRegistry.set(tag.toLowerCase(),
-    Class.tag ? Class : (class extends Class {
+    Class.tag ? Class : class extends Class {
       static get tag() {
         return tag;
       }
-    }));
+    });
 };

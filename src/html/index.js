@@ -57,7 +57,7 @@ export default (strings, ...params) => {
     potentialTagTokens,
     paramIndexToToken,
     strings,
-    true,
+    true
   )),
   potentialTagTokens);
 
